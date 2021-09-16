@@ -8,7 +8,7 @@ import zhCn from './locale/zh_CN';
 import PropTypes from '../_util/vue-types';
 import { getOptionProps } from '../_util/props-util';
 import { defaultConfigProvider } from '../config-provider';
-import { checkValidate, stringToDayjs, dayjsToString } from '../_util/moment-util';
+import { checkValidate, stringToDayjs, dayjsToString } from '../_util/dayjs-util';
 
 type PickerType = 'date' | 'week' | 'month' | 'year';
 

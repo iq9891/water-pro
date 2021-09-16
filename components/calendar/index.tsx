@@ -10,7 +10,7 @@ import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import interopDefault from '../_util/interopDefault';
 import { defaultConfigProvider } from '../config-provider';
 import enUS from './locale/en_US';
-import { checkValidate, stringToDayjs, dayjsToString, TimeType } from '../_util/moment-util';
+import { checkValidate, stringToDayjs, dayjsToString, TimeType } from '../_util/dayjs-util';
 import { tuple, withInstall } from '../_util/type';
 
 function noop() {

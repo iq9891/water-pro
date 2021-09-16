@@ -1,4 +1,4 @@
-import 'moment/dist/locale/zh-cn';
+// import 'moment/dist/locale/zh-cn';
 import '@@style';
 import water from '@@';
 import Md from '../components/md.vue';

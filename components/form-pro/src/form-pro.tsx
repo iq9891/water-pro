@@ -13,6 +13,7 @@ import {
   toRefs,
   nextTick,
 } from 'vue';
+import dayjs from 'dayjs';
 import { deepMerge, hasOwn, isBoolean, isFunction } from '@fe6/shared';
 
 import Row from '../../grid/Row';
@@ -107,7 +108,7 @@ export default defineComponent({
           if (!Array.isArray(defaultValue)) {
             schema.defaultValue = dateUtil(defaultValue);
           } else {
-            const def: moment.Moment[] = [];
+            const def: dayjs.Dayjs[] = [];
             defaultValue.forEach((item) => {
               def.push(dateUtil(item));
             });
@@ -128,7 +129,7 @@ export default defineComponent({
           if (!Array.isArray(defaultValue)) {
             schema.defaultValue = dateUtil(defaultValue);
           } else {
-            const def: moment.Moment[] = [];
+            const def: dayjs.Dayjs[] = [];
             defaultValue.forEach((item) => {
               def.push(dateUtil(item));
             });

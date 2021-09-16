@@ -6,8 +6,8 @@
 | allowClear | 是否展示清除按钮 | boolean | true |  |
 | autoFocus | 自动获取焦点 | boolean | false |  |
 | clearText | 清除按钮的提示文案 | string | clear |  |
-| defaultOpenValue | 当 defaultValue/value 不存在时，可以设置面板打开时默认选中的值 | [moment](http://momentjs.com/) | dayjs() |  |
-| defaultValue | 默认时间 | [moment](http://momentjs.com/) | 无 |  |
+| defaultOpenValue | 当 defaultValue/value 不存在时，可以设置面板打开时默认选中的值 | [dayjs](https://dayjs.gitee.io/zh-CN/) | dayjs() |  |
+| defaultValue | 默认时间 | [dayjs](https://dayjs.gitee.io/zh-CN/) | 无 |  |
 | disabled | 禁用全部操作 | boolean | false |  |
 | disabledHours | 禁止选择部分小时选项 | function() | 无 |  |
 | disabledMinutes | 禁止选择部分分钟选项 | function(selectedHour) | 无 |  |
@@ -26,16 +26,16 @@
 | suffixIcon | 自定义的选择框后缀图标 | string \| VNode \| slot | - |  |
 | clearIcon | 自定义的清除图标 | string \| VNode \| slot | - | 1.5.0 |
 | use12Hours | 使用 12 小时制，为 true 时 `format` 默认为 `h:mm:ss a` | boolean | false |  |
-| value(v-model) | 当前时间 | [moment](http://momentjs.com/) | 无 |  |
+| value(v-model) | 当前时间 | [dayjs](https://dayjs.gitee.io/zh-CN/) | 无 |  |
 | align | 该值将合并到 placement 的配置中，设置参考 [dom-align](https://github.com/yiminghe/dom-align) | Object | 无 | 1.5.4 |
-| valueFormat | 可选，绑定值的格式，对 value、defaultValue 起作用。不指定则绑定值为 moment 对象 | string，[具体格式](https://momentjs.com/docs/#/displaying/format/) | - | 1.5.4 |
+| valueFormat | 可选，绑定值的格式，对 value、defaultValue 起作用。不指定则绑定值为 dayjs 对象 | string，[具体格式](https://dayjs.gitee.io/docs/zh-CN/parse/string-format) | - | 1.5.4 |
 
 ### 事件
 
-| 事件名称   | 说明                  | 回调参数                                                   |
-| ---------- | --------------------- | ---------------------------------------------------------- |
-| change     | 时间发生变化的回调    | function(time: moment \| string, timeString: string): void |
-| openChange | 面板打开/关闭时的回调 | (open: boolean): void                                      |
+| 事件名称 | 说明 | 回调参数 |
+| --- | --- | --- |
+| change | 时间发生变化的回调 | function(time: dayjs.Dayjs \| string, timeString: string): void |
+| openChange | 面板打开/关闭时的回调 | (open: boolean): void |
 
 ## 方法
 

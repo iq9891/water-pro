@@ -5,6 +5,7 @@ import type { FormProps, FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from '../../../form/interface';
 
 import { unref, toRaw, ref } from 'vue';
+import dayjs from 'dayjs';
 import { cloneDeep, uniqBy } from 'lodash-es';
 import {
   isArray,
@@ -79,7 +80,7 @@ export function useFormEvents({
         // time type
         if (itemIsDateType(key)) {
           if (Array.isArray(value)) {
-            const arr: moment.Moment[] = [];
+            const arr: dayjs.Dayjs[] = [];
             for (const ele of value) {
               arr.push(schema.component === 'TimeRangePicker' ? ele : dateUtil(ele));
             }

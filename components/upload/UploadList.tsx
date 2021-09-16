@@ -60,7 +60,7 @@ export default defineComponent({
         /*eslint-disable */
         file.thumbUrl = '';
         if (previewFile) {
-          previewFile(file.originFileObj).then(previewDataUrl => {
+          previewFile(file.originFileObj).then((previewDataUrl) => {
             // Need append '' to avoid dead loop
             file.thumbUrl = previewDataUrl || '';
             this.$forceUpdate();
@@ -105,7 +105,7 @@ export default defineComponent({
     const getPrefixCls = this.configProvider.getPrefixCls;
     const prefixCls = getPrefixCls('upload', customizePrefixCls);
 
-    const list = items.map(file => {
+    const list = items.map((file) => {
       let progress;
       let icon = file.status === 'uploading' ? <LoadingOutlined /> : <PaperClipOutlined />;
 
@@ -127,7 +127,7 @@ export default defineComponent({
           icon = (
             <a
               class={`${prefixCls}-list-item-thumbnail`}
-              onClick={e => this.handlePreview(file, e)}
+              onClick={(e) => this.handlePreview(file, e)}
               href={file.url || file.thumbUrl}
               target="_blank"
               rel="noopener noreferrer"
@@ -180,7 +180,7 @@ export default defineComponent({
       const listItemNameClass = classNames({
         [`${prefixCls}-list-item-name`]: true,
         [`${prefixCls}-list-item-name-icon-count-${
-          [downloadIcon, removeIcon].filter(x => x).length
+          [downloadIcon, removeIcon].filter((x) => x).length
         }`]: true,
       });
 
@@ -193,7 +193,7 @@ export default defineComponent({
               title={file.name}
               {...linkProps}
               href={file.url}
-              onClick={e => this.handlePreview(file, e)}
+              onClick={(e) => this.handlePreview(file, e)}
             >
               {file.name}
             </a>,
@@ -203,7 +203,7 @@ export default defineComponent({
             <span
               key="view"
               class={`${prefixCls}-list-item-name`}
-              onClick={e => this.handlePreview(file, e)}
+              onClick={(e) => this.handlePreview(file, e)}
               title={file.name}
             >
               {file.name}
@@ -223,7 +223,7 @@ export default defineComponent({
           target="_blank"
           rel="noopener noreferrer"
           style={style}
-          onClick={e => this.handlePreview(file, e)}
+          onClick={(e) => this.handlePreview(file, e)}
           title={locale.previewFile}
         >
           <EyeOutlined />

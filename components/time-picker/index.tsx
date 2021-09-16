@@ -11,7 +11,7 @@ import { hasProp, getOptionProps, getComponent, isValidElement } from '../_util/
 import initDefaultProps from '../_util/props-util/initDefaultProps';
 import { cloneElement } from '../_util/vnode';
 import { defaultConfigProvider } from '../config-provider';
-import { checkValidate } from '../_util/moment-util';
+import { checkValidate, stringToDayjs, dayjsToString } from '../_util/dayjs-util';
 import { TimePickerProps } from './props';
 import TimeRangePicker from './range-picker';
 import { generateShowHourMinuteSecond } from './utils';

@@ -30,7 +30,7 @@ LocaleProvider 使用 Vue 的 [provide/inject](https://cn.vuejs.org/v2/api/#prov
 
 我们提供了英语，中文，俄语，法语，德语等多种语言支持，所有语言包可以在 [这里](https://github.com/vueComponent/ant-design-vue/tree/master/components/locale-provider) 找到。
 
-注意：如果你需要使用 UMD 版的 dist 文件，应该引入 `ant-design-vue/dist/antd-with-locales.js`，同时引入 moment 对应的 locale，然后按以下方式使用：
+注意：如果你需要使用 UMD 版的 dist 文件，应该引入 `ant-design-vue/dist/antd-with-locales.js`，同时引入 dayjs 对应的 locale，然后按以下方式使用：
 
 ```html
 <template>

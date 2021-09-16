@@ -18,11 +18,11 @@
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| format | 格式化倒计时展示，参考 [moment](http://momentjs.com/) | string | 'HH:mm:ss' |
+| format | 格式化倒计时展示，参考 [dayjs](https://dayjs.gitee.io/zh-CN/) | string | 'HH:mm:ss' |
 | prefix | 设置数值的前缀 | string \| v-slot | - |
 | suffix | 设置数值的后缀 | string \| v-slot | - |
 | title | 数值的标题 | string \| v-slot | - |
-| value | 数值内容 | number \| moment | - |
+| value | 数值内容 | number \| dayjs.Dayjs | - |
 | valueStyle | 设置数值的样式 | style | - |
 
 #### Statistic.Countdown 事件

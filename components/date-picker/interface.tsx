@@ -72,7 +72,7 @@ export interface MonthPickerPropsTypes extends PickerProps, SinglePickerProps {
 }
 
 export interface YearPickerPropsTypes extends PickerProps, SinglePickerProps {
-  yearCellContentRender?: (date: moment.Moment, locale: any) => any;
+  yearCellContentRender?: (date: dayjs.Dayjs, locale: any) => any;
 }
 
 export type RangePickerPresetRange = RangePickerValue | (() => RangePickerValue);

@@ -28,7 +28,7 @@ ConfigProvider 使用 Vue 的 [provide / inject](https://vuejs.org/v2/api/#provi
 
 #### 为什么我使用了 ConfigProvider `locale`，时间类组件的国际化还有问题？
 
-请检查是否设置了 `moment.locale('zh-cn')`，或者是否有两个版本的 moment 共存。
+请检查是否设置了 `dayjs.locale('zh-cn')`，或者是否有两个版本的 dayjs 共存。
 
 #### 配置 `getPopupContainer` 导致 Modal 报错？
 

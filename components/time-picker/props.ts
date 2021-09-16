@@ -1,6 +1,6 @@
 import PropTypes from '../_util/vue-types';
 import { tuple } from '../_util/type';
-import { TimeOrTimesType } from '../_util/moment-util';
+import { TimeOrTimesType } from '../_util/dayjs-util';
 
 export const TimePickerBaseProps = () => ({
   size: PropTypes.oneOf(tuple('large', 'default', 'small')),
