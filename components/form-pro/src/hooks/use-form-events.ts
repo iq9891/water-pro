@@ -4,9 +4,9 @@ import { ComputedRef, Ref } from 'vue';
 import type { FormProps, FormSchema, FormActionType } from '../types/form';
 import type { NamePath } from '../../../form/interface';
 
-import { unref, toRaw } from 'vue';
+import { unref, toRaw, ref } from 'vue';
 import { cloneDeep, uniqBy } from 'lodash-es';
-import { isArray, isFunction, isPlainObject, isString, deepMerge } from '@fe6/shared';
+import { isArray, isBoolean, isFunction, isPlainObject, isString, deepMerge, hasOwn } from '@fe6/shared';
 
 import warning from '../../../_util/warning';
 import { dateItemType, handleInputNumberValue } from '../helper';
@@ -20,6 +20,7 @@ interface UseFormActionContext {
   defaultValueRef: Ref<Recordable>;
   formElRef: Ref<FormActionType>;
   schemaRef: Ref<FormSchema[] | Partial<FormSchema>[]>;
+  getOriginSchema: Ref<FormSchema[] | Partial<FormSchema>[]>;
   handleFormValues: Fn;
 }
 export function useFormEvents({
@@ -30,6 +31,7 @@ export function useFormEvents({
   defaultValueRef,
   formElRef,
   schemaRef,
+  getOriginSchema,
   handleFormValues,
 }: UseFormActionContext) {
   async function resetFields(emitReset = true): Promise<void> {
@@ -71,7 +73,7 @@ export function useFormEvents({
           if (Array.isArray(value)) {
             const arr: moment.Moment[] = [];
             for (const ele of value) {
-              arr.push(dateUtil(ele));
+              arr.push(schema.component === 'TimeRangePicker' ? ele : dateUtil(ele));
             }
             formModel[key] = arr;
           } else {
@@ -191,10 +193,97 @@ export function useFormEvents({
     schemaRef.value = uniqBy(schema, 'field');
   }
 
-  function getFieldsValue(): Recordable {
+  function getShow(schema): { isShow: boolean; isIfShow: boolean } {
+      const { show, ifShow } = schema;
+      const { showAdvancedButton, mergeDynamicData } = unref(getProps);
+      const itemIsAdvanced = showAdvancedButton
+        ? isBoolean(schema.isAdvanced)
+          ? schema.isAdvanced
+          : true
+        : true;
+      const values = {
+        ...mergeDynamicData,
+        ...(unref(defaultValueRef) as any),
+        ...(unref(formModel) as any),
+        ...handleFormValues(toRaw(unref(formModel)))
+      } as Recordable;
+      const getValues = ref({
+        field: schema.field,
+        model: formModel,
+        values,
+        schema,
+      })
+
+      let isShow = true;
+      let isIfShow = true;
+
+      if (isBoolean(show)) {
+        isShow = show as boolean;
+      }
+      if (isBoolean(ifShow)) {
+        isIfShow = ifShow as boolean;
+      }
+      if (isFunction(show)) {
+        isShow = (show as Function)(getValues);
+      }
+      if (isFunction(ifShow)) {
+        isIfShow = (ifShow as Function)(getValues);
+      }
+      isShow = (isShow && itemIsAdvanced) as boolean;
+      return { isShow, isIfShow };
+    }
+
+  function getFieldsValue(filterHidden?: boolean): Recordable {
     const formEl = unref(formElRef);
     if (!formEl) return {};
-    return handleFormValues(toRaw(unref(formModel)));
+    const myValue = handleFormValues(toRaw(unref(formModel)));
+
+    if (filterHidden) {
+      const myNewValue = {};
+      getOriginSchema.value.forEach((pItem: any) => {
+        const {isIfShow: isParentIfShow} = getShow(pItem);
+        if (isParentIfShow && hasOwn(myValue, pItem.field)) {
+          myNewValue[pItem.field] = myValue[pItem.field];
+        }
+
+        if (hasOwn(pItem, 'children')) {
+          pItem.children.forEach((cItem: any) => {
+            const {isIfShow: isChildIfShow} = getShow(cItem);
+            if (isChildIfShow && isParentIfShow && hasOwn(myValue, cItem.field)) {
+              myNewValue[cItem.field] = myValue[cItem.field];
+            }
+          });
+        }
+      });
+      return myNewValue;
+    }
+    return myValue;
+  }
+
+  function getChildrenFieldsValue(filterHidden?: boolean) {
+    const formEl = unref(formElRef);
+    if (!formEl) return {};
+    const myValue = handleFormValues(toRaw(unref(formModel)));
+    const myNewValue = {};
+    getOriginSchema.value.forEach((pItem: any) => {
+      const {isIfShow: isParentIfShow} = getShow(pItem);
+      if ((!filterHidden || isParentIfShow) && hasOwn(myValue, pItem.field)) {
+        myNewValue[pItem.field] = myValue[pItem.field];
+      }
+
+      if (hasOwn(pItem, 'children')) {
+        pItem.children.forEach((cItem: any) => {
+          const {isIfShow: isChildIfShow} = getShow(cItem);
+          if ((!filterHidden || (isChildIfShow && isParentIfShow)) && hasOwn(myValue, cItem.field)) {
+            if (!hasOwn(myNewValue, pItem.field)) {
+              myNewValue[pItem.field] = {};
+            }
+            myNewValue[pItem.field][cItem.field] = myValue[cItem.field];
+          }
+        });
+      }
+    });
+    return myNewValue;
   }
 
   /**
@@ -250,6 +339,7 @@ export function useFormEvents({
     validate,
     validateFields,
     getFieldsValue,
+    getChildrenFieldsValue,
     updateSchema,
     appendSchemaByField,
     removeSchemaByFiled,

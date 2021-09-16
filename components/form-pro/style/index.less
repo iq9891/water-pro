@@ -9,9 +9,37 @@
     width: 100%;
   }
 
-  & .ant-affix {
+  & .@{form-prefix-cls}-footer-affix .ant-affix {
     background: #fff;
     box-shadow: 0 -1px 4px 0 rgba(0, 21, 41, 0.12);
+  }
+
+  & .@{form-prefix-cls}-nav {
+    &-affix .ant-affix {
+      background: #fff;
+      box-shadow: 0 1px 4px 0 rgba(0, 21, 41, 0.12);
+    }
+
+    padding: 0 8px;
+    display: flex;
+    background: #fff;
+    border: 1px solid #f0f0f0;
+
+    &-item {
+      margin: 0 16px;
+      padding-top: 2px;
+      cursor: pointer;
+      border-bottom: 2px solid #fff;
+      line-height: 44px;
+
+      &-active {
+        border-bottom-color: @primary-6;
+      }
+    }
+  }
+
+  &-card-first {
+    margin-top: 16px;
   }
 
   & .ant-card {
@@ -45,7 +73,7 @@
   & .@{form-base-prefix-cls}-item-control-wrapper {
     width: 100%;
 
-    .ant-calendar-picker {
+    .ant-calendar-picker:not(.ant-calendar-range-picker-group) {
       width: 100%;
     }
   }
@@ -94,6 +122,25 @@
 
       & .pcr-app[data-theme=monolith] {
         box-sizing: border-box;
+      }
+    }
+
+    &-special {
+      & .@{form-base-prefix-cls}-item-children {
+        height: 32px;
+        margin-bottom: 8px;
+      }
+    }
+
+    &-smscode {
+      & .@{form-base-prefix-cls}-item-children {
+        height: auto;
+        display: block;
+        line-height: 40px;
+
+        & .@{ant-prefix}-input-smscode {
+          padding-top: 4px;
+        }
       }
     }
   }

@@ -30,7 +30,8 @@ export interface FormActionType {
   submit: () => Promise<void>;
   setFieldsValue: <T>(values: T) => Promise<void>;
   resetFields: (emitReset?: boolean) => Promise<void>;
-  getFieldsValue: () => Recordable;
+  getFieldsValue: (filterHidden?: boolean) => Recordable;
+  getChildrenFieldsValue: (filterHidden?: boolean) => Recordable;
   resetAllModel: () => Promise<void>;
   clearValidate: (name?: string | string[]) => Promise<void>;
   updateSchema: any;
@@ -116,7 +117,14 @@ export interface FormProps {
 
   // 操作按钮是否悬停底部
   actionAffix?: boolean;
+  actionOffsetBottom?: number;
+  actionTarget?: any;
 
+  // 操作按钮是否悬停底部
+  navAffix?: boolean;
+  navOffsetTop?: number;
+  navTarget?: any;
+  
   showIsAdvanced?: boolean;
 
   // Show reset button
@@ -126,7 +134,7 @@ export interface FormProps {
 
   resetFunc?: () => Promise<void>;
   submitFunc?: () => Promise<void>;
-  transformDateFunc?: (date: any) => string;
+  transformDateFunc?: (date: any, schemaItem: FormSchema) => string;
   colon?: boolean;
   hideRequiredMark?: boolean;
 }
@@ -138,7 +146,7 @@ export interface FormSchema {
   // Variable name bound to v-model Default value
   valueField?: string;
   // Label name
-  label?: string;
+  label?: string | ((renderCallbackParams: ComputedRef<RenderCallbackParams>) => string);
   // 分组
   children?: FormSchema[];
   // Auxiliary text
@@ -152,7 +160,7 @@ export interface FormSchema {
   // Disable the adjustment of labelWidth with global settings of formModel, and manually set labelCol and wrapperCol by yourself
   disabledLabelWidth?: boolean;
   // render component
-  component: ComponentType;
+  component?: ComponentType;
   // Component parameters
   componentProps?:
     | ((opt: {
@@ -173,6 +181,13 @@ export interface FormSchema {
     | ((values: RenderCallbackParams) => string | number)
     | (() => VNode<RendererNode, RendererElement, { [key: string]: any; }>);
 
+  end?:
+    | string
+    | number
+    | ((values: RenderCallbackParams) => string | number)
+    | (() => VNode<RendererNode, RendererElement, { [key: string]: any; }>);
+
+  wrapperWidth?: string,
   // Validation rules
   rules?: Rule[];
   // Check whether the information is added to the label

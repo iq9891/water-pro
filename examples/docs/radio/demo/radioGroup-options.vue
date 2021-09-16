@@ -2,9 +2,29 @@
   <div>
     <a-radio-group :options="plainOptions" v-model:value="value1" />
     <br />
-    <a-radio-group v-model:value="value2" :options="options" />
     <br />
-    <a-radio-group v-model:value="value3" :options="optionsWithDisabled" disabled />
+    <a-radio-group v-model:value="value2" :options="options" disabled />
+    <br />
+    <br />
+    <a-radio-group v-model:value="value3" :options="optionsWithDisabled" />
+    <br />
+    <br />
+    <a-radio-group type="button" :options="plainOptions" v-model:value="value1" />
+    <br />
+    <br />
+    <a-radio-group size="small" type="button" v-model:value="value2" :options="options" disabled />
+    <br />
+    <br />
+    <a-radio-group size="large" type="button" v-model:value="value3" :options="optionsWithDisabled" />
+    <br />
+    <br />
+    <a-radio-group type="button" buttonStyle="solid" :options="plainOptions" v-model:value="value1" />
+    <br />
+    <br />
+    <a-radio-group size="small" type="button" buttonStyle="solid" v-model:value="value2" :options="options" disabled />
+    <br />
+    <br />
+    <a-radio-group size="large" type="button" buttonStyle="solid" v-model:value="value3" :options="optionsWithDisabled" />
   </div>
 </template>
 <script lang="ts">
@@ -18,7 +38,7 @@ const options = [
 const optionsWithDisabled = [
   { label: 'Apple', value: 'Apple' },
   { label: 'Pear', value: 'Pear' },
-  { label: 'Orange', value: 'Orange', disabled: false },
+  { label: 'Orange', value: 'Orange', disabled: true },
 ];
 export default defineComponent({
   data() {

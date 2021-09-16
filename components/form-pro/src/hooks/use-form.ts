@@ -100,8 +100,13 @@ export function useForm(props?: UseFormProps): UseFormReturnType {
     },
 
     // TODO promisify
-    getFieldsValue: <T>() => {
-      return unref(formRef)?.getFieldsValue() as T;
+    getFieldsValue: <T>(filterHidden?: boolean) => {
+      return unref(formRef)?.getFieldsValue(filterHidden) as T;
+    },
+
+    // children 结构
+    getChildrenFieldsValue: <T>(filterHidden?: boolean) => {
+      return unref(formRef)?.getChildrenFieldsValue(filterHidden) as T;
     },
 
     setFieldsValue: async <T>(values: T) => {

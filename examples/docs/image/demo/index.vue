@@ -11,6 +11,9 @@ import ManyCodeString from './many.vue?raw';
 import Reload from './reload.vue';
 import ReloadString from './reload.md?raw';
 import ReloadCodeString from './reload.vue?raw';
+import Border from './border.vue';
+import BorderString from './border.md?raw';
+import BorderCodeString from './border.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -45,6 +48,9 @@ export default {
           </demo-container>
           <demo-container api={ReloadString} code={ReloadCodeString}>
             <Reload />
+          </demo-container>
+          <demo-container api={BorderString} code={BorderCodeString}>
+            <Border />
           </demo-container>
         </demo-sort>
         <api>

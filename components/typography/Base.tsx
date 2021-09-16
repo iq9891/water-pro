@@ -80,6 +80,7 @@ export interface BlockProps extends TypographyProps {
   strong?: boolean;
   keyboard?: boolean;
   content?: string;
+  styleReset?: boolean;
 }
 
 interface Locale {
@@ -568,9 +569,11 @@ export const baseProps = () => ({
   editable: PropTypes.oneOfType([PropTypes.looseBool, PropTypes.object]),
   copyable: PropTypes.oneOfType([PropTypes.looseBool, PropTypes.object]),
   resetable: PropTypes.looseBool.def(true),
+  styleReset: PropTypes.looseBool,
   prefixCls: PropTypes.string,
   component: PropTypes.string,
   type: PropTypes.oneOf(['secondary', 'success', 'danger', 'warning']),
+  size: PropTypes.oneOf(['large', 'small', 'default']).def('default'),
   disabled: PropTypes.looseBool,
   ellipsis: PropTypes.oneOfType([PropTypes.looseBool, PropTypes.object]),
   code: PropTypes.looseBool,

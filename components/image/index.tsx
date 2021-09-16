@@ -1,4 +1,5 @@
 import { App, defineComponent, inject, Plugin } from 'vue';
+import { hasOwn } from '@fe6/shared';
 import { defaultConfigProvider } from '../config-provider';
 import ImageInternal from '../vc-image';
 export type { ImagePropsType } from '../vc-image/src/Image';
@@ -16,7 +17,14 @@ const Image = defineComponent({
     return () => {
       const { getPrefixCls } = configProvider;
       const prefixCls = getPrefixCls('image', props.prefixCls);
-      return <ImageInternal {...{ ...attrs, ...props, prefixCls }} v-slots={slots}></ImageInternal>;
+      const imageProps: any = { ...attrs, ...props, prefixCls };
+      if (hasOwn(imageProps, 'width') && !hasOwn(imageProps, 'height')) {
+        imageProps.height = imageProps.width;
+      }
+      if (props.bordered) {
+        imageProps.class = `${prefixCls}-border`;
+      }
+      return <ImageInternal {...imageProps} v-slots={slots}></ImageInternal>;
     };
   },
 });

@@ -20,10 +20,7 @@
 
   &-tag {
     cursor: pointer;
-
-    &-only {
-      margin-bottom: 8px;
-    }
+    margin-bottom: 8px;
   }
 
   &-box {
@@ -40,7 +37,7 @@
     display: inline-block;
     position: relative;
     background-color: #fff;
-    border: 1px solid #f0f0f8;
+    border: 1px solid @border-color-base;
     border-radius: 2px;
     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
     width: 100%;
@@ -132,6 +129,10 @@
       text-overflow: ellipsis;
       pointer-events: none;
       font-size: 14px;
+    }
+
+    &-disabled {
+      cursor: not-allowed;
     }
   }
 }

@@ -1,4 +1,7 @@
 <script lang="jsx">
+import Options from './options.vue';
+import OptionsString from './options.md?raw';
+import OptionsCodeString from './options.vue?raw';
 import Basic from './basic.vue';
 import BasicString from './basic.md?raw';
 import BasicCodeString from './basic.vue?raw';
@@ -20,11 +23,14 @@ import HeaderCodeString from './header.vue?raw';
 import BeforeClose from './before-close.vue';
 import BeforeCloseString from './before-close.md?raw';
 import BeforeCloseCodeString from './before-close.vue?raw';
+import maxCheckCount from './max-check-count.vue';
+import maxCheckCountString from './max-check-count.md?raw';
+import maxCheckCountCodeString from './max-check-count.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
 const md = {
-  cn: `# TagGroup 标签组
+  cn: `# TagModalList 标签选择器
 
     标签的快捷封装
 
@@ -35,7 +41,7 @@ const md = {
 - 需要创建标签
 
     ## 代码演示`,
-  us: `# TagGroup
+  us: `# TagModalList
 TODO
 
 ## When To Use
@@ -54,6 +60,9 @@ export default {
       <div id="components-tag-demo">
         <Md cn={md.cn} us={md.us} />
         <demo-sort>
+          <demo-container api={OptionsString} code={OptionsCodeString}>
+            <Options />
+          </demo-container>
           <demo-container api={BasicString} code={BasicCodeString}>
             <Basic />
           </demo-container>
@@ -74,6 +83,9 @@ export default {
           </demo-container>
           <demo-container api={RadioSelectString} code={RadioSelectCodeString}>
             <RadioSelect />
+          </demo-container>
+          <demo-container api={maxCheckCountString} code={maxCheckCountCodeString}>
+            <maxCheckCount />
           </demo-container>
         </demo-sort>
         <api>

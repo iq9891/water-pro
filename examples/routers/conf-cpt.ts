@@ -329,4 +329,16 @@ export default [
     path: 'upload-image-cn',
     component: () => import('../docs/upload-image/demo/index.vue'),
   },
+  {
+    path: 'upload-card-cn',
+    component: () => import('../docs/upload-card/demo/index.vue'),
+  },
+  {
+    path: 'preview-image-cn',
+    component: () => import('../docs/preview-image/demo/index.vue'),
+  },
+  {
+    path: 'classify-cn',
+    component: () => import('../docs/classify/demo/index.vue'),
+  },
 ];

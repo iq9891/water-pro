@@ -68,7 +68,6 @@ export default defineComponent({
       beforeUploadFn,
       handleChange,
       imageUrl,
-      acceptListString,
       prefixClsNew,
       errorBackImage: props.errorImage || errorImageDef || errorUploadImage,
     };
@@ -111,7 +110,7 @@ export default defineComponent({
 
     return (
       <Upload
-        accept={this.acceptListString}
+        accept={this.accept}
         class={this.prefixClsNew}
         show-upload-list={false}
         action={this.autoUpload ? this.action : ''}

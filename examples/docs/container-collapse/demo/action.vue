@@ -5,7 +5,7 @@
   >
     <template #action>
       <div style="margin-right: 8px">
-        action
+        action1
       </div>
     </template>
     这里面是个内容

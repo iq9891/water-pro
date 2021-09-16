@@ -25,9 +25,9 @@ import Tooltip from '../../../../tooltip';
 
 import useConfigInject from '../../../../_util/hooks/useConfigInject';
 import { getPopupContainer } from '../../../../_util/dom';
+import { useSortable } from '../../../../_util/hooks/use-sortable';
 
 import { useTableContext } from '../../hooks/use-table-context';
-import { useSortable } from '../../hooks/use-sortable';
 import type { BasicColumn } from '../../types/table';
 
 interface State {

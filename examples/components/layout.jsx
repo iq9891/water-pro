@@ -5,11 +5,13 @@ import sortBy from 'lodash/sortBy';
 import zhCN from '@@locale-provider/zh_CN';
 import enUS from '@@locale-provider/default';
 import MobileMenu from '@@vc-drawer/src';
+// import AllDemo from '../routers/demo-utils';
 import AllDemo from '../routers/demo';
 import Header from './header.vue';
 import Footer from './footer';
 import { isZhCN } from '../utils/util';
 import { Provider, create } from '../utils/store';
+import { getPageType } from '../utils/get-page-type';
 import { navTypeName } from '../constant/nav';
 
 const docsList = [
@@ -22,8 +24,6 @@ const docsList = [
   // { key: 'faq', enTitle: 'FAQ', title: '常见问题' },
   // { key: 'download', enTitle: 'Download Design Resources', title: '下载设计资源' },
 ];
-
-const isGitee = window.location.host.indexOf('gitee.io') > -1;
 
 export default {
   provide() {
@@ -59,7 +59,6 @@ export default {
   watch: {
     '$route.path'() {
       this.store.setState({ currentSubMenu: [] });
-      this.addSubMenu();
     },
   },
   beforeUnmount() {
@@ -74,48 +73,7 @@ export default {
       this.debouncedResize.cancel();
     }
   },
-  mounted() {
-    // if (isGitee) {
-    //   this.$info({
-    //     title: '提示',
-    //     content: '访问国内镜像站点的用户请访问 antdv.com 站点',
-    //     okText: '立即跳转',
-    //     onOk() {
-    //       location.href = 'https://www.antdv.com';
-    //     },
-    //   });
-    // }
-
-    this.$nextTick(() => {
-      this.addSubMenu();
-      const nprogressHiddenStyle = document.getElementById('nprogress-style');
-      if (nprogressHiddenStyle) {
-        this.timer = setTimeout(() => {
-          nprogressHiddenStyle.parentNode.removeChild(nprogressHiddenStyle);
-        }, 0);
-      }
-      enquireScreen(b => {
-        this.isMobile = !!b;
-      });
-    });
-  },
   methods: {
-    addSubMenu() {
-      // if (this.$route.path.indexOf('/docs/vue/') !== -1) {
-      //   this.$nextTick(() => {
-      //     const menus = [];
-      //     const doms = [...this.$refs.doc.querySelectorAll(['h2', 'h3'])];
-      //     doms.forEach(dom => {
-      //       const id = dom.id;
-      //       if (id) {
-      //         const title = dom.textContent.split('#')[0].trim();
-      //         menus.push({ cnTitle: title, usTitle: title, id });
-      //       }
-      //     });
-      //     this.currentSubMenu = menus;
-      //   });
-      // }
-    },
     subscribe() {
       const { store } = this;
       this.unsubscribe = store.subscribe(() => {
@@ -129,7 +87,9 @@ export default {
         const title = isCN ? cnTitle : usTitle;
         lis.push(<a-anchor-link key={id + index} href={`#${id}`} title={title} />);
       });
-      const showApi = this.$route.path.indexOf('/components/') !== -1;
+      const pagePath = this.$route.path.match(/\/(.*)\//g);
+      const pageType = pagePath.length ? pagePath[0] : '';
+      const showApi = this.$route.path.indexOf(pageType) !== -1;
       return (
         <a-anchor offsetTop={100} class="demo-anchor">
           {lis}
@@ -174,26 +134,27 @@ export default {
 
   render() {
     const name = this.name;
+    const {
+      pageType,
+      pageTrueType,
+    } = getPageType(this.$route.path);
     const isCN = isZhCN(name);
     const titleMap = {};
     const menuConfig = {
-      General: [],
-      Layout: [],
-      Navigation: [],
-      'Data Entry': [],
-      'Data Display': [],
-      Feedback: [],
-      Other: [],
     };
+    Object.keys(navTypeName[pageTrueType]).forEach((navKey) => {
+      menuConfig[navKey] = [];
+    });
     const pagesKey = [];
     let prevPage = null;
     let nextPage = null;
-    const searchData = [];
-    for (const [title, d] of Object.entries(AllDemo)) {
+    const AllNewDemo = AllDemo[pageTrueType];
+
+    for (const [title, d] of Object.entries(AllNewDemo)) {
       const type = d.type || 'Other';
       const key = `${title.replace(/(\B[A-Z])/g, '-$1').toLowerCase()}`;
       titleMap[key] = title;
-      AllDemo[title].key = key;
+      AllNewDemo[title].key = key;
       menuConfig[type] = menuConfig[type] || [];
       menuConfig[type].push(d);
     }
@@ -212,21 +173,16 @@ export default {
         }
         pagesKey.push({
           name: key,
-          url: `/components/${key}`,
+          url: `${pageType}${key}`,
           title: isCN ? `${title} ${subtitle}` : title,
-        });
-        searchData.push({
-          title,
-          subtitle,
-          url: `/components/${key}`,
         });
         MenuItems.push(
           <a-menu-item key={key}>
-            <router-link to={`/components/${key}`}>{linkValue}</router-link>
+            <router-link to={`${pageType}${key}`}>{linkValue}</router-link>
           </a-menu-item>,
         );
       });
-      MenuGroup.push(<a-menu-item-group title={navTypeName[type]}>{MenuItems}</a-menu-item-group>);
+      MenuGroup.push(<a-menu-item-group title={navTypeName[pageTrueType][type]}>{MenuItems}</a-menu-item-group>);
     }
     pagesKey.forEach((item, index) => {
       if (item.name === name) {
@@ -238,12 +194,12 @@ export default {
     if (!isCN) {
       locale = enUS;
     }
-    const config = AllDemo[titleMap[reName]];
+    const config = AllNewDemo[titleMap[reName]];
     this.resetDocumentTitle(config, reName, isCN);
     const { isMobile, $route } = this;
     return (
       <div class="page-wrapper">
-        <Header searchData={searchData} name={name} />
+        <Header name={name} />
         <a-config-provider locale={locale}>
           <div class="main-wrapper">
             <a-row>

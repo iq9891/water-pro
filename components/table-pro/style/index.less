@@ -7,9 +7,10 @@
 .@{table-prefix-cls} {
   &-form-container {
     .@{ant-prefix}-form {
-      margin-bottom: 16px;
+      margin-bottom: 24px;
       background: #fff;
       border-radius: 4px;
+      padding: 16px 16px 8px;
     }
   }
 
@@ -216,7 +217,7 @@
   .@{ant-prefix}-table-wrapper {
     background: #fff;
     border-radius: 2px;
-    padding: 8px;
+    padding: 24px;
 
     .@{table-prefix-cls}-title {
       padding: 0 0 12px 0 !important;
@@ -224,12 +225,29 @@
 
     .@{ant-prefix}-table.@{ant-prefix}-table-bordered .@{ant-prefix}-table-title {
       border: none !important;
+      padding: 12px 0 !important;
+    }
+  }
+
+  &-cardable {
+    & .@{ant-prefix}-card {
+      width: 100%;
+    }
+
+    .@{ant-prefix}-table-wrapper {
+      padding: 0 !important;
     }
   }
 
   &--inset {
     & .@{ant-prefix}-table-wrapper {
       padding: 0;
+    }
+  }
+
+  &--drag {
+    & .ant-table-row {
+      cursor: move;
     }
   }
 
@@ -287,6 +305,12 @@
 
     &.left {
       justify-content: flex-start;
+
+      button {
+        &:first-child {
+          padding-left: 0 !important;
+        }
+      }
     }
 
     &.center {
@@ -303,6 +327,10 @@
 
       span {
         margin-left: 0 !important;
+
+        &.anticon {
+          margin-right: 4px !important;
+        }
       }
     }
 
@@ -317,6 +345,42 @@
       svg {
         font-size: 1.1em;
         font-weight: 700;
+      }
+    }
+  }
+
+  &-card {
+    display: flex;
+
+    & .ant-image {
+      flex-shrink: 0;
+    }
+
+    &-core {
+      padding-left: 8px;
+      width: calc(100% - 88px);
+    }
+
+    &-text {
+      width: calc(100% - 32px);
+      height: 22px;
+      line-height: 22px;
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &-title {
+      padding: 5px 0 22px;
+
+      &-only {
+        padding: 0;
+      }
+
+      & .ant-tag {
+        margin-left: 4px !important;
       }
     }
   }

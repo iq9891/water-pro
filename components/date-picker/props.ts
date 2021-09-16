@@ -79,6 +79,13 @@ export const MonthPickerProps = {
   placeholder: PropTypes.string,
   monthCellContentRender: PropTypes.func,
 };
+
+export const YearPickerProps = {
+  ...PickerProps,
+  ...SinglePickerProps,
+  placeholder: PropTypes.string,
+  yearCellContentRender: PropTypes.func,
+};
 // export const RangePickerPresetRange = PropTypes.oneOfType([TimesType, PropTypes.func])
 
 export const RangePickerProps = {
@@ -102,6 +109,14 @@ export const RangePickerProps = {
   onPanelChange: PropTypes.func,
   onMouseenter: PropTypes.func,
   onMouseleave: PropTypes.func,
+};
+
+export const RangePickerGroupProps = {
+  ...RangePickerProps,
+  showTodayButton: PropTypes.bool,
+  showYesterdayButton: PropTypes.bool,
+  showSevenDaysButton: PropTypes.bool,
+  showThirtyDaysButton: PropTypes.bool,
 };
 
 export const WeekPickerProps = {

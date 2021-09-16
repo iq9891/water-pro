@@ -1,73 +1,20 @@
 import omit from 'omit.js';
-import { defineComponent, inject, provide } from 'vue';
+import { defineComponent, inject, provide, App, Plugin } from 'vue';
 import VcTimePicker from '../vc-time-picker';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import BaseMixin from '../_util/BaseMixin';
-import PropTypes from '../_util/vue-types';
 import warning from '../_util/warning';
 import ClockCircleOutlined from '@ant-design/icons-vue/ClockCircleOutlined';
 import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
-import enUS from './locale/en_US';
+import zhCn from './locale/zh_CN';
 import { hasProp, getOptionProps, getComponent, isValidElement } from '../_util/props-util';
 import initDefaultProps from '../_util/props-util/initDefaultProps';
 import { cloneElement } from '../_util/vnode';
 import { defaultConfigProvider } from '../config-provider';
-import { checkValidate, stringToDayjs, dayjsToString, TimeOrTimesType } from '../_util/moment-util';
-import { tuple, withInstall } from '../_util/type';
-
-export function generateShowHourMinuteSecond(format: string) {
-  // Ref: http://momentjs.com/docs/#/parsing/string-format/
-  return {
-    showHour: format.indexOf('H') > -1 || format.indexOf('h') > -1 || format.indexOf('k') > -1,
-    showMinute: format.indexOf('m') > -1,
-    showSecond: format.indexOf('s') > -1,
-  };
-}
-
-export const TimePickerProps = () => ({
-  size: PropTypes.oneOf(tuple('large', 'default', 'small')),
-  value: TimeOrTimesType,
-  defaultValue: TimeOrTimesType,
-  open: PropTypes.looseBool,
-  format: PropTypes.string,
-  disabled: PropTypes.looseBool,
-  placeholder: PropTypes.string,
-  prefixCls: PropTypes.string,
-  hideDisabledOptions: PropTypes.looseBool,
-  disabledHours: PropTypes.func,
-  disabledMinutes: PropTypes.func,
-  disabledSeconds: PropTypes.func,
-  getPopupContainer: PropTypes.func,
-  use12Hours: PropTypes.looseBool,
-  focusOnOpen: PropTypes.looseBool,
-  hourStep: PropTypes.number,
-  minuteStep: PropTypes.number,
-  secondStep: PropTypes.number,
-  allowEmpty: PropTypes.looseBool,
-  allowClear: PropTypes.looseBool,
-  inputReadOnly: PropTypes.looseBool,
-  clearText: PropTypes.string,
-  defaultOpenValue: PropTypes.object,
-  popupClassName: PropTypes.string,
-  popupStyle: PropTypes.style,
-  suffixIcon: PropTypes.any,
-  align: PropTypes.object,
-  placement: PropTypes.any,
-  transitionName: PropTypes.string,
-  autofocus: PropTypes.looseBool,
-  addon: PropTypes.any,
-  clearIcon: PropTypes.any,
-  locale: PropTypes.object,
-  valueFormat: PropTypes.string,
-  onChange: PropTypes.func,
-  onAmPmChange: PropTypes.func,
-  onOpen: PropTypes.func,
-  onClose: PropTypes.func,
-  onFocus: PropTypes.func,
-  onBlur: PropTypes.func,
-  onKeydown: PropTypes.func,
-  onOpenChange: PropTypes.func,
-});
+import { checkValidate } from '../_util/moment-util';
+import { TimePickerProps } from './props';
+import TimeRangePicker from './range-picker';
+import { generateShowHourMinuteSecond } from './utils';
 
 const TimePicker = defineComponent({
   name: 'ATimePicker',
@@ -139,7 +86,7 @@ const TimePicker = defineComponent({
     },
     getDefaultLocale() {
       const defaultLocale = {
-        ...enUS,
+        ...zhCn,
         ...this.$props.locale,
       };
       return defaultLocale;
@@ -256,4 +203,15 @@ const TimePicker = defineComponent({
   },
 });
 
-export default withInstall(TimePicker);
+Object.assign(TimePicker, {
+  RangePicker: TimeRangePicker,
+});
+
+/* istanbul ignore next */
+TimePicker.install = function(app: App) {
+  app.component(TimePicker.name, TimePicker);
+  app.component(TimeRangePicker.name, TimeRangePicker);
+  return app;
+};
+
+export default TimePicker as typeof TimePicker & Plugin;

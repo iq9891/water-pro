@@ -37,6 +37,7 @@ export default defineComponent({
     lazy: PropTypes.bool,
     // Delayed loading time
     lazyTime: PropTypes.number.def(0),
+    titleLevel: PropTypes.number.def(5),
     prefixCls: PropTypes.string,
   },
   emits: ['expand'],
@@ -71,7 +72,6 @@ export default defineComponent({
   render() {
     const defChildren = getSlot(this);
     const titleChildren = getSlot(this, 'title');
-    const actionChildren = getSlot(this, 'action');
     const skeletonChildren = getSlot(this, 'skeleton');
     const props = getOptionProps(this);
 
@@ -82,9 +82,12 @@ export default defineComponent({
       show={this.show}
       loading={this.loading}
       onExpand={this.handleExpand}
+      level={this.titleLevel}
+      v-slots={{
+        action: () => getSlot(this, 'action')
+      }}
     >
       {titleChildren}
-      {actionChildren}
     </CollapseHeader>)
 
     let lazyNode = null;

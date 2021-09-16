@@ -8,7 +8,7 @@ import TodayButton from './calendar/TodayButton';
 import OkButton from './calendar/OkButton';
 import TimePickerButton from './calendar/TimePickerButton';
 import CommonMixin from './mixin/CommonMixin';
-import enUs from './locale/en_US';
+import zhCn from './locale/zh_CN';
 import { syncTime, getTodayTime, isAllowedDate } from './util/';
 import { goTime, goStartMonth, goEndMonth, includesTime } from './util/toTime';
 import { defineComponent } from 'vue';
@@ -85,7 +85,7 @@ const RangeCalendar = defineComponent({
   mixins: [BaseMixin, CommonMixin],
   inheritAttrs: false,
   props: {
-    locale: PropTypes.object.def(enUs),
+    locale: PropTypes.object.def(zhCn),
     visible: PropTypes.looseBool.def(true),
     prefixCls: PropTypes.string.def('rc-calendar'),
     dateInputPlaceholder: PropTypes.any,
@@ -96,6 +96,7 @@ const RangeCalendar = defineComponent({
     mode: PropTypes.arrayOf(PropTypes.oneOf(['time', 'date', 'month', 'year', 'decade'])),
     showDateInput: PropTypes.looseBool.def(true),
     timePicker: PropTypes.any,
+    showTimePickerButton: PropTypes.looseBool.def(true),
     showOk: PropTypes.looseBool,
     showToday: PropTypes.looseBool.def(true),
     defaultSelectedValue: PropTypes.array.def([]),
@@ -776,7 +777,7 @@ const RangeCalendar = defineComponent({
     }
 
     let TimePickerButtonNode = null;
-    if (props.timePicker) {
+    if (props.timePicker && props.showTimePickerButton) {
       const timePickerButtonProps = {
         ...baseProps,
         showTimePicker: sShowTimePicker || (mode[0] === 'time' && mode[1] === 'time'),

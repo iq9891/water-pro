@@ -20,6 +20,9 @@ import ThemeCodeString from './theme.vue?raw';
 import Vertical from './vertical.vue';
 import VerticalString from './vertical.md?raw';
 import VerticalCodeString from './vertical.vue?raw';
+import Color from './color.vue';
+import ColorString from './color.md?raw';
+import ColorCodeString from './color.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -70,6 +73,9 @@ export default {
           </demo-container>
           <demo-container api={SwitchModeString} code={SwitchModeCodeString}>
             <SwitchMode />
+          </demo-container>
+          <demo-container api={ColorString} code={ColorCodeString}>
+            <Color />
           </demo-container>
         </demo-sort>
         <api>

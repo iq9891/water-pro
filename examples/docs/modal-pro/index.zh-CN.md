@@ -4,8 +4,9 @@
 | --- | --- | --- | --- | --- |
 | defaultFullscreen | 是否全屏 | boolean | - |  |
 | canFullscreen | 是否全屏按钮 | boolean | - |  |
-| bodyStyle | 内容的高度 | object | - |  |
+| bodyStyle | 内容的样式 | object | - |  |
 | minHeight | 内容的最小高度 | number | - |  |
+| scrollStyle | 滚动内容的样式 | object | - |  |
 | width | 内容的宽度 | number | - |  |
 | title | 弹框标题， 为 `null` 的时候就隐藏标题 | string \| null | - |  |
 | text | 标题边上的帮助提示 | string | - |  |

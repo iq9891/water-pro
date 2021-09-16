@@ -17,8 +17,10 @@
 | tabList | 页签标题列表, 可以通过 scopedSlots 属性自定义 tab | Array<{key: string, tab: any, scopedSlots: {tab: 'XXX'}}> | - |  |
 | tabBarExtraContent | tab bar 上额外的元素 | slot | 无 | 1.5.0 |
 | size | card 的尺寸 | `default` \| `small` | `default` |  |
+| theme | card 的主题 | `default` \| `gray` | 3.15.0 |
 | title | 卡片标题 | string\|slot | - |  |
 | type | 卡片类型，可设置为 `inner` 或 不设置 | string | - |  |
+| headPlacement | 头部的位置 | `top` \| `bottom` | `top` | 3.21.0 |
 
 ### 事件
 

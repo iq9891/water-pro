@@ -9,6 +9,7 @@
 | preview | 预览参数，为 `false` 时禁用 | boolean \| [previewType](https://2x.antdv.com/components/image-cn#previewType) | true |  |
 | src | 图片地址 | string |  |  |
 | width | 图像宽度 | string \| number |  |  |
+| bordered | 图像边框 | boolean | true | 3.31.0 |
 
 
 ## previewType

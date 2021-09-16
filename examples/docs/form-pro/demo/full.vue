@@ -21,10 +21,9 @@ import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
 import { FormSchema, useForm, Button } from '@fe6/water-pro';
 
 
-const getCascaderApi = () => {
-  return new Promise((resolve) => {
+const getCascaderApi = ({success}) => {
     setTimeout(() => {
-      resolve([
+      success([
         {
           value: 'zhejiang',
           label: 'Zhejiang',
@@ -59,13 +58,11 @@ const getCascaderApi = () => {
         },
       ]);
     }, 1000);
-  })
 }
 
-const tagModalListApi = () => {
-  return new Promise((resolve) => {
+const tagModalListApi = ({success}) => {
     setTimeout(() => {
-      resolve([
+      success([
         {
           name: '组件库',
           children: [
@@ -94,7 +91,6 @@ const tagModalListApi = () => {
         },
       ]);
     }, 1000);
-  })
 }
 
 const tagModalListConfig: FormSchema[] = [
@@ -478,6 +474,11 @@ const schemas: FormSchema[] =[
     label: '周选择',
   },
   {
+    field: 'yearPicker',
+    component: 'YearPicker',
+    label: '年份',
+  },
+  {
     field: 'timePicker',
     component: 'TimePicker',
     label: '时间',
@@ -486,6 +487,17 @@ const schemas: FormSchema[] =[
     field: 'rangePicker',
     component: 'RangePicker',
     label: '日期区间',
+  },
+  {
+    field: 'rangePickerGroup',
+    component: 'RangeGroupPicker',
+    label: '日期区间快捷',
+    componentProps: {
+      showTodayButton: true,
+      showYesterdayButton: true,
+      showSevenDaysButton: true,
+      showThirtyDaysButton: true,
+    }
   },
   {
     field: 'colorPicker',

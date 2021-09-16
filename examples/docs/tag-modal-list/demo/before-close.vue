@@ -16,7 +16,7 @@ import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
 
 import Button from '@fe6/water-pro/es/button/index';
 
-const tagModalListApi = (params, success) => {
+const tagModalListApi = ({params, success}) => {
   setTimeout(() => {
     success([
       {

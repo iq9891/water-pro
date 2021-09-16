@@ -10,6 +10,7 @@ const Editable = defineComponent({
     value: PropTypes.string,
     maxlength: PropTypes.number,
     autoSize: PropTypes.oneOfType([PropTypes.looseBool, PropTypes.object]),
+    size: PropTypes.oneOf(['large', 'small', 'default']).def('default'),
     onSave: PropTypes.func,
     onCancel: PropTypes.func,
     onEnd: PropTypes.func,

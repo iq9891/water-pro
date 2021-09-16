@@ -2,6 +2,7 @@ import { defineComponent, inject } from 'vue';
 import PropTypes from '../_util/vue-types';
 import { getComponent } from '../_util/props-util';
 import { defaultConfigProvider } from '../config-provider';
+import { tuple } from '../_util/type';
 
 export default defineComponent({
   name: 'ACardMeta',
@@ -10,6 +11,7 @@ export default defineComponent({
     title: PropTypes.VNodeChild,
     description: PropTypes.VNodeChild,
     avatar: PropTypes.VNodeChild,
+    theme: PropTypes.oneOf(tuple('default', 'gray')).def('default'),
   },
   setup() {
     return {
@@ -17,13 +19,14 @@ export default defineComponent({
     };
   },
   render() {
-    const { prefixCls: customizePrefixCls } = this.$props;
+    const { prefixCls: customizePrefixCls, theme } = this.$props;
 
     const { getPrefixCls } = this.configProvider;
     const prefixCls = getPrefixCls('card', customizePrefixCls);
 
     const classString = {
       [`${prefixCls}-meta`]: true,
+      [`${prefixCls}-meta-${theme}`]: theme && theme !== 'default',
     };
 
     const avatar = getComponent(this, 'avatar');

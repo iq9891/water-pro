@@ -73,6 +73,10 @@ export interface MonthPickerPropsTypes extends PickerProps, SinglePickerProps {
   monthCellContentRender?: (date: dayjs.Dayjs, locale: any) => any;
 }
 
+export interface YearPickerPropsTypes extends PickerProps, SinglePickerProps {
+  yearCellContentRender?: (date: moment.Moment, locale: any) => any;
+}
+
 export type RangePickerPresetRange = RangePickerValue | (() => RangePickerValue);
 
 export interface RangePickerPropsTypes extends PickerProps {
@@ -104,6 +108,13 @@ export interface RangePickerPropsTypes extends PickerProps {
   renderExtraFooter?: () => any;
   onMouseenter?: (e: MouseEvent) => void;
   onMouseleave?: (e: MouseEvent) => void;
+}
+
+export interface RangePickerGroupPropsTypes extends RangePickerPropsTypes {
+  showTodayButton?: boolean;
+  showYesterdayButton?: boolean;
+  showSevenDaysButton?: boolean;
+  showThirtyDaysButton?: boolean;
 }
 
 export interface WeekPickerPropsTypes extends PickerProps, SinglePickerProps {

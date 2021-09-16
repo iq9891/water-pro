@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-radio-group v-model="size">
+    <a-radio-group v-model:value="size">
       <a-radio value="small">Small</a-radio>
       <a-radio value="middle">Middle</a-radio>
       <a-radio value="large">Large</a-radio>

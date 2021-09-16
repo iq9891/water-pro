@@ -31,6 +31,7 @@ export default defineComponent({
       .oneOf(['horizontal', 'vertical', 'inline'])
       .def('horizontal'),
     actionAffix: PropTypes.looseBool,
+    actionTarget: PropTypes.func,
     showActionButtonGroup: PropTypes.bool.def(true),
     showResetButton: PropTypes.bool.def(true),
     showSubmitButton: PropTypes.bool.def(true),

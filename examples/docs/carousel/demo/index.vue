@@ -21,12 +21,12 @@ import CustomArrowsCodeString from './customArrows.vue?raw';
 import CN from '../index.zh-CN.md';
 
 const md = {
-  cn: `# Carousel 走马灯
+  cn: `# Carousel 走马灯轮播
         旋转木马，一组轮播的区域。
        ## 何时使用
 
       - 当有一组平级的内容。
-      - 当内容空间不足时，可以用走马灯的形式进行收纳，进行轮播展现。
+      - 当内容空间不足时，可以用走马灯轮播的形式进行收纳，进行轮播展现。
       - 常用于一组图片或卡片轮播。
        ## 代码演示
         `,
@@ -45,7 +45,7 @@ export default {
   type: 'Data Display',
   zhType: '数据展示',
   title: 'Carousel',
-  subtitle: '走马灯',
+  subtitle: '走马灯轮播',
   inject: {
     demoContext: { default: {} },
   },

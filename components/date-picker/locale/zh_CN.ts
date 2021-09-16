@@ -4,6 +4,12 @@ import TimePickerLocale from '../../time-picker/locale/zh_CN';
 const locale = {
   lang: {
     placeholder: '请选择日期',
+    otherPlaceholder: {
+      ADatePicker: '请选择日期',
+      AMonthPicker: '请选择月份',
+      AYearPicker: '请选择年份',
+      week: '请选择周',
+    },
     rangePlaceholder: ['开始日期', '结束日期'],
     ...CalendarLocale,
   },

@@ -33,17 +33,19 @@ export default defineComponent({
     const loading = ref(false);
     const options = ref<any[]>([]);
     const getOptionDatas = () => {
-      loading.value = true;
-      fetch({
-        success: (res: any) => {
-          loading.value = false;
-          options.value = res;
-        },
-        error: () => {
-          loading.value = false;
-        },
-        params: props.apiParams,
-      });
+      if (!loading.value) {
+        loading.value = true;
+        fetch({
+          success: (res: any) => {
+            loading.value = false;
+            options.value = res;
+          },
+          error: () => {
+            loading.value = false;
+          },
+          params: props.apiParams,
+        });
+      }
     };
 
     const getOptionsTime = ref(1);

@@ -25,7 +25,7 @@ export default defineComponent({
 
     if (this.imgList && this.imgList.length) {
       this.imgList.forEach((img: string) => {
-        imgNode.push(<Image width={this.size} src={img} />);
+        imgNode.push(<Image bordered={false} width={this.size} src={img} />);
       });
     }
 

@@ -83,6 +83,9 @@ const Menu = {
       return ins.vnode.el;
     };
     provide('menuStore', store);
+    provide('selectedColor', props.selectedColor);
+    provide('selectedBgColor', props.selectedBgColor);
+    provide('selectedBorderColor', props.selectedBorderColor);
     provide(
       'parentMenu',
       reactive({

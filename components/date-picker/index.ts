@@ -1,15 +1,25 @@
 import { App, DefineComponent, Plugin } from 'vue';
 import VcCalendar from '../vc-calendar';
 import MonthCalendar from '../vc-calendar/src/MonthCalendar';
+import YearCalendar from '../vc-calendar/src/YearCalendar';
 import createPicker from './createPicker';
 import wrapPicker from './wrapPicker';
 import RangePicker from './RangePicker';
 import WeekPicker from './WeekPicker';
-import { DatePickerProps, MonthPickerProps, WeekPickerProps, RangePickerProps } from './props';
+import {
+  DatePickerProps,
+  MonthPickerProps,
+  YearPickerProps,
+  WeekPickerProps,
+  RangePickerProps,
+  RangePickerGroupProps,
+} from './props';
 import {
   DatePickerPropsTypes,
   RangePickerPropsTypes,
+  RangePickerGroupPropsTypes,
   MonthPickerPropsTypes,
+  YearPickerPropsTypes,
   WeekPickerPropsTypes,
 } from './interface';
 
@@ -18,6 +28,12 @@ const WrappedRangePicker = (wrapPicker(
   RangePickerProps,
   'date',
 ) as unknown) as DefineComponent<RangePickerPropsTypes>;
+
+const WrappedRangePickerGroup = (wrapPicker(
+  RangePicker as any,
+  RangePickerGroupProps,
+  'date',
+) as unknown) as DefineComponent<RangePickerGroupPropsTypes>;
 
 const WrappedWeekPicker = (wrapPicker(
   WeekPicker as any,
@@ -41,9 +57,17 @@ const MonthPicker = (wrapPicker(
   'month',
 ) as unknown) as DefineComponent<MonthPickerPropsTypes>;
 
+const YearPicker = (wrapPicker(
+  createPicker(YearCalendar as any, YearPickerProps, 'AYearPicker'),
+  YearPickerProps,
+  'year',
+) as unknown) as DefineComponent<YearPickerPropsTypes>;
+
 Object.assign(DatePicker, {
   RangePicker: WrappedRangePicker,
+  RangePickerGroup: WrappedRangePickerGroup,
   MonthPicker,
+  YearPicker,
   WeekPicker: WrappedWeekPicker,
 });
 
@@ -51,7 +75,9 @@ Object.assign(DatePicker, {
 DatePicker.install = function(app: App) {
   app.component(DatePicker.name, DatePicker);
   app.component(DatePicker.RangePicker.name, DatePicker.RangePicker);
+  app.component('ARangePickerGroup', DatePicker.RangePickerGroup);
   app.component(DatePicker.MonthPicker.name, DatePicker.MonthPicker);
+  app.component(DatePicker.YearPicker.name, DatePicker.YearPicker);
   app.component(DatePicker.WeekPicker.name, DatePicker.WeekPicker);
   return app;
 };

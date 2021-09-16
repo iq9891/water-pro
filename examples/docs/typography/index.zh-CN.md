@@ -7,6 +7,7 @@
 | code | 添加代码样式 | boolean | - |  |
 | copyable | 是否可拷贝，为对象时可进行各种自定义 | boolean \| [copyable](#copyable) | - |  |
 | delete | 添加删除线样式 | boolean | - |  |
+| size | 设置大小，可选值为 `small` `large` 或者不设 | string | `default` | 3.14.0 |
 | disabled | 禁用文本 | boolean | - |  |
 | editable | 是否可编辑，为对象时可对编辑进行控制 | boolean \| [copyable](#copyable) | - |  |
 | ellipsis | 自动溢出省略 | boolean | - |  |
@@ -25,10 +26,11 @@
 | code | 添加代码样式 | boolean | - |  |
 | copyable | 是否可拷贝，为对象时可进行各种自定义 | boolean \| [copyable](#copyable) | - |  |
 | delete | 添加删除线样式 | boolean | - |  |
+| size | 设置按钮大小，可选值为 `small` `large` 或者不设 | string | `default` | 3.14.0 |
 | disabled | 禁用文本 | boolean | - |  |
 | editable | 是否可编辑，为对象时可对编辑进行控制 | boolean \| [copyable](#copyable) | - |  |
 | ellipsis | 自动溢出省略 | boolean | - |  |
-| level | 重要程度，相当于 h1、h2、h3、h4、h5 | number: 1, 2, 3, 4, 5 | 1 |  |
+| level | 重要程度，相当于 h1、h2、h3、h4、h5、h6 | number: 1, 2, 3, 4, 5, 6 | 1 |  |
 | mark | 添加标记样式 | boolean | - |  |
 | strong | 是否加粗 | boolean | - |  |
 | type | 文本类型 | `secondary` \| `success` \| `warning` \| `danger` | - |  |
@@ -43,6 +45,7 @@
 | code | 添加代码样式 | boolean | - |  |
 | copyable | 是否可拷贝，为对象时可进行各种自定义 | boolean \| [copyable](#copyable) | - |  |
 | delete | 添加删除线样式 | boolean | - |  |
+| size | 设置按钮大小，可选值为 `small` `large` 或者不设 | string | `default` | 3.14.0 |
 | disabled | 禁用文本 | boolean | - |  |
 | editable | 是否可编辑，为对象时可对编辑进行控制 | boolean \| [copyable](#copyable) | - |  |
 | ellipsis | 自动溢出省略 | boolean | - |  |

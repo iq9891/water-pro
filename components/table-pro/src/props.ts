@@ -22,6 +22,8 @@ export const basicProps = {
 
   isTreeTable: PropTypes.bool.def(false),
 
+  draggable: PropTypes.bool.def(false),
+
   formLabelALigin: PropTypes.oneOf(['left', 'right']).def('right'),
 
   formLabelCol: Object as PropType<Partial<ColEx>>,
@@ -49,7 +51,8 @@ export const basicProps = {
   autoCreateKey: PropTypes.bool.def(true),
   striped: PropTypes.bool.def(true),
   showSummary: PropTypes.bool,
-
+  cardable: PropTypes.bool,
+  cardTitle: PropTypes.string,
   locale: {
     type: Object as PropType<LocaleParams>,
     default: () => ({

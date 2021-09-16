@@ -30,10 +30,12 @@ const Card = defineComponent({
     bordered: PropTypes.looseBool.def(true),
     bodyStyle: PropTypes.style,
     headStyle: PropTypes.style,
+    headPlacement: PropTypes.oneOf(tuple('top', 'bottom')).def('top'),
     loading: PropTypes.looseBool.def(false),
     hoverable: PropTypes.looseBool.def(false),
     type: PropTypes.string,
     size: PropTypes.oneOf(tuple('default', 'small')),
+    theme: PropTypes.oneOf(tuple('default', 'gray')),
     actions: PropTypes.VNodeChild,
     tabList: {
       type: Array as PropType<CardTabListType[]>,
@@ -93,6 +95,8 @@ const Card = defineComponent({
       hoverable,
       activeTabKey,
       defaultActiveTabKey,
+      theme,
+      headPlacement,
     } = this.$props;
     const { $slots } = this;
     const children = getSlot(this);
@@ -109,6 +113,8 @@ const Card = defineComponent({
       [`${prefixCls}-contain-tabs`]: tabList && tabList.length,
       [`${prefixCls}-${size}`]: size !== 'default',
       [`${prefixCls}-type-${type}`]: !!type,
+      [`${prefixCls}-${theme}`]: theme && theme !== 'default',
+      [`${prefixCls}-${theme}-bordered`]: bordered && theme && theme !== 'default',
     };
 
     const loadingBlockStyle =
@@ -186,8 +192,25 @@ const Card = defineComponent({
     const extraDom = getComponent(this, 'extra');
     if (titleDom || extraDom || tabs) {
       head = (
-        <div class={`${prefixCls}-head`} style={headStyle}>
-          <div class={`${prefixCls}-head-wrapper`}>
+        <div
+          class={[
+            `${prefixCls}-head`,
+            `${prefixCls}-head-${headPlacement}`,
+            {
+              [`${prefixCls}-${theme}-head`]: theme && theme !== 'default',
+            },
+            `${prefixCls}-${theme}-head-${headPlacement}`,
+          ]}
+          style={headStyle}
+        >
+          <div
+            class={[
+              `${prefixCls}-head-wrapper`,
+              {
+                [`${prefixCls}-${theme}-head-wrapper`]: theme && theme !== 'default',
+              },
+            ]}
+          >
             {titleDom && <div class={`${prefixCls}-head-title`}>{titleDom}</div>}
             {extraDom && <div class={`${prefixCls}-extra`}>{extraDom}</div>}
           </div>
@@ -199,7 +222,15 @@ const Card = defineComponent({
     const cover = getComponent(this, 'cover');
     const coverDom = cover ? <div class={`${prefixCls}-cover`}>{cover}</div> : null;
     const body = (
-      <div class={`${prefixCls}-body`} style={bodyStyle}>
+      <div
+        class={[
+          `${prefixCls}-body`,
+          {
+            [`${prefixCls}-${theme}-body`]: head && theme && theme !== 'default',
+          },
+        ]}
+        style={bodyStyle}
+      >
         {loading ? loadingBlock : children}
       </div>
     );
@@ -211,10 +242,11 @@ const Card = defineComponent({
 
     return (
       <div class={classString} ref="cardContainerRef">
-        {head}
+        {headPlacement === 'top' ? head : null}
         {coverDom}
         {children ? body : null}
         {actionDom}
+        {headPlacement === 'bottom' ? head : null}
       </div>
     );
   },

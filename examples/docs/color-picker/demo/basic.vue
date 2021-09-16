@@ -5,7 +5,7 @@
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const value = ref<string>('#9C27B0E6');
+    const value = ref<string>('#f0f0f0');
     return {
       value,
     };

@@ -1,6 +1,6 @@
 ## API
 
-更多***帮助提示***的参数，参考 [basic-help](./basic-help-cn) 。更多***延迟容器***的参数，参考 [container-lazy](./container-lazy-cn) 。
+更多 ***帮助提示*** 的参数，参考 [basic-help](./basic-help-cn) 。更多 ***延迟容器*** 的参数，参考 [container-lazy](./container-lazy-cn) 。
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
@@ -11,6 +11,7 @@
 | triggerWindowResize | 是否监听窗口改变 | boolean | - | - |
 | loading | 是否加载中 | boolean | - | - |
 | lazy | 是否延迟加载 | boolean | - | - |
+| titleLevel | 标题字号 | number | 5 | 3.24.0 |
 
 ### 事件
 

@@ -71,6 +71,7 @@ export default defineComponent({
         ghost,
         block,
         $attrs,
+        color,
       } = this;
       const getPrefixCls = this.configProvider.getPrefixCls;
       const prefixCls = getPrefixCls('btn', customizePrefixCls);
@@ -101,6 +102,7 @@ export default defineComponent({
         [`${prefixCls}-background-ghost`]: ghost || type === 'ghost',
         [`${prefixCls}-two-chinese-chars`]: hasTwoCNChar && autoInsertSpace,
         [`${prefixCls}-block`]: block,
+        [`${prefixCls}-${type}-${color}`]: type && color,
       };
     },
     fixTwoCNChar() {

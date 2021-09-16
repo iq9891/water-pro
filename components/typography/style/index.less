@@ -61,12 +61,17 @@
   h5 {
     .typography-title-5();
   }
+  h6&,
+  h6 {
+    .typography-title-6();
+  }
 
   h1&,
   h2&,
   h3&,
   h4&,
-  h5& {
+  h5&,
+  h6& {
     .@{typography-prefix-cls} + & {
       margin-top: @typography-title-margin-top;
     }
@@ -80,12 +85,14 @@
   h2,
   h3,
   h4,
-  h5 {
+  h5,
+  h6 {
     + h1,
     + h2,
     + h3,
     + h4,
-    + h5 {
+    + h5,
+    + h6 {
       margin-top: @typography-title-margin-top;
     }
   }
@@ -279,10 +286,24 @@
     -webkit-box-orient: vertical;
   }
 
+  h1&-reset,
+  h2&-reset,
   h3&-reset,
+  h4&-reset,
+  h5&-reset,
+  h6&-reset,
   p&reset,
-  &&-reset {
-    margin: 0;
+  &&-reset,
+  &-reset {
+    margin: 0 !important;
+  }
+
+  &-small {
+    font-size: 12px;
+  }
+
+  &-large {
+    font-size: 16px;
   }
 }
 

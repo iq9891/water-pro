@@ -18,6 +18,10 @@
 | color | 标签颜色 | string | blue | |
 | tagStyle | 标签样式 | CSSProperties | - | |
 | className | 最外层的 class 定制 | array \| string | - | |
+| createIcon | type不是select模式，可以不显示+icon | boolean | true | 3.26.0 |
+| createBordered | type不是select模式，可以不显示边框内边距 | boolean | true | 3.26.0 |
+| showSelected | type不是select模式，是否显示已选 | boolean | true | 3.26.0 |
+| disabled | 禁用 | boolean | - | 3.27.0 |
 
 ### 事件
 

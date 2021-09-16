@@ -6,6 +6,7 @@
 - MonthPicker
 - RangePicker
 - WeekPicker
+- YearPicker
 
 ### 国际化配置
 
@@ -13,12 +14,12 @@
 
 如有特殊需求（仅修改单一组件的语言），请使用 locale 参数，参考：[默认配置](https://github.com/ant-design/ant-design/blob/master/components/date-picker/locale/example.json)。
 
-**注意：**DatePicker、MonthPicker、RangePicker、WeekPicker 部分 locale 是从 value 中读取，所以请先正确设置 moment 的 locale。
+**注意：**DatePicker、MonthPicker、RangePicker、WeekPicker、YearPicker 部分 locale 是从 value 中读取，所以请先正确设置 moment 的 locale。
 
 
 ### 共同的 API
 
-以下 API 为 DatePicker、MonthPicker、RangePicker, WeekPicker 共享的 API。
+以下 API 为 DatePicker、MonthPicker、RangePicker, WeekPicker, YearPicker 共享的 API。
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
@@ -74,6 +75,21 @@
 | -------- | ------------------ | ---------------------------------------------------- |
 | change   | 时间发生变化的回调 | function(date: moment \| string, dateString: string) |
 | ok       | 点击确定按钮的回调 | function()                                           |
+
+### YearPicker
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| defaultValue | 默认日期 | [moment](http://momentjs.com/) | 无 |
+| defaultPickerValue | 默认面板日期 | [moment](http://momentjs.com/) | 无 |
+| format | 展示的日期格式，配置参考 [moment.js](http://momentjs.com/) | string | "YYYY" |
+| value(v-model) | 日期 | [moment](http://momentjs.com/) | 无 |
+
+### YearPicker 事件
+
+| 事件名称 | 说明 | 回调参数 |
+| --- | --- | --- |
+| change | 时间发生变化的回调，发生在用户选择时间时 | function(date: moment \| string, dateString: string) |
 
 ### MonthPicker
 

@@ -44,13 +44,6 @@
       Download
     </a-button>
     <br>
-    <a-button-group :size="size">
-      <a-button type="primary">
-        <template #icon><LeftOutlined /></template>
-        Go back
-      </a-button>
-      <a-button type="primary"> Go forward<template #icon><RightOutlined /></template></a-button>
-    </a-button-group>
   </div>
 </template>
 <script>

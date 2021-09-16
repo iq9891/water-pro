@@ -1274,7 +1274,7 @@ export default defineComponent({
     let moreDisplayNode = null;
     let moreHandlerNode = null;
 
-    if (this.store.selectedRowKeys.length) {
+    if (this.showMoreHandler && this.store.selectedRowKeys.length) {
       moreDisplayNode = (
         <MoreDisplay
           selectKey={this.store.selectedRowKeys}
@@ -1286,6 +1286,7 @@ export default defineComponent({
         <MoreHandler
           selectKey={this.store.selectedRowKeys}
           prefixCls={prefixCls}
+          target={this.moreHandlerTarget}
           v-slots={{
             moreHandler: () => getSlot(this, 'moreHandler'),
           }}

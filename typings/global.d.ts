@@ -6,7 +6,9 @@ declare module '@fe6/water-pro' {
     FormSchema,
     RenderCallbackParams,
   } from '@fe6/water-pro'
-  export { useForm,
+  export {
+    utils,
+    useForm,
     message,
     Modal,
     useModal,

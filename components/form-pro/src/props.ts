@@ -7,6 +7,8 @@ import type { TableActionType } from '../../table-pro';
 import type { ButtonProps } from '../../button/buttonTypes';
 
 import PropTypes from '../../_util/vue-types';
+import { hasOwn } from '@vue/shared';
+import { isArray } from 'lodash';
 
 export const basicProps = {
   model: {
@@ -22,6 +24,7 @@ export const basicProps = {
     default: () => [],
   },
   actionAffix: PropTypes.looseBool,
+  actionTarget: PropTypes.func,
   actionOffsetBottom: PropTypes.number.def(0),
   actionAlgin: PropTypes.oneOf(['left', 'right', 'center', 'space-between']).def('left'),
   compact: PropTypes.bool,
@@ -58,8 +61,15 @@ export const basicProps = {
   // 转化时间
   transformDateFunc: {
     type: Function as PropType<Fn>,
-    default: (date: any) => {
-      return date._isAMomentObject ? date?.format('YYYY-MM-DD HH:mm:ss') : date;
+    default: (date: any, schemaItem: FormSchema) => {
+      let format = schemaItem && (schemaItem.component === 'TimePicker' || schemaItem.component === 'TimeRangePicker') ? 'HH:mm:ss' : 'YYYY-MM-DD HH:mm:ss';
+      if (schemaItem && hasOwn(schemaItem, 'componentProps') && hasOwn(schemaItem.componentProps, 'format')) {
+        format = (schemaItem.componentProps as any).format;
+        if (isArray(format)) {
+          format = format[0];
+        }
+      }
+      return date._isAMomentObject ? date?.format(format) : date;
     },
   },
   rulesMessageJoinLabel: PropTypes.bool.def(true),
@@ -116,4 +126,7 @@ export const basicProps = {
 
   labelAlign: PropTypes.string,
   prefixCls: PropTypes.string,
+  navAffix: PropTypes.looseBool,
+  navTarget: PropTypes.func,
+  navOffsetTop: PropTypes.number.def(0),
 };

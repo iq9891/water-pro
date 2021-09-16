@@ -245,7 +245,7 @@ export default defineComponent({
       // Fixed 修复之前是空，问题是 RangPicker 的时候设置无效
       let placeholder = unref(getComponentsProps)?.placeholder;
       // RangePicker place is an array
-      if (isCreatePlaceholder && component !== 'RangePicker' && component) {
+      if (isCreatePlaceholder && component !== 'RangePicker' && component !== 'RangeGroupPicker' && component !== 'TimeRangePicker' && component) {
         placeholder =
           unref(getComponentsProps)?.placeholder ||
           createPlaceholderMessage(component);
@@ -301,12 +301,18 @@ export default defineComponent({
         helpComponentProps,
         subLabel,
       } = props.schema;
+      let labelInnerTrue = '';
+      if (isFunction(label)) {
+        labelInnerTrue = (label as Function)(getValues);
+      } else {
+        labelInnerTrue = label as string;
+      }
       const renderLabel = subLabel ? (
         <span>
-          {label} <span style="color:#00000073">{subLabel}</span>
+          {labelInnerTrue} <span style="color:#00000073">{subLabel}</span>
         </span>
       ) : (
-        label
+        labelInnerTrue
       );
       if (
         !helpMessage ||
@@ -328,7 +334,7 @@ export default defineComponent({
     }
 
     function renderItem() {
-      const { itemProps, slot, render, field, suffix, component } = props.schema;
+      const { label, itemProps, slot, render, field, suffix, component, end, wrapperWidth } = props.schema;
       const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
       const { colon } = props.formProps;
 
@@ -346,9 +352,24 @@ export default defineComponent({
         ? (suffix as Function)(unref(getValues))
         : suffix;
 
+        const showEnd = !!end;
+  
+        const getEnd = isFunction(end)
+          ? (end as Function)(unref(getValues))
+          : end;
+
       const isAddDiyClassName = () => {
         const whiteListOfAddName = ['InputSmsCode', 'ColorPicker', 'TagGroup', 'TagModalList'];
         return whiteListOfAddName.includes(component) 
+      }
+      const isInlineCpt = () => {
+        const inlineCpt = ['InputSmsCode', 'InputNumber'];
+        return inlineCpt.includes(component) 
+      }
+
+      const isTagModalListClassName = () => {
+        const whiteListOfTagModalListName = ['TagModalList'];
+        return whiteListOfTagModalListName.includes(component) 
       }
 
       let realWrapperCol = wrapperCol;
@@ -356,24 +377,49 @@ export default defineComponent({
       if (!renderLabelHelpMessage()) {
         realWrapperCol = { span: 24 };
       }
-      
+
+      let contentNode = null;
+      const contentInnerNode = wrapperWidth ? <div style={{width: wrapperWidth, display: 'inline-block'}}>{getContent()}</div> : getContent();
+
+      if (showEnd) {
+        contentNode = <>
+          <div>
+            {contentInnerNode}
+            {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
+          </div>
+          {showEnd && <div class={`${prefixClsNew.value}-end`}>{getEnd}</div>}
+        </>
+      } else {
+        contentNode = <>
+          {contentInnerNode}
+          {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
+        </>
+      }
+
+      let labelTrue = '';
+
+      if (isFunction(label)) {
+        labelTrue = (label as Function)(getValues);
+      } else {
+        labelTrue = label as string;
+      }
+
       return (
         <Form.Item
           name={field}
-          colon={colon}
+          colon={ labelTrue && labelTrue.trim() === '' ? false : colon}
           class={{
             [`${prefixClsNew.value}-item-suffix`]: showSuffix,
-            [`${prefixClsNew.value}-item-diy`]: isAddDiyClassName()
+            [`${prefixClsNew.value}-item-diy`]: isAddDiyClassName(),
+            [`${prefixClsNew.value}-item-special`]: isTagModalListClassName(),
+            [`${prefixClsNew.value}-item-smscode`]: isInlineCpt,
           }}
           {...(itemProps as Recordable)}
           label={renderLabelHelpMessage()}
           rules={handleRules()}
           labelCol={labelCol}
           wrapperCol={realWrapperCol}>
-          <>
-            {getContent()}
-            {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
-          </>
+          {contentNode}
         </Form.Item>
       );
     }

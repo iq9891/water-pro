@@ -1,10 +1,8 @@
 <template>
-  <a-carousel :after-change="onChange">
-    <div><h3>1</h3></div>
-    <div><h3>2</h3></div>
-    <div><h3>3</h3></div>
-    <div><h3>4</h3></div>
-  </a-carousel>
+  <a-carousel
+    :after-change="onChange"
+    :imgList="imgUrls"
+  />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -17,21 +15,13 @@ export default defineComponent({
 
     return {
       onChange,
+      imgUrls: [
+        'https://img01.yzcdn.cn/upload_files/2021/07/15/FikfPBWchRpMqQ-pCaqKYuzIYF8z.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+        'https://img01.yzcdn.cn/upload_files/2021/07/15/lmT6p7-Zidq69_5oWDIHtS-HYzIL.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+        'https://img01.yzcdn.cn/upload_files/2021/07/15/lsjdz-NSI3PExOsfAS1oUutlPRXu.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+        'https://img01.yzcdn.cn/upload_files/2021/07/15/lkjEEeyR8wBtQ6QKlLZgzzjEr5gS.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+      ],
     };
   },
 });
 </script>
-<style scoped>
-/* For demo */
-.ant-carousel :deep(.slick-slide) {
-  text-align: center;
-  height: 160px;
-  line-height: 160px;
-  background: #364d79;
-  overflow: hidden;
-}
-
-.ant-carousel :deep(.slick-slide h3) {
-  color: #fff;
-}
-</style>

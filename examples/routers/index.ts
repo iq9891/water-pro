@@ -5,7 +5,8 @@ import type { App } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 
 import Layout from '../components/layout';
-import demoRoutes from './conf';
+import cptRoutes from './conf-cpt';
+import utilsRoutes from './conf-utils';
 
 const routes = [
   {
@@ -15,7 +16,16 @@ const routes = [
       const name = route.path.split('/components/')[1].split('/')[0];
       return { name, showDemo: true };
     },
-    children: demoRoutes,
+    children: cptRoutes,
+  },
+  {
+    path: '/utils',
+    component: Layout,
+    props: route => {
+      const name = route.path.split('/utils/')[1].split('/')[0];
+      return { name, showDemo: true };
+    },
+    children: utilsRoutes,
   },
   {
     path: '',

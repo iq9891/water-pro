@@ -1,16 +1,21 @@
 <template>
-  <a-tag-modal-list
-    v-model:value="tags"
-    createable
-    :api="tagModalListApi"
-    valueLabel="value"
-    nameLabel="label"
-  />
+  <div>
+    <a-button @click="onReload">reload</a-button>
+    <a-divider></a-divider>
+    <a-tag-modal-list
+      v-model:value="tags"
+      createable
+      :api="tagModalListApi"
+      valueLabel="value"
+      nameLabel="label"
+      ref="tagModalNode"
+    />
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-const tagModalListApi = (params, success) => {
+const tagModalListApi = ({params, success}) => {
   setTimeout(() => {
     success([
       {
@@ -45,7 +50,14 @@ const tagModalListApi = (params, success) => {
 
 export default defineComponent({
   setup() {
+    const tagModalNode = ref(null);
+    const onReload = async () => {
+      await tagModalNode.value.getTagDatas(true);
+      console.log(tagModalNode.value, 'tagModalNode');
+    }
     return {
+      tagModalNode,
+      onReload,
       tags: ref([80, 380]),
       tagModalListApi,
     };

@@ -77,6 +77,15 @@
 
   &-link {
     .btn-link();
+
+    &-danger {
+      color: @btn-danger-bg;
+
+      &:hover,
+      &:focus {
+        color: ~`colorPalette('@{btn-danger-bg}', 5) `
+      }
+    }
   }
 
   &-icon-only {

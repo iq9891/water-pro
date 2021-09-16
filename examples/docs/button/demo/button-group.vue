@@ -35,7 +35,7 @@
         <template #icon><LeftOutlined /></template>
         Go back
       </a-button>
-      <a-button type="primary"> Go forward<template #icon><RightOutlined /></template></a-button>
+      <a-button type="primary"><template #icon><RightOutlined /></template> Go forward</a-button>
     </a-button-group>
     <a-button-group>
       <a-button type="primary">

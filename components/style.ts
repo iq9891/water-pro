@@ -78,3 +78,6 @@ import './select-api/style';
 import './form-pro/style';
 import './table-pro/style';
 import './loading/style';
+import './upload-card/style';
+import './preview-image/style';
+import './classify/style';

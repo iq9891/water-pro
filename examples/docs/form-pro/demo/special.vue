@@ -54,7 +54,7 @@ const schemas: FormSchema[] = [
       const { formActionType } = params;
       return {
         placeholder: 'UploadImage 自动上传',
-        action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+        action: 'https://api.dev.mosh.cn/public/upload/image/binary',
         mergeMoreDataable: true,
         mergeOriginDatas: (uploadParams: Recordable) => {
           // 设置提交数据
@@ -94,6 +94,37 @@ const schemas: FormSchema[] = [
         autoUpload: false,
         onFormChange: (values: any) => {
           console.log(values, 'values');
+        },
+      };
+    },
+  },
+  {
+    field: 'spfield4',
+    component: 'UploadCard',
+    label: 'UploadCard',
+    changeEvent: 'changeUpload',
+    dynamicRules: (ruleParams) => {
+      const { values } = ruleParams.value;
+      return [
+        {
+          required: true,
+          validator: () => {
+            const { spfield4 } = values;
+            if (!spfield4 || !spfield4.length) {
+              return Promise.reject(new Error('请上传 UploadCard'));
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
+    componentProps: (params) => {
+      return {
+        placeholder: 'UploadCard',
+        action: 'https://api.dev.mosh.cn/public/upload/image/binary',
+        onFormChange: () => {
+          // 上传之后验证一下
+          params.formActionType.validate('spfield4');
         },
       };
     },

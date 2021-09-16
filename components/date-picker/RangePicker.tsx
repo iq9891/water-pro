@@ -2,13 +2,14 @@ import { CSSProperties, defineComponent, inject, nextTick } from 'vue';
 import dayjs from 'dayjs';
 import RangeCalendar from '../vc-calendar/src/RangeCalendar';
 import VcDatePicker from '../vc-calendar/src/Picker';
+import AButton from '../button/button';
 import classNames from '../_util/classNames';
 import shallowequal from '../_util/shallowequal';
 import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
 import Tag from '../tag';
 import { defaultConfigProvider } from '../config-provider';
 import interopDefault from '../_util/interopDefault';
-import { RangePickerProps } from './props';
+import { RangePickerGroupProps } from './props';
 import { hasProp, getOptionProps, getComponent } from '../_util/props-util';
 import BaseMixin from '../_util/BaseMixin';
 import { formatDate } from './utils';
@@ -84,7 +85,7 @@ export default defineComponent({
   name: 'ARangePicker',
   mixins: [BaseMixin],
   inheritAttrs: false,
-  props: initDefaultProps(RangePickerProps, {
+  props: initDefaultProps(RangePickerGroupProps, {
     allowClear: true,
     showToday: false,
     separator: '~',
@@ -309,6 +310,10 @@ export default defineComponent({
       onBlur,
       onFocus,
       onPanelChange,
+      showTodayButton,
+      showYesterdayButton,
+      showSevenDaysButton,
+      showThirtyDaysButton,
     } = props;
     const getPrefixCls = this.configProvider.getPrefixCls;
     const prefixCls = getPrefixCls('calendar', customizePrefixCls);
@@ -377,7 +382,7 @@ export default defineComponent({
     // default width for showTime
     const pickerStyle: CSSProperties = {};
     if (props.showTime) {
-      pickerStyle.width = '350px';
+      pickerStyle.width = '360px';
     }
     const [startValue, endValue] = value;
     const clearIcon =
@@ -413,6 +418,55 @@ export default defineComponent({
         </span>
       );
     };
+
+    let todayBtnNode = null;
+    if (showTodayButton) {
+      const todayHandle = () => {
+        this.handleChange([moment(), moment()]);
+      };
+      todayBtnNode = (
+        <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={todayHandle}>
+          今日
+        </AButton>
+      );
+    }
+
+    let yesterdayBtnNode = null;
+    if (showYesterdayButton) {
+      const yesterdayHandle = () => {
+        this.handleChange([moment().subtract(1, 'days'), moment().subtract(1, 'days')]);
+      };
+      yesterdayBtnNode = (
+        <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={yesterdayHandle}>
+          昨日
+        </AButton>
+      );
+    }
+
+    let sevenDaysBtnNode = null;
+    if (showSevenDaysButton) {
+      const sevenDaysHandle = () => {
+        this.handleChange([moment().subtract(6, 'days'), moment()]);
+      };
+      sevenDaysBtnNode = (
+        <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>
+          近7日
+        </AButton>
+      );
+    }
+
+    let thirtyDaysBtnNode = null;
+    if (showThirtyDaysButton) {
+      const sevenDaysHandle = () => {
+        this.handleChange([moment().subtract(29, 'days'), moment()]);
+      };
+      thirtyDaysBtnNode = (
+        <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>
+          近30日
+        </AButton>
+      );
+    }
+
     const vcDatePickerProps = {
       ...props,
       ...pickerChangeHandler,
@@ -423,20 +477,33 @@ export default defineComponent({
       onOpenChange: this.handleOpenChange,
       style: popupStyle,
     };
+    const rangeGroupName =
+      showTodayButton || showYesterdayButton || showSevenDaysButton || showThirtyDaysButton
+        ? ` ${prefixCls}-range-picker-group`
+        : '';
     return (
-      <span
-        ref={this.savePicker}
-        id={props.id}
-        class={classNames(props.class, props.pickerClass)}
-        style={{ ...pickerStyle, ...style }}
-        tabindex={props.disabled ? -1 : 0}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onMouseenter={this.onMouseEnter}
-        onMouseleave={this.onMouseLeave}
-        {...getDataAndAriaProps(props)}
-      >
-        <VcDatePicker {...vcDatePickerProps} v-slots={{ default: input, ...$slots }}></VcDatePicker>
+      <span class={`${prefixCls}-range-picker-box`}>
+        <span
+          ref={this.savePicker}
+          id={props.id}
+          class={classNames(props.class, `${props.pickerClass}${rangeGroupName}`)}
+          style={{ ...pickerStyle, ...style }}
+          tabindex={props.disabled ? -1 : 0}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          onMouseenter={this.onMouseEnter}
+          onMouseleave={this.onMouseLeave}
+          {...getDataAndAriaProps(props)}
+        >
+          <VcDatePicker
+            {...vcDatePickerProps}
+            v-slots={{ default: input, ...$slots }}
+          ></VcDatePicker>
+        </span>
+        {todayBtnNode}
+        {yesterdayBtnNode}
+        {sevenDaysBtnNode}
+        {thirtyDaysBtnNode}
       </span>
     );
   },

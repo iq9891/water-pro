@@ -61,7 +61,11 @@ const CalendarHeader = {
       const referer = this.yearPanelReferer;
       this.setState({ yearPanelReferer: null });
       this.__emit('panelChange', value, referer);
-      this.__emit('valueChange', value);
+      if (this.$attrs.onYearSelect) {
+        this.__emit('yearSelect', value);
+      } else {
+        this.__emit('valueChange', value);
+      }
     },
 
     onDecadeSelect(value) {
@@ -214,7 +218,7 @@ const CalendarHeader = {
               title={locale.previousMonth}
             />,
           )}
-          {this.monthYearElement(showTimePicker)}
+          {props.mode !== 'time' && this.monthYearElement(showTimePicker)}
           {showIf(
             enableNext && !showTimePicker,
             <a

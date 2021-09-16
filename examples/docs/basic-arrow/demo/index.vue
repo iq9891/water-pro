@@ -8,6 +8,9 @@ import ExpandCodeString from './expand.vue?raw';
 import TopDemo from './top.vue';
 import TopDemoString from './top.md?raw';
 import TopDemoCodeString from './top.vue?raw';
+import TipDemo from './tip.vue';
+import TipDemoString from './tip.md?raw';
+import TipDemoCodeString from './tip.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -42,6 +45,9 @@ export default {
           </demo-container>
           <demo-container api={TopDemoString} code={TopDemoCodeString}>
             <TopDemo />
+          </demo-container>
+          <demo-container api={TipDemoString} code={TipDemoCodeString}>
+            <TipDemo />
           </demo-container>
         </demo-sort>
         <api>

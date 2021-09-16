@@ -5,12 +5,14 @@ import type {
   BasicColumn,
 } from './types/table';
 
-import { defineComponent, ref, computed, unref } from 'vue';
+import { defineComponent, ref, computed, unref, onMounted, nextTick } from 'vue';
 import { omit } from 'lodash-es';
+import { isNull, isUndefined } from '@fe6/shared';
 
 import Table from '../../table';
 import { FormPro, useForm } from '../../form-pro';
 import useConfigInject from '../../_util/hooks/useConfigInject';
+import { useSortable } from '../../_util/hooks/use-sortable';
 
 import { usePagination } from './hooks/use-pagination';
 import { useColumns } from './hooks/use-columns';
@@ -29,6 +31,7 @@ import { useExpose } from './hooks/use-expose';
 import { basicProps } from './props';
 import expandIcon from './components/expand-icon';
 import HeaderCell from './components/header-cell';
+import Card from '../../card';
 
 export default defineComponent({
   name: 'ATablePro',
@@ -53,6 +56,7 @@ export default defineComponent({
     'edit-cancel',
     'edit-row-end',
     'edit-change',
+    'drag-end',
   ],
   setup(props, { attrs, emit, slots }) {
     const { prefixCls: prefixClsNew } = useConfigInject('table-pro', props);
@@ -189,8 +193,34 @@ export default defineComponent({
       return !!unref(getDataSourceRef).length;
     });
 
+    const initDragTable = async () => {
+      await nextTick();
+      const columnListEl = unref(tableElRef).$el;
+      if (!columnListEl) return;
+      const { initSortable } = useSortable(columnListEl.querySelector('.ant-table-tbody') as any, {
+        onEnd: evt => {
+          const { oldIndex, newIndex } = evt;
+          if (
+            (isUndefined(oldIndex) && isNull(oldIndex)) ||
+            (isUndefined(newIndex) && isNull(newIndex)) ||
+            oldIndex === newIndex
+          ) {
+            return;
+          }
+          // Sort column
+          const oldIndexNumber = oldIndex as number;
+          const newIndexNumber = newIndex as number;
+          emit('drag-end', oldIndexNumber, newIndexNumber);
+        },
+      });
+      initSortable();
+    };
+
     function setProps(props: Partial<TableProProps>) {
       innerPropsRef.value = { ...unref(innerPropsRef), ...props };
+      if (innerPropsRef.value.draggable) {
+        initDragTable();
+      }
     }
 
     const tableAction: TableActionType = {
@@ -227,6 +257,12 @@ export default defineComponent({
     useExpose<TableActionType>(tableAction);
 
     emit('register', tableAction, formActions);
+
+    onMounted(() => {
+      if (props.draggable) {
+        initDragTable();
+      }
+    });
 
     return {
       tableElRef,
@@ -281,28 +317,39 @@ export default defineComponent({
       tableSlots[`header-${column.dataIndex}`] = () => [<HeaderCell column={column} />];
     });
 
+    let tableNode = (<Table
+      v-show={this.getEmptyDataIsShowTable}
+      ref="tableElRef"
+      { ...this.getBindValues }
+      row-class-name={this.getRowClassName}
+      onChange={this.handleTableChange}
+      onMoreDisplayCancelSelect={this.moreDisplayCancelSelect}
+      v-slots={tableSlots}
+    >
+    </Table>);
+
+    if (this.cardable) {
+      tableNode = <Card title={this.cardTitle}
+      v-slots={this.$slots}>
+        {tableNode}
+      </Card>
+    }
+
     return (<div
       ref="wrapRef"
       class={[
         this.prefixClsNew,
         this.$attrs.class,
         {
+          [`${this.prefixClsNew}-cardable`]: this.cardable,
           [`${this.prefixClsNew}-form-container`]: this.getBindValues.useSearchForm,
           [`${this.prefixClsNew}--inset`]: this.getBindValues.inset,
+          [`${this.prefixClsNew}--drag`]: this.getBindValues.draggable,
         },
       ]}
     >
       {formNode}
-      <Table
-        v-show="getEmptyDataIsShowTable"
-        ref="tableElRef"
-        { ...this.getBindValues }
-        row-class-name={this.getRowClassName}
-        onChange={this.handleTableChange}
-        onMoreDisplayCancelSelect={this.moreDisplayCancelSelect}
-        v-slots={tableSlots}
-      >
-      </Table>
+      {tableNode}
     </div>)
   },
 });

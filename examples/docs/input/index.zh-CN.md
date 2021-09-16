@@ -82,7 +82,7 @@
 
 | 参数             | 说明             | 类型    | 默认值 |
 | ---------------- | ---------------- | ------- | ------ |
-| api | 接口请求 promise 配置 | `(...arg: any) => Promise<any>` | - |
+| api | 接口请求，不支持 async 和 Promise ，只支持回调 | `(...arg: any) => Promise<any>` | - |
 | buttonOptions | [按钮配置](./button-cn) | object | - |
 | btnText | 发送验证码默认的文案 | object | 发送验证码 |
 | before | 发送之前的回调，用于图形验证码的接入 | Function | () => {} |

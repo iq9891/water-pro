@@ -5,7 +5,7 @@ import { ButtonProps } from '../../../button/buttonTypes';
 export interface ActionItem extends ButtonProps {
   onClick?: Fn;
   label: string;
-  color?: 'success' | 'error' | 'warning';
+  color?: 'success' | 'danger' | 'warning';
   icon?: string;
   popConfirm?: PopConfirm;
   disabled?: boolean;

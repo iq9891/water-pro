@@ -428,9 +428,9 @@ export default defineComponent({
       if (haveColon && typeof label === 'string' && label.trim() !== '') {
         labelChildren = label.replace(/[：:]\s*$/, '');
       }
-
+      const hasLabel = (typeof label === 'string' && label !== ' ') || typeof label === 'object';
       const labelClassName = classNames({
-        [`${prefixCls}-item-required`]: required,
+        [`${prefixCls}-item-required`]: hasLabel && required,
         [`${prefixCls}-item-no-colon`]: !computedColon,
       });
       const colProps = {

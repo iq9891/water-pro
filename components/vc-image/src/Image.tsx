@@ -40,6 +40,7 @@ export const ImageProps = {
   src: PropTypes.string,
   wrapperClassName: PropTypes.string,
   wrapperStyle: PropTypes.style,
+  bordered: PropTypes.looseBool.def(true),
   prefixCls: PropTypes.string,
   previewPrefixCls: PropTypes.string,
   placeholder: PropTypes.VNodeChild,

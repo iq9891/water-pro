@@ -2,6 +2,7 @@ import { provide, inject, nextTick, defineComponent } from 'vue';
 import classNames from '../_util/classNames';
 import PropTypes from '../_util/vue-types';
 import Radio from './Radio';
+import ARadioButton from './RadioButton';
 import { getOptionProps, filterEmpty, hasProp, getSlot } from '../_util/props-util';
 import { defaultConfigProvider } from '../config-provider';
 import { tuple } from '../_util/type';
@@ -19,6 +20,7 @@ export default defineComponent({
     name: PropTypes.string,
     buttonStyle: PropTypes.string.def('outline'),
     onChange: PropTypes.func,
+    type: PropTypes.oneOf(tuple('button', 'default')).def('default'),
   },
   emits: ['update:value', 'change'],
   setup() {
@@ -73,7 +75,7 @@ export default defineComponent({
   },
   render() {
     const props = getOptionProps(this);
-    const { prefixCls: customizePrefixCls, options, buttonStyle } = props;
+    const { prefixCls: customizePrefixCls, options, type, buttonStyle } = props;
     const { getPrefixCls } = this.configProvider;
     const prefixCls = getPrefixCls('radio', customizePrefixCls);
 
@@ -88,29 +90,64 @@ export default defineComponent({
     if (options && options.length > 0) {
       children = options.map(option => {
         if (typeof option === 'string') {
-          return (
+          let strRadioNode = null;
+
+          if (type === 'default') {
+            strRadioNode = (
+              <Radio
+                key={option}
+                prefixCls={prefixCls}
+                disabled={props.disabled}
+                value={option}
+                checked={this.stateValue === option}
+              >
+                {option}
+              </Radio>
+            );
+          } else {
+            strRadioNode = (
+              <ARadioButton
+                key={option}
+                disabled={props.disabled}
+                value={option}
+                checked={this.stateValue === option}
+              >
+                {option}
+              </ARadioButton>
+            );
+          }
+
+          return strRadioNode;
+        }
+
+        let objRadioNode = null;
+
+        if (type === 'default') {
+          objRadioNode = (
             <Radio
-              key={option}
+              key={`radio-group-value-options-${option.value}`}
               prefixCls={prefixCls}
-              disabled={props.disabled}
-              value={option}
-              checked={this.stateValue === option}
+              disabled={option.disabled || props.disabled}
+              value={option.value}
+              checked={this.stateValue === option.value}
             >
-              {option}
+              {option.label}
             </Radio>
           );
+        } else {
+          objRadioNode = (
+            <ARadioButton
+              key={`radio-group-value-options-${option.value}`}
+              disabled={option.disabled || props.disabled}
+              value={option.value}
+              checked={this.stateValue === option.value}
+            >
+              {option.label}
+            </ARadioButton>
+          );
         }
-        return (
-          <Radio
-            key={`radio-group-value-options-${option.value}`}
-            prefixCls={prefixCls}
-            disabled={option.disabled || props.disabled}
-            value={option.value}
-            checked={this.stateValue === option.value}
-          >
-            {option.label}
-          </Radio>
-        );
+
+        return objRadioNode;
       });
     }
 

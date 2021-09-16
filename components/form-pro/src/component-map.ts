@@ -21,6 +21,7 @@ import UploadName from '../../upload-name';
 import UploadImage from '../../upload-image';
 import TagGroup from '../../tag-group';
 import TagModalList from '../../tag-modal-list';
+import UploadCard from '../../upload-card';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -47,8 +48,11 @@ componentMap.set('Cascader', Cascader);
 componentMap.set('DatePicker', DatePicker);
 componentMap.set('MonthPicker', DatePicker.MonthPicker);
 componentMap.set('RangePicker', DatePicker.RangePicker);
+componentMap.set('RangeGroupPicker', DatePicker.RangePickerGroup);
 componentMap.set('WeekPicker', DatePicker.WeekPicker);
+componentMap.set('YearPicker', DatePicker.YearPicker);
 componentMap.set('TimePicker', TimePicker);
+componentMap.set('TimeRangePicker', TimePicker.RangePicker);
 componentMap.set('ColorPicker', ColorPicker);
 
 componentMap.set('TagGroup', TagGroup);
@@ -56,6 +60,7 @@ componentMap.set('TagModalList', TagModalList);
 
 componentMap.set('UploadName', UploadName);
 componentMap.set('UploadImage', UploadImage);
+componentMap.set('UploadCard', UploadCard);
 componentMap.set('CascaderApi', CascaderApi);
 
 export function add(compName: ComponentType, component: Component) {

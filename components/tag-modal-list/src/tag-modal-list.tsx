@@ -13,6 +13,7 @@ import { hasOwn, isUndefined } from '@fe6/shared';
 import Tag from '../../tag';
 import { TagGroup } from '../../tag-group';
 import Button from '../../button';
+import Empty from '../../empty';
 import { BasicArrow } from '../../basic-arrow';
 import { ModalPro, useModal } from '../../modal-pro';
 import { tuple } from '../../_util/type';
@@ -23,6 +24,7 @@ import { useAttrs } from '../../_util/hooks/use-attrs';
 import classNames from '../../_util/classNames';
 import WTitleRender from '../../_util/render';
 import useFetch from '../../_util/hooks/use-fetch';
+import { isNumber } from 'lodash';
 
 function getClassName(prefixCls: string, size: string) {
   return classNames(prefixCls, {
@@ -61,6 +63,7 @@ export default defineComponent({
     valueLabel: PropTypes.string.def('id'),
     childrenLabel: PropTypes.string.def('children'),
     checkMode: PropTypes.oneOf(tuple('radio', 'checkbox')).def('checkbox'),
+    maxCheckCount: PropTypes.number,
     api: {
       type: Function as PropType<(arg?: Recordable) => Promise<Recordable[]>>,
       default: null,
@@ -74,7 +77,21 @@ export default defineComponent({
         });
       },
     },
+    beforeOk: {
+      type: Function as PropType<(arg?: Recordable) => Promise<Recordable[]>>,
+      default: ({ success }: any) => {
+        return new Promise(reslove => {
+          success();
+          reslove(true);
+        });
+      },
+    },
     titleRightRender: PropTypes.func,
+    options: PropTypes.array.def([]),
+    showSelected: PropTypes.bool.def(true),
+    createIcon: PropTypes.bool.def(true),
+    createBordered: PropTypes.bool.def(true),
+    disabled: PropTypes.bool,
   },
   emits: ['update:value', 'change'],
   setup(props, { emit }) {
@@ -102,39 +119,50 @@ export default defineComponent({
       tagCheckList.value = tagCheckOldList.value.slice();
     };
 
-    const { fetch } = useFetch(props.api);
+    const afterGetOptions = (newOptions: any, isInit?: boolean) => {
+      tagItems.value = newOptions.slice();
+      // feat 支持以为数据
+      const hasChild = tagItems.value.every((tItem: Recordable) =>
+        hasOwn(tItem, props.childrenLabel),
+      );
+      const tagLists = hasChild
+        ? tagItems.value.reduce((acc, tItem: Recordable) => {
+            return acc.concat(tItem[props.childrenLabel]);
+          }, [])
+        : tagItems.value;
+      // fix: 弹框中不按顺序选择，并不按顺序取消选择高亮问题
+      tagValueItems.value = tagLists.sort(
+        (prev: Recordable, next: Recordable) => prev[props.valueLabel] - next[props.valueLabel],
+      );
+      createLoading.value = false;
+      if (!isInit) {
+        copyCheckData();
+        openModal();
+      }
+    };
+    const getTagDatas = async (isInit?: boolean) => {
+      if (!createLoading.value) {
+        createLoading.value = true;
+        if (props.api) {
+          const { fetch } = useFetch(props.api);
+          fetch({
+            success: (res: any) => {
+              createLoading.value = false;
+              afterGetOptions(res, isInit);
+            },
+            error: () => {
+              createLoading.value = false;
+            },
+            params: props.apiParams,
+          });
+        } else {
+          afterGetOptions(props.options, isInit);
+        }
+      }
+    };
     const getTagList = async (isInit?: boolean) => {
       if (!tagItems.value.length) {
-        createLoading.value = true;
-        fetch({
-          success: (res: any) => {
-            createLoading.value = false;
-            tagItems.value = res.slice();
-            // feat 支持以为数据
-            const hasChild = tagItems.value.every((tItem: Recordable) =>
-              hasOwn(tItem, props.childrenLabel),
-            );
-            const tagLists = hasChild
-              ? tagItems.value.reduce((acc, tItem: Recordable) => {
-                  return acc.concat(tItem[props.childrenLabel]);
-                }, [])
-              : tagItems.value;
-            // fix: 弹框中不按顺序选择，并不按顺序取消选择高亮问题
-            tagValueItems.value = tagLists.sort(
-              (prev: Recordable, next: Recordable) =>
-                prev[props.valueLabel] - next[props.valueLabel],
-            );
-            createLoading.value = false;
-            if (!isInit) {
-              copyCheckData();
-              openModal();
-            }
-          },
-          error: () => {
-            createLoading.value = false;
-          },
-          params: props.apiParams,
-        });
+        await getTagDatas(isInit);
       } else {
         if (!isInit) {
           copyCheckData();
@@ -144,7 +172,9 @@ export default defineComponent({
     };
 
     const createClick = async () => {
-      await getTagList();
+      if (!props.disabled) {
+        await getTagList();
+      }
     };
 
     const emitChange = (emitType: string) => {
@@ -178,8 +208,15 @@ export default defineComponent({
             tagCheckAllList.value.splice(indexInCheckList, 1);
           }
         } else {
-          tagCheckList.value.push(item[props.valueLabel]);
-          tagCheckAllList.value.push(item);
+          if (
+            (isNumber(props.maxCheckCount) &&
+              props.maxCheckCount > 0 &&
+              props.maxCheckCount >= tagCheckList.value.length + 1) ||
+            !isNumber(props.maxCheckCount)
+          ) {
+            tagCheckList.value.push(item[props.valueLabel]);
+            tagCheckAllList.value.push(item);
+          }
         }
       } else {
         tagCheckList.value.length = 0;
@@ -191,9 +228,24 @@ export default defineComponent({
       }
     };
 
+    const okLoading = ref(false);
     const submitModal = () => {
-      emitChange('ok');
-      openModal(false);
+      okLoading.value = true;
+      props.beforeOk({
+        params: {
+          tagCheckList: tagCheckList.value,
+          tagCheckAllList: tagCheckAllList.value,
+        },
+        success: () => {
+          okLoading.value = false;
+          emitChange('ok');
+          openModal(false);
+        },
+        error: () => {
+          resetCheckData();
+          okLoading.value = false;
+        },
+      });
     };
 
     const cancelModal = () => {
@@ -237,12 +289,14 @@ export default defineComponent({
       attrs,
       state,
       createClick,
+      getTagDatas,
       registerModal,
       createLoading,
       tagItems,
       tagClick,
       tagCheckList,
       tagCheckAllList,
+      okLoading,
       submitModal,
       cancelModal,
       getVisible,
@@ -264,10 +318,14 @@ export default defineComponent({
         createable={this.createable}
         create-placeholder={this.createPlaceholder}
         create-inputable={false}
-        closable={this.tagCheckAllList.length > 1}
+        show-selected={this.showSelected}
+        create-icon={this.createIcon}
+        create-bordered={this.createBordered}
+        closable={this.closable || this.tagCheckAllList.length > 1}
         create-loading={this.createLoading}
         onCreateClick={this.createClick}
         onCloseClick={this.closeClick}
+        disabled={this.disabled}
       />
     );
 
@@ -294,12 +352,21 @@ export default defineComponent({
             v-slots={{
               more: () => `+${this.tagCheckAllList.length - this.maxTagCount}`,
             }}
+            disabled={this.disabled}
           ></TagGroup>
         );
       }
 
       tagButtonNode = (
-        <div class={this.selectClass} onClick={this.createClick}>
+        <div
+          class={[
+            this.selectClass,
+            {
+              [`${this.prefixClsNew}-select-disabled`]: this.disabled,
+            },
+          ]}
+          onClick={this.createClick}
+        >
           <div class={this.boxClass}>{tagButtonInnerNode}</div>
           <div>
             <LoadingOutlined
@@ -331,9 +398,8 @@ export default defineComponent({
     }
 
     const modalContentNodes = [];
-    const hasAllChild = this.tagItems.every((tagGroupItem: any) =>
-      hasOwn(tagGroupItem, this.childrenLabel),
-    );
+
+    const hasAllChild = this.tagItems.length > 0;
 
     this.tagItems.forEach((tagGroupItem: any) => {
       const modalTagNodes = [];
@@ -359,7 +425,7 @@ export default defineComponent({
       } else {
         modalTagNodes.push(
           <Tag
-            class={[`${this.prefixClsNew}-tag`, `${this.prefixClsNew}-tag-only`]}
+            class={`${this.prefixClsNew}-tag`}
             color={
               this.tagCheckAllList.findIndex(
                 checkItem => checkItem[this.valueLabel] === tagGroupItem[this.valueLabel],
@@ -386,7 +452,13 @@ export default defineComponent({
       }
     });
 
-    const onlyNode = <div class={`${this.prefixClsNew}-box-only`}>{modalContentNodes}</div>;
+    const onlyNode =
+      modalContentNodes.length > 0 ? (
+        <div class={`${this.prefixClsNew}-box-only`}>{modalContentNodes}</div>
+      ) : (
+        <Empty />
+      );
+    const childTrue = hasAllChild ? modalContentNodes : onlyNode;
 
     return (
       <div class={this.type ? [`${this.prefixClsNew}-select-warp`] : ''}>
@@ -398,12 +470,15 @@ export default defineComponent({
           scroll-style={{ padding: '8px 16px 0' }}
           onRegister={this.registerModal}
           onOk={this.submitModal}
+          ok-button-props={{
+            loading: this.okLoading,
+          }}
           onCancel={this.cancelModal}
           v-slots={{
             header: () => modalTitleNode,
           }}
         >
-          {hasAllChild ? modalContentNodes : onlyNode}
+          {childTrue}
         </ModalPro>
       </div>
     );

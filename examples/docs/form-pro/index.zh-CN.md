@@ -11,6 +11,7 @@
 | fieldMapToTime | 标签的文本的宽度 | [字段，[开始时间的字段名字，结束时间的字段名字]， 时间格式化][] |  |  |
 | actionAlgin | 底部操作按钮的对齐方式，当 `space-between` 的时候，是 flex 布局，适合多按钮。 | 'left' \| 'right' \| 'center' \| 'space-between' | left |  |
 | actionAffix | 底部操作按钮是否悬停到底部 | boolean | - |  |
+| actionTarget | 设置提交 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 | () => HTMLElement | - | 3.13.0 |
 | actionOffsetBottom | 底部操作按钮悬停到底部的距离 | Number | 0 |  |
 | baseGutter | 水平内联的间距 | number | 0 |  |
 | autoSetPlaceHolder | 是否自定设置占位文字， RangePicker 无效 | boolean | true |  |
@@ -39,6 +40,9 @@
 | resetButtonOptions | 重置[按钮配置](./button-cn) | object |  |  |
 | submitButtonOptions | 确认[按钮配置](./button-cn) | object |  |  |
 | size | 尺寸 | `default` \| `small` | `default` |  |
+| navAffix | 顶部导航是否显示 | boolean | - | 3.17.0 |
+| navTarget | 设置提交 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 | () => HTMLElement | - | 3.17.0 |
+| navOffsetTop | 顶部操作按钮悬停到顶部的距离 | Number | 0 | 3.17.0 |
 
 ### FormPro 事件
 
@@ -60,7 +64,8 @@
 | clearValidate | 清除验证 | 字段名字， string \| string[] |  |
 | resetFields | 重置字段 | - |  |
 | removeSchemaByFiled | 删除字段 | field(字段名，string \| string[]) |  |
-| getFieldsValue | 获取所有字段的值 | - |  |
+| getFieldsValue | 获取所有字段的值，传 true 过滤不显示的字段 | filterHidden |  |
+| getChildrenFieldsValue | 获取所有字段的值，符合 schema 结构，传 true 过滤不显示的字段 | filterHidden | 3.19.0 |
 | setFieldsValue | 设置所有字段的值 | 设置的值 (object) |  |
 | appendSchemaByField | 添加新字段 | schema(规则， [FormSchema](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L126))，参照的字段，是否在前面添加  |  |
 | submit | 提交方法 | - |  |

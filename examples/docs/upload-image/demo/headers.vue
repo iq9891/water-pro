@@ -1,8 +1,8 @@
 <template>
   <a-upload-image
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    action="https://api.dev.mosh.cn/public/upload/image/binary"
+    resultKey="data"
     :headers="headers"
-    resultKey=""
   />
 </template>
 <script lang="ts">

@@ -58,8 +58,6 @@ export default defineComponent({
         // const size = unref(getSize);
         return {
           type: 'link',
-          size: 'small',
-          // ...(size ? { size } : {}),
           ...action,
           ...(popConfirm || {}),
           onConfirm: popConfirm?.confirm,

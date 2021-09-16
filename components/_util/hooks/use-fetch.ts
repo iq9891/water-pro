@@ -18,6 +18,7 @@ export default (api: any) => {
       const res = api({
         params: fecthParams,
         success,
+        error,
       });
       loading.value = false;
       if (isArray(res)) {

@@ -33,18 +33,20 @@ export default defineComponent({
     const popupVisible = ref(false);
     const optionDatas = ref<Recordable[]>([]);
     const getOptionDatas = () => {
-      loading.value = true;
-      fetch({
-        success: (res: any) => {
-          loading.value = false;
-          popupVisible.value = true;
-          optionDatas.value = res;
-        },
-        error: () => {
-          loading.value = false;
-        },
-        params: props.apiParams,
-      });
+      if (!loading.value) {
+        loading.value = true;
+        fetch({
+          success: (res: any) => {
+            loading.value = false;
+            popupVisible.value = true;
+            optionDatas.value = res;
+          },
+          error: () => {
+            loading.value = false;
+          },
+          params: props.apiParams,
+        });
+      }
     };
 
     const getOptionsTime = ref(1);

@@ -16,6 +16,7 @@ export default defineComponent({
     bottom: PropTypes.bool,
     inset: PropTypes.bool,
     prefixCls: PropTypes.string,
+    helpMessage: PropTypes.string,
   },
   setup(props) {
     const { prefixCls: prefixClsNew } = useConfigInject('basic-arrow', props);
@@ -38,10 +39,18 @@ export default defineComponent({
     };
   },
   render() {
-    return (
+    const innerNode = (
       <span class={this.getClass}>
         <RightOutlined />
       </span>
     );
+    let contentNode = null;
+
+    if (this.helpMessage) {
+      contentNode = <a-tooltip title={this.helpMessage}>{innerNode}</a-tooltip>;
+    } else {
+      contentNode = innerNode;
+    }
+    return contentNode;
   },
 });

@@ -17,29 +17,13 @@
       <a-button @click="toSetProps"> 设置配置(去掉省略号) </a-button>
       <a-button @click="toGetSize"> 获取表格的 size </a-button>
       <a-button @click="toGetForm"> 获取表格 </a-button>
+      <a-button @click="setShowMoreHandler">showMoreHandler 显示批量操作 </a-button>
     </a-space>
     <a-table-pro
       @register="useMethodsRegister"
     >
       <template #action="{ record }">
-        <a-table-action
-          :actions="[
-            {
-              label: '删除',
-              onClick: handleDelete.bind(null, record),
-            },
-            {
-              label: '编辑',
-              onClick: handleEdit.bind(null, record),
-            },
-          ]"
-          :dropDownActions="[
-            {
-              label: '启用',
-              onClick: handleOpen.bind(null, record),
-            },
-          ]"
-        />
+        123
       </template>
       <template #moreHandler>
         <a-button>批量删除</a-button>
@@ -48,7 +32,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref, onMounted } from 'vue';
 import { useTable, TableAction } from '@fe6/water-pro';
 import { BasicColumn } from '@fe6/water-pro/src/types/table';
 
@@ -162,6 +146,22 @@ export function getBasicColumns(): BasicColumn[] {
   ];
 }
 
+export function getFormConfig(): Partial<any> {
+  return {
+    labelWidth: 130,
+    schemas: [
+      {
+        field: 'input',
+        label: '兑换券名称',
+        component: 'Input',
+        colProps: {
+          xl: 12,
+          xxl: 8,
+        },
+      },
+    ],
+  };
+}
 export default defineComponent({
   components: {
     [Button.name]: Button,
@@ -189,15 +189,32 @@ export default defineComponent({
           getSize,
           getForm,
         },
-      ] = useTable({
-        // title: 'useTable示例',
-        // titleHelpMessage: '使用useTable调用表格内方法',
-        api: demoListApi,
-        columns: getBasicColumns(),
-        rowKey: 'id',
-        rowSelection: {
-          type: 'checkbox', // radio or checkbox
-        },
+      ] = useTable();
+
+      const getConfig = async () => {
+        await demoListApi({params: {}, success: () => {}});
+      }
+
+      onMounted(async () => {
+        await getConfig();
+        setProps({
+          // title: 'useTable示例',
+          // titleHelpMessage: '使用useTable调用表格内方法',
+          api: demoListApi,
+          columns: getBasicColumns(),
+          rowKey: 'id',
+          rowSelection: {
+            type: 'checkbox', // radio or checkbox
+          },
+          useSearchForm: true,
+          formConfig: getFormConfig(),
+          actionColumn: {
+            width: 80,
+            title: 'Action',
+            dataIndex: 'action',
+            slots: { customRender: 'action' },
+          },
+        });
       });
 
       function changeLoading() {
@@ -255,6 +272,15 @@ export default defineComponent({
           ellipsis: false,
         });
       }
+
+      const moreHandlerStatus = ref(false);
+      function setShowMoreHandler() {
+        moreHandlerStatus.value = !moreHandlerStatus.value;
+        setProps({
+          showMoreHandler: moreHandlerStatus.value,
+        });
+      }
+      
       function toGetSize() {
         console.log(getSize());
       }
@@ -283,6 +309,7 @@ export default defineComponent({
         toSetProps,
         toGetSize,
         toGetForm,
+        setShowMoreHandler,
       };
   },
 });

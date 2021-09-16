@@ -9,6 +9,7 @@
     <a-month-picker :size="size" placeholder="Select Month" />
     <a-range-picker :size="size" />
     <a-week-picker :size="size" placeholder="Select Week" />
+    <a-year-picker :size="size" placeholder="Select year" />
   </a-space>
 </template>
 <script lang="ts">

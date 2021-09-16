@@ -20,7 +20,7 @@ import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup(props) {
-    const value = ref(false);
+    const value = ref(true);
     const loading = ref(false);
     return {
       expandHandle: () => {

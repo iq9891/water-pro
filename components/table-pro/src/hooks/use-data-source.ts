@@ -261,11 +261,13 @@ export function useDataSource(
     } catch (error) {
       emit('fetch-error', error);
       dataSourceRef.value = [];
+      setLoading(false);
       setPagination({
         total: 0,
       });
     } finally {
-      setLoading(false);
+      // fix table 加载数据的时候没有loading
+      // setLoading(false);
       emit('fetch-finally');
     }
   }

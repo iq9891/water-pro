@@ -1,6 +1,7 @@
 import { CSSProperties, DefineComponent, defineComponent, inject, nextTick } from 'vue';
 import omit from 'lodash-es/omit';
 import MonthCalendar from '../vc-calendar/src/MonthCalendar';
+import YearCalendar from '../vc-calendar/src/YearCalendar';
 import VcDatePicker from '../vc-calendar/src/Picker';
 import dayjs from '../_util/dayjs';
 import classNames from '../_util/classNames';
@@ -150,13 +151,16 @@ export default function createPicker<P>(
 
       const dateRender = props.dateRender || $slots.dateRender;
       const monthCellContentRender = props.monthCellContentRender || $slots.monthCellContentRender;
-      const placeholder = 'placeholder' in props ? props.placeholder : locale.lang.placeholder;
+
+      const placeholder =
+        'placeholder' in props ? props.placeholder : locale.lang.otherPlaceholder[name];
 
       const disabledTime = props.showTime ? props.disabledTime : null;
 
       const calendarClassName = classNames({
         [`${prefixCls}-time`]: props.showTime,
         [`${prefixCls}-month`]: (MonthCalendar as any) === TheCalendar,
+        [`${prefixCls}-year`]: (YearCalendar as any) === TheCalendar,
       });
 
       if (value && localeCode) {

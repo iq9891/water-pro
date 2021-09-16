@@ -9,9 +9,30 @@
       </a-tag>
     </template>
     <template #img>
-      <a-table-img
+      <a-table-image
         :imgList="['https://www.evente.cn/_nuxt/img/2d0fa17.png', 'https://www.evente.cn/_nuxt/img/c45fac2.png','https://www.evente.cn/_nuxt/img/2d0fa17.png', 'https://www.evente.cn/_nuxt/img/c45fac2.png','https://www.evente.cn/_nuxt/img/2d0fa17.png', 'https://www.evente.cn/_nuxt/img/c45fac2.png','https://www.evente.cn/_nuxt/img/2d0fa17.png']"
       />
+    </template>
+    <template #name="{ record }">
+      <a-table-card
+        :imgUrl="record.image"
+        :title="`${record.name}${record.name}`"
+        :desc="`ID:${record.id}`"
+      >
+        <template #titleSuffix>
+          <a-tag color="red" v-if="!record.ifShow">隐</a-tag>
+        </template>
+      </a-table-card>
+    </template>
+    <template #info="{ record }">
+      <a-table-card
+        :imgUrl="record.image"
+        :title="`${record.name}${record.name}`"
+      >
+        <template #titleSuffix>
+          <a-tag color="red" v-if="record.ifShow">隐</a-tag>
+        </template>
+      </a-table-card>
     </template>
     <template #category="{ record }">
       <a-tag color="green">
@@ -22,7 +43,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useTable, BasicColumn, TableImg } from '@fe6/water-pro';
+import { useTable, BasicColumn, TableImage, TableCard } from '@fe6/water-pro';
 
 const columns: BasicColumn[] = [
     {
@@ -39,9 +60,16 @@ const columns: BasicColumn[] = [
       slots: { customRender: 'category' },
     },
     {
-      title: '姓名',
+      title: '产品',
       dataIndex: 'name',
-      width: 120,
+      width: 300,
+      slots: { customRender: 'name' },
+    },
+    {
+      title: '信息',
+      dataIndex: 'info',
+      width: 300,
+      slots: { customRender: 'info' },
     },
     {
       title: '头像',
@@ -72,13 +100,15 @@ export function demoListApi({params, success}) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
-      id: `${index}`,
+      id: `这是一个号，${index*1000000000000}`,
       name: `${Math.random() + index}-water`,
       no: `${index + 10}`,
       age: `1${index}`,
       address: 'New York No. 1 Lake ParkNew York No. 1 Lake Park',
       beginTime: new Date().toLocaleString(),
       endTime: new Date().toLocaleString(),
+      image: index % 2 === 0 ? 'https://www.evente.cn/_nuxt/img/2d0fa17.png' : 'https://www.evente.cn/_nuxt/img/c45fac2.png',
+      ifShow: index % 2 > 0
     });
   }
   setTimeout(() => {
@@ -88,7 +118,8 @@ export function demoListApi({params, success}) {
 
 export default defineComponent({
   components: {
-    ATableImg: TableImg,
+    ATableImage: TableImage,
+    ATableCard: TableCard,
   },
   setup() {
     const [customerCellTable] = useTable({

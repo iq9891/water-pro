@@ -6,6 +6,7 @@ import PropTypes from '../_util/vue-types';
 
 export interface LinkProps extends BlockProps, Omit<AnchorHTMLAttributes, 'type'> {
   ellipsis?: boolean;
+  size?: 'default' | 'small' | 'large';
 }
 
 const Link: FunctionalComponent<LinkProps> = (props, { slots, attrs }) => {

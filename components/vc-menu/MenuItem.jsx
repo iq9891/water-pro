@@ -38,6 +38,9 @@ const MenuItem = defineComponent({
   setup(props) {
     const uniKey = `menu_item_${++indexGuid}`;
     const store = inject('menuStore', () => ({}));
+    const selectedColor = inject('selectedColor', () => '#1890ff');
+    const selectedBgColor = inject('selectedBgColor', () => '#e6f7ff');
+    const selectedBorderColor = inject('selectedBorderColor', () => '#1890ff');
     const isSelected = computed(
       () => store.selectedKeys && store.selectedKeys.indexOf(props.eventKey) !== -1,
     );
@@ -60,6 +63,9 @@ const MenuItem = defineComponent({
     return {
       parentMenu: inject('parentMenu', undefined),
       isSelected,
+      selectedColor,
+      selectedBgColor,
+      selectedBorderColor,
     };
   },
   created() {
@@ -204,6 +210,23 @@ const MenuItem = defineComponent({
     if (props.mode === 'inline') {
       styles.paddingLeft = `${props.inlineIndent * props.level}px`;
     }
+    if (this.isSelected) {
+      if (this.selectedColor) {
+        styles.color = this.selectedColor;
+      }
+      if (this.selectedBgColor) {
+        styles.backgroundColor = this.selectedBgColor;
+      }
+      if (this.selectedBorderColor) {
+        styles.borderColor = this.selectedBorderColor;
+      }
+    }
+
+    // 移入高亮选中
+    if (!props.disabled && this.active && this.selectedColor) {
+      styles.color = this.selectedColor;
+    }
+
     menuAllProps.forEach(key => delete props[key]);
     const liProps = {
       ...props,

@@ -1257,7 +1257,7 @@ export default {
 
 `2018-07-21`
 
-- 🌟 新增`Carousel 走马灯`组件[edddbd](https://github.com/vueComponent/ant-design-vue/commit/edddbd982a279b62229ce825855c14c556866ece)
+- 🌟 新增`Carousel 走马灯轮播`组件[edddbd](https://github.com/vueComponent/ant-design-vue/commit/edddbd982a279b62229ce825855c14c556866ece)
 - 更正了若干文档错误
 
 ## 0.7.1

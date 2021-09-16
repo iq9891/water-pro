@@ -6,14 +6,14 @@ import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
-import enUs from './locale/en_US';
+import zhCn from './locale/zh_CN';
 import { defineComponent } from 'vue';
 const MonthCalendar = defineComponent({
   name: 'MonthCalendar',
   mixins: [BaseMixin, CommonMixin, CalendarMixin],
   inheritAttrs: false,
   props: {
-    locale: PropTypes.object.def(enUs),
+    locale: PropTypes.object.def(zhCn),
     format: PropTypes.string,
     visible: PropTypes.looseBool.def(true),
     prefixCls: PropTypes.string.def('rc-calendar'),

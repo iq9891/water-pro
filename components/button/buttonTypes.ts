@@ -27,6 +27,7 @@ const buttonProps = () => ({
   href: PropTypes.string,
   title: PropTypes.string,
   onClick: PropTypes.func,
+  color: PropTypes.oneOf(['default', 'danger']).def('default'),
 });
 
 export type ButtonProps = Partial<ExtractPropTypes<ReturnType<typeof buttonProps>>>;

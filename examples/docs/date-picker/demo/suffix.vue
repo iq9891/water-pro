@@ -24,6 +24,7 @@
     <a-month-picker suffix-icon="ab" placeholder="Select month" @change="onChange" />
     <a-range-picker suffix-icon="ab" @change="onChange" />
     <a-week-picker suffix-icon="ab" placeholder="Select week" @change="onChange" />
+    <a-year-picker suffix-icon="ab" placeholder="Select year" @change="onChange" />
   </a-space>
 </template>
 <script lang="ts">

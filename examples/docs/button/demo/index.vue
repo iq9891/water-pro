@@ -23,6 +23,9 @@ import SizeCodeString from './size.vue?raw';
 import BlockString from './block.md?raw';
 import Block from './block.vue';
 import BlockCodeString from './block.vue?raw';
+import CopyString from './copy.md?raw';
+import Copy from './copy.vue';
+import CopyCodeString from './copy.vue?raw';
 import CN from '../index.zh-CN.md';
 
 const md = {
@@ -97,6 +100,9 @@ export default {
           </demo-container>
           <demo-container api={BlockString} code={BlockCodeString}>
             <Block />
+          </demo-container>
+          <demo-container api={CopyString} code={CopyCodeString}>
+            <Copy />
           </demo-container>
         </demo-sort>
         <api>

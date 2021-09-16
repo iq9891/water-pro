@@ -93,6 +93,19 @@ export function getFormConfig(): Partial<FormProps> {
     labelWidth: 100,
     schemas: [
       {
+        field: 'picker',
+        component: 'RangeGroupPicker',
+        componentProps: {
+          showTodayButton: true,
+          showYesterdayButton: true,
+          showSevenDaysButton: true,
+          showThirtyDaysButton: true,
+        },
+        colProps: {
+          span: 24,
+        },
+      },
+      {
         field: 'input',
         component: 'Input',
         componentProps: {

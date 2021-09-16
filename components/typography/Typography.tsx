@@ -10,11 +10,13 @@ import classNames from '../_util/classNames';
 
 export interface TypographyProps extends HTMLAttributes {
   prefixCls?: string;
+  size?: 'default' | 'small' | 'large';
 }
 
 interface InternalTypographyProps extends TypographyProps {
   component?: string;
   resetable?: boolean;
+  styleReset?: boolean;
 }
 
 const Typography = defineComponent<InternalTypographyProps>({
@@ -37,7 +39,9 @@ const Typography = defineComponent<InternalTypographyProps>({
       return (
         <Component
           class={classNames(prefixCls.value, attrs.class, {
-            [`${prefixCls.value}-reset`]: props.resetable,
+            [`${prefixCls.value}-size`]: props.resetable,
+            [`${prefixCls.value}-reset`]: props.styleReset,
+            [`${prefixCls.value}-${props.size}`]: props.size && props.size !== 'default',
           })}
           {...restProps}
         >
@@ -51,7 +55,9 @@ const Typography = defineComponent<InternalTypographyProps>({
 Typography.props = {
   prefixCls: PropTypes.string,
   component: PropTypes.string,
+  size: PropTypes.oneOf(['large', 'small', 'default']).def('default'),
   resetable: PropTypes.looseBool,
+  styleReset: PropTypes.looseBool,
 };
 
 Typography.install = function(app: App) {

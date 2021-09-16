@@ -29,6 +29,9 @@ import SimpleCodeString from './simple.vue?raw';
 import TabsString from './tabs.md?raw';
 import Tabs from './tabs.vue';
 import TabsCodeString from './tabs.vue?raw';
+import GrayString from './gray.md?raw';
+import Gray from './gray.vue';
+import GrayCodeString from './gray.vue?raw';
 
 import CN from './../index.zh-CN.md';
 
@@ -87,6 +90,9 @@ export default {
           </demo-container>
           <demo-container api={TabsString} code={TabsCodeString}>
             <Tabs />
+          </demo-container>
+          <demo-container api={GrayString} code={GrayCodeString}>
+            <Gray />
           </demo-container>
         </demo-sort>
         <api>

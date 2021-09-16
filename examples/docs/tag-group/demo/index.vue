@@ -5,6 +5,9 @@ import BasicCodeString from './basic.vue?raw';
 import Add from './add.vue';
 import AddString from './add.md?raw';
 import AddCodeString from './add.vue?raw';
+import Disabled from './disabled.vue';
+import DisabledString from './disabled.md?raw';
+import DisabledCodeString from './disabled.vue?raw';
 import Slot from './slot.vue';
 import SlotString from './slot.md?raw';
 import SlotCodeString from './slot.vue?raw';
@@ -50,6 +53,9 @@ export default {
           </demo-container>
           <demo-container api={SlotString} code={SlotCodeString}>
             <Slot />
+          </demo-container>
+          <demo-container api={DisabledString} code={DisabledCodeString}>
+            <Disabled />
           </demo-container>
         </demo-sort>
         <api>

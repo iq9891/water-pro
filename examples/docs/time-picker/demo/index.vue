@@ -23,12 +23,13 @@ import SizeCodeString from './size.vue?raw';
 import Value from './value.vue';
 import ValueString from './value.md?raw';
 import ValueCodeString from './value.vue?raw';
-import Suffix from './basic.vue';
-import SuffixString from './basic.md?raw';
+import Suffix from './suffix.vue';
+import SuffixString from './suffix.md?raw';
 import SuffixCodeString from './suffix.vue?raw';
-
+import Rang from './rang.vue';
+import RangString from './rang.md?raw';
+import RangCodeString from './rang.vue?raw';
 import CN from '../index.zh-CN.md';
-
 const md = {
   cn: `# TimePicker 时间选择框
           输入或选择时间的控件。
@@ -77,6 +78,9 @@ export default {
           </demo-container>
           <demo-container api={SuffixString} code={SuffixCodeString}>
             <Suffix />
+          </demo-container>
+          <demo-container api={RangString} code={RangCodeString}>
+            <Rang />
           </demo-container>
         </demo-sort>
         <api>

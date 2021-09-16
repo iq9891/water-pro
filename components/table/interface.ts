@@ -154,6 +154,8 @@ export const tableProps = {
   expandIconAsCell: PropTypes.looseBool,
   expandIconColumnIndex: PropTypes.number,
   expandRowByClick: PropTypes.looseBool,
+  showMoreHandler: PropTypes.looseBool,
+  moreHandlerTarget: PropTypes.func,
   loading: PropTypes.oneOfType([PropTypes.shape(SpinProps).loose, PropTypes.looseBool]),
   locale: TableLocale,
   indentSize: PropTypes.number,
@@ -245,6 +247,7 @@ export const SelectionCheckboxAllProps = {
 export const MoreHandlerProps = {
   selectKey: PropTypes.array,
   prefixCls: PropTypes.string,
+  target: PropTypes.func,
 };
 
 export const MoreDisplayProps = {

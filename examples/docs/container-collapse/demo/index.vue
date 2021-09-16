@@ -15,10 +15,10 @@ import SlotCodeString from './slot.vue?raw';
 import CN from '../index.zh-CN.md';
 
 const md = {
-  cn: `# 帮助提示
-           有感叹号的帮助提示的封装
+  cn: `# 展开容器
+           有过多东西的时候
          ## 何时使用
-         简单的说明不变全展示在页面中
+         不想一次展现的时候
          ## 代码演示
         `,
   us: `# ContainerCollapse

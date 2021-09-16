@@ -25,7 +25,7 @@ const RenderEmpty = (props: RenderEmptyProps) => {
         return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} class={`${prefix}-small`} />;
 
       default:
-        return <Empty />;
+        return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />;
     }
   };
   return renderHtml(props.componentName);

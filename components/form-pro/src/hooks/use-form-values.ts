@@ -39,15 +39,16 @@ export function useFormValues({
       if ((isArray(value) && value.length === 0) || isFunction(value)) {
         continue;
       }
+      const schemaItem = getSchema.value.find((gsItem: any) => gsItem.field === key);
       if (isPlainObject(value)) {
-        value = transformDateFunc(value);
+        value = transformDateFunc(value, schemaItem);
       }
       if (
         isArray(value) &&
         value[0]._isAMomentObject &&
         value[1]._isAMomentObject
       ) {
-        value = value.map((item: any) => transformDateFunc(item));
+        value = value.map((item: any) => transformDateFunc(item, schemaItem));
       }
       // Remove spaces
       if (isString(value)) {
@@ -66,7 +67,6 @@ export function useFormValues({
     if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
       return values;
     }
-
     for (const [
       field,
       [startTimeKey, endTimeKey],
@@ -77,9 +77,8 @@ export function useFormValues({
       }
 
       const [startTime, endTime]: string[] = values[field];
-
-      values[startTimeKey] = dateUtil(startTime).format(format);
-      values[endTimeKey] = dateUtil(endTime).format(format);
+      values[startTimeKey] = isString(startTime) ? startTime : dateUtil(startTime).format(format);
+      values[endTimeKey] = isString(endTime) ? endTime : dateUtil(endTime).format(format);
       Reflect.deleteProperty(values, field);
     }
 

@@ -33,6 +33,8 @@
 | customRow | 设置行属性 | Function(record, index) | - |  |
 | getPopupContainer | 设置表格内各类浮层的渲染节点，如筛选菜单 | (triggerNode) => HTMLElement | `() => TableHtmlElement` | 1.5.0 |
 | transformCellText | 数据渲染前可以再次改变，一般用户空数据的默认配置，可以通过 [ConfigProvider](/components/config-provider-cn/) 全局统一配置 | Function({ text, column, record, index }) => any | - | 1.5.4 |
+| showMoreHandler | 是否显示表头多选的批量操作 | boolean | - | 3.13.0 |
+| moreHandlerTarget | 设置批量操作 Affix 需要监听其滚动事件的元素，值为一个返回对应 DOM 元素的函数 | () => HTMLElement | - | 3.13.0 |
 
 ### 事件
 

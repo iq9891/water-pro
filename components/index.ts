@@ -169,8 +169,18 @@ import { default as TagGroup } from './tag-group';
 import { default as TagModalList } from './tag-modal-list';
 import { default as UploadName } from './upload-name';
 import { default as UploadImage } from './upload-image';
+import { default as UploadCard } from './upload-card';
 import { default as TablePro } from './table-pro';
 import { default as Loading } from './loading';
+import { default as PreviewImage } from './preview-image';
+import { default as Classify } from './classify';
+
+// 工具函数
+import copy from './_util/copy-to-clipboard';
+
+const utils = {
+  copy,
+};
 
 const components = [
   Affix,
@@ -249,10 +259,13 @@ const components = [
   Loading,
   UploadName,
   UploadImage,
+  UploadCard,
+  PreviewImage,
   SelectApi,
   TagGroup,
   TagModalList,
   TablePro,
+  Classify,
 ];
 
 const install = function(app: App) {
@@ -360,6 +373,9 @@ export {
   TagGroup,
   TagModalList,
   TablePro,
+  Classify,
+  PreviewImage,
+  utils,
 };
 
 export default {

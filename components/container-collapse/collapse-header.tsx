@@ -44,7 +44,9 @@ export default defineComponent({
 
     let arrowNode = null;
     if (!this.loading && this.expanable) {
-      arrowNode = <BasicArrow top={this.show} expand={!this.show} />;
+      arrowNode = (
+        <BasicArrow top={this.show} helpMessage={this.show ? '收起' : '展开'} expand={!this.show} />
+      );
     }
 
     return (
@@ -52,12 +54,15 @@ export default defineComponent({
         class={[
           `${this.prefixClsNew}-header`,
           {
+            [`${this.prefixClsNew}-header-active`]: this.show,
             [`${this.prefixClsNew}-header-only`]: !this.expanable,
           },
         ]}
         onClick={() => this.$emit('expand')}
       >
-        <BasicTitle {...this.$attrs}>{titleNode}</BasicTitle>
+        <BasicTitle class={`${this.prefixClsNew}-header-title`} {...this.$attrs}>
+          {titleNode}
+        </BasicTitle>
         <div class={`${this.prefixClsNew}-action`}>
           {actionNode}
           {loadingNode}

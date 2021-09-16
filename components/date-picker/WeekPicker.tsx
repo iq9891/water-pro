@@ -164,7 +164,9 @@ export default defineComponent({
       pickerValue.locale(localeCode);
     }
 
-    const placeholder = hasProp(this, 'placeholder') ? this.placeholder : locale.lang.placeholder;
+    const placeholder = hasProp(this, 'placeholder')
+      ? this.placeholder
+      : locale.lang.otherPlaceholder.week;
     const weekDateRender = this.dateRender || $slots.dateRender || this.weekDateRender;
     const calendar = (
       <Calendar

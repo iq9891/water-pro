@@ -1,6 +1,7 @@
 <template>
   <a-upload-name
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-    resultKey=""
+    action="https://api.dev.mosh.cn/public/upload/image/binary"
+    resultKey="data"
+    accept='image/png,image/jpeg,image/gif'
   />
 </template>

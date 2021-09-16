@@ -39,4 +39,7 @@ export default {
   onClick: PropTypes.func,
   onSelect: PropTypes.func,
   onDeselect: PropTypes.func,
+  selectedColor: PropTypes.string.def('#1890ff'),
+  selectedBgColor: PropTypes.string.def('#e6f7ff'),
+  selectedBorderColor: PropTypes.string.def('#1890ff'),
 };

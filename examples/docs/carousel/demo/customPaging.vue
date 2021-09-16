@@ -1,60 +1,32 @@
 <template>
-  <a-carousel arrows dots-class="slick-dots slick-thumb">
-    <template #customPaging="props">
-      <a>
-        <img :src="getImgUrl(props.i)" />
-      </a>
-    </template>
-    <div v-for="item in 4" :key="item">
-      <img :src="baseUrl + 'abstract0' + item + '.jpg'" />
-    </div>
-  </a-carousel>
+  <a-carousel-img
+    :imgList="imgUrls"
+    preivewPageable
+  />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-
-const baseUrl =
-  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/';
+ 
+const imgUrls = [
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/FikfPBWchRpMqQ-pCaqKYuzIYF8z.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/lmT6p7-Zidq69_5oWDIHtS-HYzIL.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/lsjdz-NSI3PExOsfAS1oUutlPRXu.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/abstract01.jpg',
+  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/abstract02.jpg',
+  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/abstract03.jpg',
+  'https://raw.githubusercontent.com/vueComponent/ant-design-vue/master/components/vc-slick/assets/img/react-slick/abstract04.jpg',,
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/lkjEEeyR8wBtQ6QKlLZgzzjEr5gS.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/lhyIDYdCCsQwpx9x576m4qZsr4A7.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/Fo7E1JSqweCxNvn1NsyEcUFoYZ0d.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/FikfPBWchRpMqQ-pCaqKYuzIYF8z.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/FikfPBWchRpMqQ-pCaqKYuzIYF8z.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+  'https://img01.yzcdn.cn/upload_files/2021/07/15/lmT6p7-Zidq69_5oWDIHtS-HYzIL.png?imageMogr2/thumbnail/2130x/format/jpg/interlace/1',
+];
 export default defineComponent({
   setup() {
-    const getImgUrl = (i: number) => {
-      return `${baseUrl}abstract0${i + 1}.jpg`;
-    };
     return {
-      baseUrl,
-      getImgUrl,
+      imgUrls,
     };
   },
 });
 </script>
-<style scoped>
-/* For demo */
-.ant-carousel :deep(.slick-dots) {
-  position: relative;
-  height: auto;
-}
-.ant-carousel :deep(.slick-slide img) {
-  border: 5px solid #fff;
-  display: block;
-  margin: auto;
-  max-width: 80%;
-}
-.ant-carousel :deep(.slick-arrow) {
-  display: none !important;
-}
-.ant-carousel :deep(.slick-thumb) {
-  bottom: 0px;
-}
-.ant-carousel :deep(.slick-thumb li) {
-  width: 60px;
-  height: 45px;
-}
-.ant-carousel :deep(.slick-thumb li img) {
-  width: 100%;
-  height: 100%;
-  filter: grayscale(100%);
-}
-.ant-carousel :deep .slick-thumb li.slick-active img {
-  filter: grayscale(0%);
-}
-</style>

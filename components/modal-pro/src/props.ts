@@ -17,7 +17,7 @@ export const modalProps = {
   height: PropTypes.number,
   minHeight: PropTypes.number,
   // open drag
-  draggable: PropTypes.bool.def(true),
+  draggable: PropTypes.bool,
   centered: PropTypes.bool,
   cancelText: PropTypes.string.def(cancelText),
   okText: PropTypes.string.def(okText),
