@@ -1,6 +1,6 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
-type Value = moment.Moment | undefined | null;
+type Value = dayjs.Dayjs | undefined | null;
 type Format = string | string[] | undefined | ((val?: Value) => string | string[] | undefined);
 export function formatDate(value: Value, format: Format) {
   if (!value) {

@@ -1,5 +1,5 @@
 import { VNodeTypes } from 'vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import padStart from 'lodash-es/padStart';
 
 import interopDefault from '../_util/interopDefault';
@@ -65,8 +65,8 @@ export function formatTimeStr(duration: number, format: string) {
 
 export function formatCountdown(value: countdownValueType, config: CountdownFormatConfig) {
   const { format = '' } = config;
-  const target = interopDefault(moment)(value).valueOf();
-  const current = interopDefault(moment)().valueOf();
+  const target = interopDefault(dayjs)(value).valueOf();
+  const current = interopDefault(dayjs)().valueOf();
   const diff = Math.max(target - current, 0);
   return formatTimeStr(diff, format);
 }

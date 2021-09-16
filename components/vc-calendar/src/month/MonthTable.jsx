@@ -39,19 +39,18 @@ const MonthTable = {
       this.__emit('select', value);
     },
     chooseMonth(month) {
-      const next = this.sValue.clone();
-      next.month(month);
+      const next = this.sValue.clone().month(month);
       this.setAndSelectValue(next);
     },
     months() {
       const value = this.sValue;
-      const current = value.clone();
+      let current = value.clone();
       const months = [];
       let index = 0;
       for (let rowIndex = 0; rowIndex < ROW; rowIndex++) {
         months[rowIndex] = [];
         for (let colIndex = 0; colIndex < COL; colIndex++) {
-          current.month(index);
+          current = current.month(index);
           const content = getMonthName(current);
           months[rowIndex][colIndex] = {
             value: index,
@@ -73,7 +72,7 @@ const MonthTable = {
     const currentMonth = value.month();
     const { prefixCls, locale, contentRender, cellRender, disabledDate } = props;
     const monthsEls = months.map((month, index) => {
-      const tds = month.map(monthData => {
+      const tds = month.map((monthData, monthIdx) => {
         let disabled = false;
         if (disabledDate) {
           const testValue = value.clone();
@@ -89,17 +88,17 @@ const MonthTable = {
         };
         let cellEl;
         if (cellRender) {
-          const currentValue = value.clone();
-          currentValue.month(monthData.value);
-          cellEl = cellRender({ current: currentValue, locale });
+          const currentValue = value.clone().month(monthData.value);
+          cellEl = cellRender({ current: currentValue, locale, row: index, col: monthIdx });
         } else {
           let content;
           if (contentRender) {
-            const currentValue = value.clone();
-            currentValue.month(monthData.value);
-            content = contentRender({ current: currentValue, locale });
+            const currentValue = value.clone().month(monthData.value);
+            content = contentRender({ current: currentValue, locale, row: index, col: monthIdx });
           } else {
-            content = monthData.content;
+            // fix 日期的月选择器渲染失败
+            const currentValue = value.clone().month(monthData.value);
+            content = currentValue.localeData().monthsShort()[monthIdx + index*3];
           }
           cellEl = <a class={`${prefixCls}-month`}>{content}</a>;
         }

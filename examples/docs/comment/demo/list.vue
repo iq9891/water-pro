@@ -27,7 +27,7 @@
   </a-list>
 </template>
 <script lang="ts">
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
@@ -39,7 +39,7 @@ export default defineComponent({
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           content:
             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-          datetime: moment().subtract(1, 'days'),
+          datetime: dayjs().subtract(1, 'days'),
         },
         {
           actions: ['Reply to'],
@@ -47,10 +47,10 @@ export default defineComponent({
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           content:
             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-          datetime: moment().subtract(2, 'days'),
+          datetime: dayjs().subtract(2, 'days'),
         },
       ],
-      moment,
+      dayjs,
     };
   },
 });

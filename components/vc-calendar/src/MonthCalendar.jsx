@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import PropTypes from '../../_util/vue-types';
 import BaseMixin from '../../_util/BaseMixin';
 import KeyCode from '../../_util/KeyCode';
@@ -32,7 +32,7 @@ const MonthCalendar = defineComponent({
     const props = this.$props;
     return {
       mode: 'month',
-      sValue: props.value || props.defaultValue || moment(),
+      sValue: props.value || props.defaultValue || dayjs(),
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },
@@ -45,27 +45,25 @@ const MonthCalendar = defineComponent({
       let value = stateValue;
       switch (keyCode) {
         case KeyCode.DOWN:
-          value = stateValue.clone();
-          value.add(3, 'months');
+          value = stateValue.clone().add(3, 'month');
           break;
         case KeyCode.UP:
-          value = stateValue.clone();
-          value.add(-3, 'months');
+          value = stateValue.clone().add(-3, 'month');
           break;
         case KeyCode.LEFT:
           value = stateValue.clone();
           if (ctrlKey) {
-            value.add(-1, 'years');
+            value = value.add(-1, 'year');
           } else {
-            value.add(-1, 'months');
+            value = value.add(-1, 'month');
           }
           break;
         case KeyCode.RIGHT:
           value = stateValue.clone();
           if (ctrlKey) {
-            value.add(1, 'years');
+            value = value.add(1, 'year');
           } else {
-            value.add(1, 'months');
+            value = value.add(1, 'month');
           }
           break;
         case KeyCode.ENTER:

@@ -28,14 +28,14 @@
 </template>
 <script lang="ts">
 import { SmileOutlined } from '@ant-design/icons-vue';
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent } from 'vue';
 export default defineComponent({
   components: {
     SmileOutlined,
   },
   setup() {
-    const onChange = (date: Moment, dateString: string[]) => {
+    const onChange = (date: Dayjs, dateString: string[]) => {
       console.log(date, dateString);
     };
 

@@ -53,7 +53,7 @@
           />
         </div>
         <div :style="{ width: '319px', border: '1px solid #d9d9d9', borderRadius: '4px' }">
-          <a-calendar :fullscreen="false" :value="moment()" />
+          <a-calendar :fullscreen="false" :value="dayjs()" />
         </div>
         <a-modal v-model="visible" title="Locale Modal">
           <p>Locale Modal</p>
@@ -66,9 +66,9 @@
 // you should use import zhCN from '../../../../components/locale-provider/zh_CN'
 import zhCN from '../../../../components/locale-provider/zh_CN';
 import { Modal } from '../../../../components';
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-moment.locale('en');
+import dayjs from 'dayjs';
+// import 'dayjs/locale/zh-cn';
+// dayjs.locale('zh-cn');
 const columns = [
   {
     title: 'Name',
@@ -94,7 +94,7 @@ export default {
     };
   },
   methods: {
-    moment,
+    dayjs,
     showModal() {
       this.visible = true;
     },
@@ -117,9 +117,9 @@ export default {
       const localeValue = e.target.value;
       this.locale = localeValue;
       if (!localeValue) {
-        moment.locale('en');
+        dayjs.locale('en');
       } else {
-        moment.locale('zh-cn');
+        dayjs.locale('zh-cn');
       }
     },
   },

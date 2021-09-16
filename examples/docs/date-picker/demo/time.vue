@@ -11,16 +11,16 @@
   </a-space>
 </template>
 <script lang="ts">
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent } from 'vue';
 export default defineComponent({
   setup() {
-    const onChange = (value: Moment[], dateString: string[]) => {
+    const onChange = (value: Dayjs[], dateString: string[]) => {
       console.log('Selected Time: ', value);
       console.log('Formatted Selected Time: ', dateString);
     };
 
-    const onOk = (value: Moment[]) => {
+    const onOk = (value: Dayjs[]) => {
       console.log('onOk: ', value);
     };
 

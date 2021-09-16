@@ -12,13 +12,11 @@
   </a-space>
 </template>
 <script lang="ts">
-import moment from 'moment';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
       size: ref<string>('default'),
-      moment,
     };
   },
 });

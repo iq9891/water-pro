@@ -6,17 +6,17 @@
   </a-space>
 </template>
 <script lang="ts">
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     const dateFormat = 'YYYY-MM-DD';
     return {
-      value1: ref<moment.Moment>(moment('2015-06-06', dateFormat)),
-      value2: ref<moment.Moment>(moment('2015-06', 'YYYY-MM')),
-      value3: ref<moment.Moment[]>([
-        moment('2015-06-06', dateFormat),
-        moment('2015-06-06', dateFormat),
+      value1: ref<dayjs.Dayjs>(dayjs('2015-06-06', dateFormat)),
+      value2: ref<dayjs.Dayjs>(dayjs('2015-06', 'YYYY-MM')),
+      value3: ref<dayjs.Dayjs[]>([
+        dayjs('2015-06-06', dateFormat),
+        dayjs('2015-06-06', dateFormat),
       ]),
     };
   },

@@ -24,11 +24,11 @@
   </a-space>
 </template>
 <script lang="ts">
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { CSSProperties, defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
-    const getCurrentStyle = (current: Moment) => {
+    const getCurrentStyle = (current: Dayjs) => {
       const style: CSSProperties = {};
 
       if (current.date() === 1) {
@@ -39,9 +39,9 @@ export default defineComponent({
       return style;
     };
     return {
-      value1: ref<Moment>(),
-      value2: ref<Moment[]>([]),
-      value3: ref<Moment>(),
+      value1: ref<Dayjs>(),
+      value2: ref<Dayjs[]>([]),
+      value3: ref<Dayjs>(),
       getCurrentStyle,
     };
   },

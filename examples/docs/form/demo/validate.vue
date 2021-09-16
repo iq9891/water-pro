@@ -51,12 +51,12 @@
 </template>
 <script lang="ts">
 import { ValidateErrorEntity } from '../../../../components/form/interface';
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent, reactive, ref, toRaw, UnwrapRef } from 'vue';
 interface FormState {
   name: string;
   region: string | undefined;
-  date1: Moment | undefined;
+  date1: Dayjs | undefined;
   delivery: boolean;
   type: string[];
   resource: string;

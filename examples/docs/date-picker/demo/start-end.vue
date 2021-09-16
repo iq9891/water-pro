@@ -20,15 +20,15 @@
   </a-space>
 </template>
 <script lang="ts">
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent, ref, watch } from 'vue';
 export default defineComponent({
   setup() {
-    const startValue = ref<Moment | undefined>();
-    const endValue = ref<Moment>();
+    const startValue = ref<Dayjs | undefined>();
+    const endValue = ref<Dayjs>();
     const endOpen = ref<boolean>(false);
 
-    const disabledStartDate = (startValue: Moment) => {
+    const disabledStartDate = (startValue: Dayjs) => {
       if (!startValue || !endValue.value) {
         return false;
       }
@@ -36,7 +36,7 @@ export default defineComponent({
       return startValue.valueOf() > endValue.value.valueOf();
     };
 
-    const disabledEndDate = (endValue: Moment) => {
+    const disabledEndDate = (endValue: Dayjs) => {
       if (!endValue || !startValue.value) {
         return false;
       }

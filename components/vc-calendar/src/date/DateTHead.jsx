@@ -1,5 +1,7 @@
 import DateConstants from './DateConstants';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+dayjs.extend(localeData);
 
 const DateTHead = (_, { attrs }) => {
   const value = attrs.value;
@@ -7,14 +9,14 @@ const DateTHead = (_, { attrs }) => {
   const prefixCls = attrs.prefixCls;
   const veryShortWeekdays = [];
   const weekDays = [];
-  const firstDayOfWeek = localeData.firstDayOfWeek();
+  const firstDayOfWeek = localeData.firstDayOfWeek() + 1;
   let showWeekNumberEl;
-  const now = moment();
+  const now = dayjs();
   for (let dateColIndex = 0; dateColIndex < DateConstants.DATE_COL_COUNT; dateColIndex++) {
     const index = (firstDayOfWeek + dateColIndex) % DateConstants.DATE_COL_COUNT;
     now.day(index);
-    veryShortWeekdays[dateColIndex] = localeData.weekdaysMin(now);
-    weekDays[dateColIndex] = localeData.weekdaysShort(now);
+    veryShortWeekdays[dateColIndex] = localeData.weekdaysMin()[dateColIndex];
+    weekDays[dateColIndex] = localeData.weekdaysShort()[dateColIndex];
   }
 
   if (attrs.showWeekNumber) {

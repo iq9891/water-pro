@@ -6,12 +6,12 @@
   </div>
 </template>
 <script lang="ts">
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
-      value: ref<Moment | undefined>(undefined),
+      value: ref<Dayjs | undefined>(undefined),
     };
   },
 });

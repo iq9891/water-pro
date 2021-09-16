@@ -11,14 +11,14 @@
   </a-space>
 </template>
 <script lang="ts">
-import moment, { Moment } from 'moment';
+import dayjs, { Dayjs } from 'dayjs';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
-      value1: ref<Moment[]>([]),
-      value2: ref<Moment[]>([]),
-      ranges: { Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] },
+      value1: ref<Dayjs[]>([]),
+      value2: ref<Dayjs[]>([]),
+      ranges: { Today: [dayjs(), dayjs()], 'This Month': [dayjs(), dayjs().endOf('month')] },
     };
   },
 });

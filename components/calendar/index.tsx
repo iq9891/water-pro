@@ -2,14 +2,15 @@ import { defineComponent, inject, PropType } from 'vue';
 import PropTypes from '../_util/vue-types';
 import BaseMixin from '../_util/BaseMixin';
 import { getOptionProps, hasProp } from '../_util/props-util';
-import moment from 'moment';
+import dayjs from '../_util/dayjs';
+
 import FullCalendar from '../vc-calendar/src/FullCalendar';
 import Header from './Header';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
 import interopDefault from '../_util/interopDefault';
 import { defaultConfigProvider } from '../config-provider';
 import enUS from './locale/en_US';
-import { checkValidate, stringToMoment, momentToString, TimeType } from '../_util/moment-util';
+import { checkValidate, stringToDayjs, dayjsToString, TimeType } from '../_util/moment-util';
 import { tuple, withInstall } from '../_util/type';
 
 function noop() {
@@ -39,7 +40,7 @@ export const CalendarProps = {
   locale: PropTypes.object.def({}),
   disabledDate: PropTypes.func,
   validRange: {
-    type: Array as PropType<moment.Moment[]>,
+    type: Array as PropType<dayjs.Dayjs[]>,
   },
   headerRender: PropTypes.func,
   valueFormat: PropTypes.string,
@@ -62,11 +63,11 @@ const Calendar = defineComponent({
   },
   data() {
     const { value, defaultValue, valueFormat } = this;
-    const sValue = value || defaultValue || interopDefault(moment)();
+    const sValue = value || defaultValue || interopDefault(dayjs)();
     checkValidate('Calendar', defaultValue, 'defaultValue', valueFormat);
     checkValidate('Calendar', value, 'value', valueFormat);
     return {
-      sValue: stringToMoment(sValue, valueFormat),
+      sValue: stringToDayjs(sValue, valueFormat),
       sMode: this.mode || 'month',
     };
   },
@@ -74,7 +75,7 @@ const Calendar = defineComponent({
     value(val) {
       checkValidate('Calendar', val, 'value', this.valueFormat);
       this.setState({
-        sValue: stringToMoment(val, this.valueFormat),
+        sValue: stringToDayjs(val, this.valueFormat),
       });
     },
     mode(val) {
@@ -84,15 +85,15 @@ const Calendar = defineComponent({
     },
   },
   methods: {
-    onHeaderValueChange(value: moment.Moment) {
+    onHeaderValueChange(value: dayjs.Dayjs) {
       this.setValue(value, 'changePanel');
     },
     onHeaderTypeChange(mode: CalendarMode) {
       this.sMode = mode;
       this.triggerPanelChange(this.sValue, mode);
     },
-    triggerPanelChange(value: moment.Moment, mode: CalendarMode | undefined) {
-      const val = this.valueFormat ? momentToString(value, this.valueFormat) : value;
+    triggerPanelChange(value: dayjs.Dayjs, mode: CalendarMode | undefined) {
+      const val = this.valueFormat ? dayjsToString(value, this.valueFormat) : value;
       if (value !== this.sValue) {
         this.$emit('update:value', val);
         this.$emit('change', val);
@@ -100,17 +101,17 @@ const Calendar = defineComponent({
       this.$emit('panelChange', val, mode);
     },
 
-    triggerSelect(value: moment.Moment) {
+    triggerSelect(value: dayjs.Dayjs) {
       this.setValue(value, 'select');
     },
-    setValue(value: moment.Moment, way: 'select' | 'changePanel') {
-      const prevValue = this.value ? stringToMoment(this.value, this.valueFormat) : this.sValue;
+    setValue(value: dayjs.Dayjs, way: 'select' | 'changePanel') {
+      const prevValue = this.value ? stringToDayjs(this.value, this.valueFormat) : this.sValue;
       const { sMode: mode, valueFormat } = this;
       if (!hasProp(this, 'value')) {
         this.setState({ sValue: value });
       }
       if (way === 'select') {
-        const val = valueFormat ? momentToString(value, valueFormat) : value;
+        const val = valueFormat ? dayjsToString(value, valueFormat) : value;
         if (prevValue && prevValue.month() !== value.month()) {
           this.triggerPanelChange(value, mode);
         } else {
@@ -122,10 +123,10 @@ const Calendar = defineComponent({
       }
     },
     getDateRange(
-      validRange: [moment.Moment, moment.Moment],
-      disabledDate?: (current: moment.Moment) => boolean,
+      validRange: [dayjs.Dayjs, dayjs.Dayjs],
+      disabledDate?: (current: dayjs.Dayjs) => boolean,
     ) {
-      return (current: moment.Moment) => {
+      return (current: dayjs.Dayjs) => {
         if (!current) {
           return false;
         }
@@ -148,12 +149,18 @@ const Calendar = defineComponent({
       };
       return result;
     },
-    monthCellRender2({ current: value }) {
+    monthCellRender2({ current: value, col, row }: any) {
       const { sPrefixCls, $slots } = this;
       const monthCellRender: Function = this.monthCellRender || $slots.monthCellRender || noop;
       return (
         <div class={`${sPrefixCls}-month`}>
-          <div class={`${sPrefixCls}-value`}>{value.localeData().monthsShort(value)}</div>
+          <div class={`${sPrefixCls}-value`}>
+            {
+              dayjs(value)
+                .localeData()
+                .monthsShort()[col + row * 3]
+            }
+          </div>
           <div class={`${sPrefixCls}-content`}>{monthCellRender({ current: value })}</div>
         </div>
       );

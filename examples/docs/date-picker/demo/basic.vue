@@ -8,14 +8,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Moment } from 'moment';
+import dayjs from 'dayjs';
 export default defineComponent({
   setup() {
     return {
-      value1: ref<Moment>(),
-      value2: ref<Moment>(),
-      value3: ref<Moment[]>([]),
-      value4: ref<Moment>(),
+      value1: ref<dayjs.Dayjs>(),
+      value2: ref<dayjs.Dayjs>(),
+      value3: ref<dayjs.Dayjs[]>([]),
+      value4: ref<dayjs.Dayjs>(),
     };
   },
 });

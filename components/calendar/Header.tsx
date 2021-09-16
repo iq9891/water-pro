@@ -4,22 +4,23 @@ import { Group, Button } from '../radio';
 import PropTypes from '../_util/vue-types';
 import { defaultConfigProvider } from '../config-provider';
 import { VueNode } from '../_util/type';
-import moment from 'moment';
+import '../_util/dayjs';
+
 import { RadioChangeEvent } from '../radio/interface';
 
-function getMonthsLocale(value: moment.Moment): string[] {
+function getMonthsLocale(value: any): string[] {
   const current = value.clone();
   const localeData = value.localeData();
   const months = [];
   for (let i = 0; i < 12; i++) {
     current.month(i);
-    months.push(localeData.monthsShort(current));
+    months.push(localeData.monthsShort()[i]);
   }
   return months;
 }
 export interface RenderHeader {
-  value: moment.Moment;
-  onChange?: (value: moment.Moment) => void;
+  value: any;
+  onChange?: (value: any) => void;
   type: string;
   onTypeChange: (type: string) => void;
 }
@@ -32,10 +33,10 @@ export const HeaderProps = {
   yearSelectTotal: PropTypes.number,
   type: PropTypes.string,
   value: {
-    type: Object as PropType<moment.Moment>,
+    type: Object as PropType<any>,
   },
   validRange: {
-    type: Array as PropType<moment.Moment[]>,
+    type: Array as PropType<any[]>,
   },
   headerRender: PropTypes.func,
   onValueChange: PropTypes.func,
@@ -89,7 +90,7 @@ export default defineComponent({
       let end = 11;
       if (validRange) {
         const [rangeStart, rangeEnd] = validRange;
-        const currentYear = value.get('year');
+        const currentYear = (value as any).get('year');
         if (rangeEnd.get('year') === currentYear) {
           end = rangeEnd.get('month') + 1;
         }
@@ -119,26 +120,24 @@ export default defineComponent({
 
     onYearChange(year: string) {
       const { value, validRange } = this;
-      const newValue = value.clone();
-      newValue.year(parseInt(year, 10));
+      let newValue = (value as any).clone().year(parseInt(year, 10));
       // switch the month so that it remains within range when year changes
       if (validRange) {
         const [start, end] = validRange;
         const newYear = newValue.get('year');
         const newMonth = newValue.get('month');
         if (newYear === end.get('year') && newMonth > end.get('month')) {
-          newValue.month(end.get('month'));
+          newValue = newValue.month(end.get('month'));
         }
         if (newYear === start.get('year') && newMonth < start.get('month')) {
-          newValue.month(start.get('month'));
+          newValue = newValue.month(start.get('month'));
         }
       }
       this.$emit('valueChange', newValue);
     },
 
     onMonthChange(month: string) {
-      const newValue = this.value.clone();
-      newValue.month(parseInt(month, 10));
+      const newValue = (this.value as any).clone().month(parseInt(month, 10));
       this.$emit('valueChange', newValue);
     },
 
@@ -153,10 +152,10 @@ export default defineComponent({
       const { prefixCls: customizePrefixCls, type, value } = this.$props;
 
       const prefixCls = getPrefixCls('fullcalendar', customizePrefixCls);
-      const yearReactNode = this.getYearSelectElement(prefixCls, value.year());
+      const yearReactNode = this.getYearSelectElement(prefixCls, (value as any).year());
       const monthReactNode =
         type === 'month'
-          ? this.getMonthSelectElement(prefixCls, value.month(), getMonthsLocale(value))
+          ? this.getMonthSelectElement(prefixCls, (value as any).month(), getMonthsLocale(value))
           : null;
       return {
         yearReactNode,

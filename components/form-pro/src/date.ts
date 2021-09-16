@@ -1,14 +1,11 @@
 /** @format */
 
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 
-export function formatToDateTime(
-  date: moment.MomentInput = null,
-  format = DATE_TIME_FORMAT,
-): string {
-  return moment(date).format(format);
+export function formatToDateTime(date: any = null, format = DATE_TIME_FORMAT): string {
+  return dayjs(date).format(format);
 }
 
-export const dateUtil = moment;
+export const dateUtil = dayjs;

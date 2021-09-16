@@ -1,11 +1,11 @@
 import interopDefault from './interopDefault';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import warning from './warning';
 import isNil from 'lodash-es/isNil';
 
 export const TimeType = {
   validator(value) {
-    return typeof value === 'string' || isNil(value) || moment.isMoment(value);
+    return typeof value === 'string' || isNil(value) || dayjs.isDayjs(value);
   },
 };
 
@@ -15,7 +15,7 @@ export const TimesType = {
       return (
         value.length === 0 ||
         value.findIndex(val => typeof val !== 'string') === -1 ||
-        value.findIndex(val => !isNil(val) && !moment.isMoment(val)) === -1
+        value.findIndex(val => !isNil(val) && !dayjs.isDayjs(val)) === -1
       );
     }
     return false;
@@ -28,10 +28,10 @@ export const TimeOrTimesType = {
       return (
         value.length === 0 ||
         value.findIndex(val => typeof val !== 'string') === -1 ||
-        value.findIndex(val => !isNil(val) && !moment.isMoment(val)) === -1
+        value.findIndex(val => !isNil(val) && !dayjs.isDayjs(val)) === -1
       );
     } else {
-      return typeof value === 'string' || isNil(value) || moment.isMoment(value);
+      return typeof value === 'string' || isNil(value) || dayjs.isDayjs(value);
     }
   },
 };
@@ -42,34 +42,34 @@ export function checkValidate(componentName, value, propName, valueFormat) {
     if (!val) return;
     valueFormat &&
       warning(
-        interopDefault(moment)(val, valueFormat).isValid(),
+        interopDefault(dayjs)(val, valueFormat).isValid(),
         componentName,
         `When set \`valueFormat\`, \`${propName}\` should provides invalidate string time. `,
       );
     !valueFormat &&
       warning(
-        interopDefault(moment).isMoment(val) && val.isValid(),
+        interopDefault(dayjs).isDayjs(val) && val.isValid(),
         componentName,
-        `\`${propName}\` provides invalidate moment time. If you want to set empty value, use \`null\` instead.`,
+        `\`${propName}\` provides invalidate dayjs time. If you want to set empty value, use \`null\` instead.`,
       );
   });
 }
-export const stringToMoment = (value, valueFormat) => {
+export const stringToDayjs = (value, valueFormat) => {
   if (Array.isArray(value)) {
     return value.map(val =>
-      typeof val === 'string' && val ? interopDefault(moment)(val, valueFormat) : val || null,
+      typeof val === 'string' && val ? interopDefault(dayjs)(val, valueFormat) : val || null,
     );
   } else {
     return typeof value === 'string' && value
-      ? interopDefault(moment)(value, valueFormat)
+      ? interopDefault(dayjs)(value, valueFormat)
       : value || null;
   }
 };
 
-export const momentToString = (value, valueFormat) => {
+export const dayjsToString = (value, valueFormat) => {
   if (Array.isArray(value)) {
-    return value.map(val => (interopDefault(moment).isMoment(val) ? val.format(valueFormat) : val));
+    return value.map(val => (interopDefault(dayjs).isDayjs(val) ? val.format(valueFormat) : val));
   } else {
-    return interopDefault(moment).isMoment(value) ? value.format(valueFormat) : value;
+    return interopDefault(dayjs).isDayjs(value) ? value.format(valueFormat) : value;
   }
 };

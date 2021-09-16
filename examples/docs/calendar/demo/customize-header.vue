@@ -60,17 +60,17 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 
 export default defineComponent({
   setup() {
-    const value = ref<Moment>();
+    const value = ref<Dayjs>();
 
-    const onPanelChange = (value: Moment, mode: string) => {
+    const onPanelChange = (value: Dayjs, mode: string) => {
       console.log(value, mode);
     };
 
-    const getMonths = (value: Moment) => {
+    const getMonths = (value: Dayjs) => {
       const current = value.clone();
       const localeData = value.localeData();
       const months = [];
@@ -81,7 +81,7 @@ export default defineComponent({
       return months;
     };
 
-    const getYears = (value: Moment) => {
+    const getYears = (value: Dayjs) => {
       const year = value.year();
       const years = [];
       for (let i = year - 10; i < year + 10; i += 1) {

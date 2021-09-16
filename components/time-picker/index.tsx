@@ -12,12 +12,7 @@ import { hasProp, getOptionProps, getComponent, isValidElement } from '../_util/
 import initDefaultProps from '../_util/props-util/initDefaultProps';
 import { cloneElement } from '../_util/vnode';
 import { defaultConfigProvider } from '../config-provider';
-import {
-  checkValidate,
-  stringToMoment,
-  momentToString,
-  TimeOrTimesType,
-} from '../_util/moment-util';
+import { checkValidate, stringToDayjs, dayjsToString, TimeOrTimesType } from '../_util/moment-util';
 import { tuple, withInstall } from '../_util/type';
 
 export function generateShowHourMinuteSecond(format: string) {
@@ -112,13 +107,13 @@ const TimePicker = defineComponent({
       '`allowEmpty` is deprecated. Please use `allowClear` instead.',
     );
     return {
-      sValue: stringToMoment(value || defaultValue, valueFormat),
+      sValue: stringToDayjs(value || defaultValue, valueFormat),
     };
   },
   watch: {
     value(val) {
       checkValidate('TimePicker', val, 'value', this.valueFormat);
-      this.setState({ sValue: stringToMoment(val, this.valueFormat) });
+      this.setState({ sValue: stringToDayjs(val, this.valueFormat) });
     },
   },
   created() {
@@ -160,7 +155,7 @@ const TimePicker = defineComponent({
         this.setState({ sValue: value });
       }
       const { format = 'HH:mm:ss' } = this;
-      const val = this.valueFormat ? momentToString(value, this.valueFormat) : value;
+      const val = this.valueFormat ? dayjsToString(value, this.valueFormat) : value;
       this.$emit('update:value', val);
       this.$emit('change', val, (value && value.format(format)) || '');
     },

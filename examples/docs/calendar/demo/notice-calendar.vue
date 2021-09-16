@@ -17,13 +17,13 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 
 export default defineComponent({
   setup() {
-    const value = ref<Moment>();
+    const value = ref<Dayjs>();
 
-    const getListData = (value: Moment) => {
+    const getListData = (value: Dayjs) => {
       let listData;
       switch (value.date()) {
         case 8:
@@ -54,7 +54,7 @@ export default defineComponent({
       return listData || [];
     };
 
-    const getMonthData = (value: Moment) => {
+    const getMonthData = (value: Dayjs) => {
       if (value.month() === 8) {
         return 1394;
       }

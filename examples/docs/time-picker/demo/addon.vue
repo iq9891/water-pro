@@ -13,14 +13,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Moment } from 'moment';
+import { Dayjs } from 'dayjs';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
     const open = ref(false);
     const open2 = ref(false);
-    const value = ref<Moment>();
+    const value = ref<Dayjs>();
 
     const handleOpenChange = (openStatus: boolean) => {
       console.log('open', openStatus);

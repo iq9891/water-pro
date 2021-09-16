@@ -3,7 +3,7 @@ import BaseMixin from '../../_util/BaseMixin';
 import { getOptionProps, hasProp, getComponent, findDOMNode } from '../../_util/props-util';
 import { cloneElement } from '../../_util/vnode';
 import KeyCode from '../../_util/KeyCode';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import DateTable from './date/DateTable';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -16,7 +16,7 @@ import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import { defineComponent } from 'vue';
 
 const getMomentObjectIfValid = date => {
-  if (moment.isMoment(date) && date.isValid()) {
+  if (dayjs.isDayjs(date) && date.isValid()) {
     return date;
   }
   return false;
@@ -74,7 +74,7 @@ const Calendar = defineComponent({
       sValue:
         getMomentObjectIfValid(props.value) ||
         getMomentObjectIfValid(props.defaultValue) ||
-        moment(),
+        dayjs(),
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },

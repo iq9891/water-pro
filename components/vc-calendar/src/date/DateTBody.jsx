@@ -1,4 +1,5 @@
 import PropTypes from '../../../_util/vue-types';
+import '../../../_util/dayjs';
 import { getOptionProps } from '../../../_util/props-util';
 import cx from '../../../_util/classNames';
 import DateConstants from './DateConstants';
@@ -73,20 +74,17 @@ const DateTBody = {
     const firstDisableClass = `${prefixCls}-disabled-cell-first-of-row`;
     const lastDisableClass = `${prefixCls}-disabled-cell-last-of-row`;
     const lastDayOfMonthClass = `${prefixCls}-last-day-of-month`;
-    const month1 = value.clone();
-    month1.date(1);
+    const month1 = value.clone().date(1);
     const day = month1.day();
     const lastMonthDiffDay = (day + 7 - value.localeData().firstDayOfWeek()) % 7;
     // calculate last month
-    const lastMonth1 = month1.clone();
-    lastMonth1.add(0 - lastMonthDiffDay, 'days');
+    const lastMonth1 = month1.clone().add(0 - lastMonthDiffDay, 'day');
     let passed = 0;
     for (iIndex = 0; iIndex < DateConstants.DATE_ROW_COUNT; iIndex++) {
       for (jIndex = 0; jIndex < DateConstants.DATE_COL_COUNT; jIndex++) {
         current = lastMonth1;
         if (passed) {
-          current = current.clone();
-          current.add(passed, 'days');
+          current = current.clone().add(passed, 'day');
         }
         dateTable.push(current);
         passed++;

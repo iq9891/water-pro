@@ -1,7 +1,7 @@
 import PropTypes from '../../../_util/vue-types';
 import BaseMixin from '../../../_util/BaseMixin';
 import { hasProp } from '../../../_util/props-util';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { isAllowedDate, getTodayTime } from '../util/index';
 function noop() {}
 
@@ -10,17 +10,17 @@ export function getNowByCurrentStateValue(value) {
   if (value) {
     ret = getTodayTime(value);
   } else {
-    ret = moment();
+    ret = dayjs();
   }
   return ret;
 }
 function isMoment(value) {
   if (Array.isArray(value)) {
     return (
-      value.length === 0 || value.findIndex(val => val === undefined || moment.isMoment(val)) !== -1
+      value.length === 0 || value.findIndex(val => val === undefined || dayjs.isDayjs(val)) !== -1
     );
   } else {
-    return value === undefined || moment.isMoment(value);
+    return value === undefined || dayjs.isMoment(value);
   }
 }
 const MomentType = PropTypes.custom(isMoment);

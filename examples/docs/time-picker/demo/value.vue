@@ -13,12 +13,12 @@
   </div>
 </template>
 <script>
-import moment from 'moment';
+import dayjs from 'dayjs';
 export default {
   data() {
     return {
       value: null,
-      value2: moment(),
+      value2: dayjs(),
     };
   },
   methods: {

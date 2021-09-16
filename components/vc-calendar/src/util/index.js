@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 const defaultDisabledTime = {
   disabledHours() {
@@ -13,13 +13,13 @@ const defaultDisabledTime = {
 };
 
 export function getTodayTime(value) {
-  const today = moment();
+  const today = dayjs();
   today.locale(value.locale()).utcOffset(value.utcOffset());
   return today;
 }
 
 export function getTitleString(value) {
-  return value.format('LL');
+  return value.format('YYYY年MM月DD日');
 }
 
 export function getTodayTimeStr(value) {
@@ -34,7 +34,7 @@ export function getMonthName(month) {
 }
 
 export function syncTime(from, to) {
-  if (!moment.isMoment(from) || !moment.isMoment(to)) return;
+  if (!dayjs.isDayjs(from) || !dayjs.isDayjs(to)) return;
   to.hour(from.hour());
   to.minute(from.minute());
   to.second(from.second());

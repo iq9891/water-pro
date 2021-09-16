@@ -6,15 +6,15 @@
   </div>
 </template>
 <script lang="ts">
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   setup() {
     return {
-      value1: ref(moment('12:08:23', 'HH:mm')),
-      value2: ref(moment('12:08:23', 'HH:mm')),
-      value3: ref(moment('12:08:23', 'HH:mm')),
+      value1: ref(dayjs('12:08:23', 'HH:mm')),
+      value2: ref(dayjs('12:08:23', 'HH:mm')),
+      value3: ref(dayjs('12:08:23', 'HH:mm')),
     };
   },
 });

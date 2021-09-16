@@ -3,12 +3,12 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Moment } from 'moment';
+import dayjs from 'dayjs';
 
 export default defineComponent({
   setup() {
-    const value = ref<Moment>();
-    const onPanelChange = (value: Moment, mode: string) => {
+    const value = ref<dayjs.Dayjs>();
+    const onPanelChange = (value: dayjs.Dayjs, mode: string) => {
       console.log(value, mode);
     };
 
