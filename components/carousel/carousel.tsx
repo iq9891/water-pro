@@ -130,7 +130,7 @@ const Carousel = defineComponent({
       });
       muSlots.default = () => defNode;
       if (this.preivewPageable) {
-        muSlots.customPaging = props => pageNode[props.i];
+        muSlots.customPaging = (props) => pageNode[props.i];
       }
     }
 

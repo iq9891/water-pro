@@ -163,7 +163,7 @@ function defaultFilterOption(
   path: CascaderOptionType[],
   names: FilledFieldNamesType,
 ) {
-  return path.some(option => option[names.label].indexOf(inputValue) > -1);
+  return path.some((option) => option[names.label].indexOf(inputValue) > -1);
 }
 
 function defaultSortFilteredOption(
@@ -197,7 +197,7 @@ function flattenTree(
   const names: FilledFieldNamesType = getFilledFieldNames(props);
   let flattenOptions = [];
   const childrenName = names.children;
-  options.forEach(option => {
+  options.forEach((option) => {
     const path = ancestor.concat(option);
     if (props.changeOnSelect || !option[childrenName] || !option[childrenName].length) {
       flattenOptions.push(path);
@@ -364,7 +364,7 @@ const Cascader = defineComponent({
         (o, level) => o[names.value] === unwrappedValue[level],
         { childrenKeyName: names.children },
       );
-      const labels = selectedOptions.map(o => o[names.label]);
+      const labels = selectedOptions.map((o) => o[names.label]);
       return displayRender({ labels, selectedOptions });
     },
 
@@ -404,7 +404,7 @@ const Cascader = defineComponent({
         let matchCount = 0;
 
         // Perf optimization to filter items only below the limit
-        flattenOptions.some(path => {
+        flattenOptions.some((path) => {
           const match = filter(inputValue, path, names);
           if (match) {
             filtered.push(path);
@@ -418,19 +418,19 @@ const Cascader = defineComponent({
           'Cascader',
           "'limit' of showSearch in Cascader should be positive number or false.",
         );
-        filtered = flattenOptions.filter(path => filter(inputValue, path, names));
+        filtered = flattenOptions.filter((path) => filter(inputValue, path, names));
       }
 
       filtered.sort((a, b) => sort(a, b, inputValue, names));
 
       if (filtered.length > 0) {
-        return filtered.map(path => {
+        return filtered.map((path) => {
           return {
             __IS_FILTERED_OPTION: true,
             path,
             [names.label]: render({ inputValue, path, prefixCls, names }),
-            [names.value]: path.map(o => o[names.value]),
-            disabled: path.some(o => !!o.disabled),
+            [names.value]: path.map((o) => o[names.value]),
+            disabled: path.some((o) => !!o.disabled),
           };
         });
       }

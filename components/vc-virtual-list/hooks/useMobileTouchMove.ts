@@ -83,7 +83,7 @@ export default function useMobileTouchMove(
   onMounted(() => {
     watch(
       inVirtual,
-      val => {
+      (val) => {
         listRef.value.removeEventListener(
           'touchstart',
           onTouchStart,

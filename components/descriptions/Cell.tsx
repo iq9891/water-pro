@@ -14,7 +14,7 @@ interface CellProps extends HTMLAttributes {
   colon?: boolean;
 }
 
-const Cell: FunctionalComponent<CellProps> = props => {
+const Cell: FunctionalComponent<CellProps> = (props) => {
   const { itemPrefixCls, component, span, bordered, label, content, colon } = props;
   const Component = component as any;
   if (bordered) {

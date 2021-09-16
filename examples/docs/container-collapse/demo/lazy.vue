@@ -1,6 +1,6 @@
 <template>
-    <a-space direction="vertical" style="width: 100%;">
-    <AButton @click="expandHandle">{{loading ? '加载中' : value ? '收起' : '展开'}}</AButton>
+  <a-space direction="vertical" style="width: 100%">
+    <AButton @click="expandHandle">{{ loading ? '加载中' : value ? '收起' : '展开' }}</AButton>
     <AContainerCollapse
       text="water pro"
       v-model:value="value"
@@ -13,7 +13,6 @@
     </AContainerCollapse>
   </a-space>
 </template>
-
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
@@ -34,7 +33,7 @@ export default defineComponent({
       },
       value,
       loading,
-    }
-  }
+    };
+  },
 });
 </script>

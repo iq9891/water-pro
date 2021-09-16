@@ -74,11 +74,11 @@ const BasicLayout = defineComponent({
   setup(props, { slots }) {
     const siders = ref<string[]>([]);
     const siderHookProvider: SiderHookProvider = {
-      addSider: id => {
+      addSider: (id) => {
         siders.value = [...siders.value, id];
       },
-      removeSider: id => {
-        siders.value = siders.value.filter(currentId => currentId !== id);
+      removeSider: (id) => {
+        siders.value = siders.value.filter((currentId) => currentId !== id);
       },
     };
     provide('siderHook', siderHookProvider);

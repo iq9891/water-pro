@@ -34,7 +34,7 @@ const tagOptions = [
     label: '票大大',
     value: 480,
   },
-]
+];
 
 export default defineComponent({
   setup() {
@@ -44,12 +44,12 @@ export default defineComponent({
         tagNewOptions.value = tagOptions.slice();
       }, 1000);
     });
-    const beforeOk = ({params, success}) => {
+    const beforeOk = ({ params, success }) => {
       setTimeout(() => {
         console.log(params, '8');
         success(true);
       }, 1200);
-    }
+    };
     return {
       tags: ref([80, 380]),
       tagNewOptions,

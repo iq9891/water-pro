@@ -38,13 +38,11 @@ export default defineComponent({
   },
   setup(props) {
     const { prefixCls: prefixClsNew } = useConfigInject('loading', props);
-    const getStyle = computed(
-      (): CSSProperties => {
-        const { background } = props;
-        const bgColor = background ? background : 'rgba(240, 242, 245, 0.6)';
-        return { background: bgColor };
-      },
-    );
+    const getStyle = computed((): CSSProperties => {
+      const { background } = props;
+      const bgColor = background ? background : 'rgba(240, 242, 245, 0.6)';
+      return { background: bgColor };
+    });
 
     return { getStyle, prefixClsNew };
   },

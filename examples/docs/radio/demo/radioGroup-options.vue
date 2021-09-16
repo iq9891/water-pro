@@ -15,16 +15,39 @@
     <a-radio-group size="small" type="button" v-model:value="value2" :options="options" disabled />
     <br />
     <br />
-    <a-radio-group size="large" type="button" v-model:value="value3" :options="optionsWithDisabled" />
+    <a-radio-group
+      size="large"
+      type="button"
+      v-model:value="value3"
+      :options="optionsWithDisabled"
+    />
     <br />
     <br />
-    <a-radio-group type="button" buttonStyle="solid" :options="plainOptions" v-model:value="value1" />
+    <a-radio-group
+      type="button"
+      buttonStyle="solid"
+      :options="plainOptions"
+      v-model:value="value1"
+    />
     <br />
     <br />
-    <a-radio-group size="small" type="button" buttonStyle="solid" v-model:value="value2" :options="options" disabled />
+    <a-radio-group
+      size="small"
+      type="button"
+      buttonStyle="solid"
+      v-model:value="value2"
+      :options="options"
+      disabled
+    />
     <br />
     <br />
-    <a-radio-group size="large" type="button" buttonStyle="solid" v-model:value="value3" :options="optionsWithDisabled" />
+    <a-radio-group
+      size="large"
+      type="button"
+      buttonStyle="solid"
+      v-model:value="value3"
+      :options="optionsWithDisabled"
+    />
   </div>
 </template>
 <script lang="ts">

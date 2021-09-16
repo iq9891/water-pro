@@ -1,11 +1,6 @@
 /** @format */
 
-import type {
-  TableProProps,
-  TableActionType,
-  FetchParams,
-  BasicColumn,
-} from '../types/table';
+import type { TableProProps, TableActionType, FetchParams, BasicColumn } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import type { DynamicProps } from '../../../_util/types/utils';
 
@@ -24,10 +19,7 @@ type UseTableMethod = TableActionType & {
 
 export function useTable(
   tableProps?: Props,
-): [
-  (instance: TableActionType, formInstance: UseTableMethod) => void,
-  UseTableMethod,
-] {
+): [(instance: TableActionType, formInstance: UseTableMethod) => void, UseTableMethod] {
   const tableRef = ref<Nullable<TableActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
   const formRef = ref<Nullable<UseTableMethod>>(null);
@@ -132,7 +124,7 @@ export function useTable(
       return toRaw(getTableInstance().getCacheColumns());
     },
     getForm: () => {
-      return (unref(formRef) as unknown) as FormActionType;
+      return unref(formRef) as unknown as FormActionType;
     },
     setShowPagination: async (show: boolean) => {
       getTableInstance().setShowPagination(show);

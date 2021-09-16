@@ -155,11 +155,7 @@ const Calendar = defineComponent({
       return (
         <div class={`${sPrefixCls}-month`}>
           <div class={`${sPrefixCls}-value`}>
-            {
-              dayjs(value)
-                .localeData()
-                .monthsShort()[col + row * 3]
-            }
+            {dayjs(value).localeData().monthsShort()[col + row * 3]}
           </div>
           <div class={`${sPrefixCls}-content`}>{monthCellRender({ current: value })}</div>
         </div>

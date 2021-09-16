@@ -1,12 +1,7 @@
 /** @format */
 
 import type { NamePath } from '../../../form/interface';
-import type {
-  FormProps,
-  FormActionType,
-  UseFormReturnType,
-  FormSchema,
-} from '../types/form';
+import type { FormProps, FormActionType, UseFormReturnType, FormSchema } from '../types/form';
 import type { DynamicProps } from '../../../_util/types/utils';
 
 import { ref, onUnmounted, unref, nextTick, watch } from 'vue';
@@ -15,9 +10,7 @@ import { isProdMode } from '../../../_util/env';
 import warning from '../../../_util/warning';
 import { getDynamicProps } from '../../../_util/use';
 
-export declare type ValidateFields = (
-  nameList?: NamePath[],
-) => Promise<Recordable>;
+export declare type ValidateFields = (nameList?: NamePath[]) => Promise<Recordable>;
 
 export type UseFormProps = Partial<DynamicProps<FormProps>>;
 
@@ -60,10 +53,7 @@ export function useForm(props?: UseFormProps): UseFormReturnType {
   }
 
   const methods: FormActionType = {
-    scrollToField: async (
-      name: NamePath,
-      options?: ScrollOptions | undefined,
-    ) => {
+    scrollToField: async (name: NamePath, options?: ScrollOptions | undefined) => {
       const form = await getForm();
       form.scrollToField(name, options);
     },
@@ -75,10 +65,7 @@ export function useForm(props?: UseFormProps): UseFormReturnType {
       const form = await getForm();
       form.resetAllModel();
     },
-    updateSchema: async (
-      data: Partial<FormSchema> | Partial<FormSchema>[],
-      replace = false,
-    ) => {
+    updateSchema: async (data: Partial<FormSchema> | Partial<FormSchema>[], replace = false) => {
       const form = await getForm();
       form.updateSchema(data, replace);
     },

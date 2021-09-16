@@ -51,7 +51,7 @@ const md = {
   # When To Use
 
   When the task is complicated or has a certain sequence in the series of subtasks, we can decompose it into several steps to make things easier.
-  ## Examples 
+  ## Examples
   `,
 };
 export default {

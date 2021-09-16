@@ -34,16 +34,13 @@ export function useEventListener({
   if (el) {
     const element: Ref<Element> = ref(el as Element);
 
-    const [handler] = isDebounce
-      ? useDebounce(listener, wait)
-      : useThrottle(listener, wait);
+    const [handler] = isDebounce ? useDebounce(listener, wait) : useThrottle(listener, wait);
     const realHandler = wait ? handler : listener;
     const removeEventListener = (e: Element) => {
       isAddRef.value = true;
       e.removeEventListener(name, realHandler, options);
     };
-    const addEventListener = (e: Element) =>
-      e.addEventListener(name, realHandler, options);
+    const addEventListener = (e: Element) => e.addEventListener(name, realHandler, options);
 
     const removeWatch = watch(
       element,

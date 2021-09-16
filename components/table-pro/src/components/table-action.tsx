@@ -53,7 +53,7 @@ export default defineComponent({
     // });
 
     const getActions = computed(() => {
-      return (props.actions || []).map(action => {
+      return (props.actions || []).map((action) => {
         const { popConfirm } = action;
         // const size = unref(getSize);
         return {
@@ -80,7 +80,7 @@ export default defineComponent({
 
     const getAlign = computed(() => {
       const columns = (table as TableActionType)?.getColumns?.() || [];
-      const actionColumn = columns.find(item => item.flag === ACTION_COLUMN_FLAG);
+      const actionColumn = columns.find((item) => item.flag === ACTION_COLUMN_FLAG);
       return actionColumn?.align ?? 'left';
     });
 

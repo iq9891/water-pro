@@ -2,10 +2,7 @@
 
 declare module 'vue-drag-resize';
 declare module '@fe6/water-pro' {
-  export type {
-    FormSchema,
-    RenderCallbackParams,
-  } from '@fe6/water-pro'
+  export type { FormSchema, RenderCallbackParams } from '@fe6/water-pro';
   export {
     utils,
     useForm,
@@ -15,7 +12,7 @@ declare module '@fe6/water-pro' {
     notification,
     useTable,
     TableAction,
-    Button
+    Button,
   } from '@fe6/water-pro';
 }
 
@@ -75,9 +72,7 @@ declare interface ComponentElRef<T extends HTMLElement = HTMLDivElement> {
   $el: T;
 }
 
-declare type ComponentRef<
-  T extends HTMLElement = HTMLDivElement
-> = ComponentElRef<T> | null;
+declare type ComponentRef<T extends HTMLElement = HTMLDivElement> = ComponentElRef<T> | null;
 
 declare type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>;
 

@@ -12,7 +12,7 @@ function getNumberArray(num: string | number | undefined | null) {
         .toString()
         .split('')
         .reverse()
-        .map(i => {
+        .map((i) => {
           const current = Number(i);
           return isNaN(current) ? i : current;
         })

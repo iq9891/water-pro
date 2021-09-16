@@ -110,4 +110,4 @@ const ListBody = defineComponent({
   },
 });
 
-export default props => <ListBody {...props} />;
+export default (props) => <ListBody {...props} />;

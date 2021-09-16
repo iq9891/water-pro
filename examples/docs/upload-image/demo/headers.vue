@@ -14,7 +14,7 @@ export default defineComponent({
       headers: {
         authorization: 'authorization-text',
       },
-    }
-  }
+    };
+  },
 });
 </script>

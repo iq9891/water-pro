@@ -19,11 +19,9 @@ export default defineComponent({
       draggable,
     });
 
-    const getProps = computed(
-      (): ModalProps => {
-        return { ...props } as ModalProps;
-      },
-    );
+    const getProps = computed((): ModalProps => {
+      return { ...props } as ModalProps;
+    });
 
     return {
       getProps,

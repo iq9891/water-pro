@@ -52,11 +52,7 @@ export default function ({
   });
 
   watch(
-    [
-      () => unref(getSchema),
-      () => advanceState.isAdvanced,
-      () => unref(realWidthRef),
-    ],
+    [() => unref(getSchema), () => advanceState.isAdvanced, () => unref(realWidthRef)],
     () => {
       const { showAdvancedButton } = unref(getProps);
       if (showAdvancedButton) {
@@ -66,11 +62,7 @@ export default function ({
     { immediate: true },
   );
 
-  function getAdvanced(
-    itemCol: Partial<ColEx>,
-    itemColSum = 0,
-    isLastAction = false,
-  ) {
+  function getAdvanced(itemCol: Partial<ColEx>, itemColSum = 0, isLastAction = false) {
     const width = unref(realWidthRef);
 
     const mdWidth =
@@ -159,14 +151,9 @@ export default function ({
       }
     }
 
-    advanceState.actionSpan =
-      (realItemColSum % BASIC_COL_LEN) + unref(getEmptySpan);
+    advanceState.actionSpan = (realItemColSum % BASIC_COL_LEN) + unref(getEmptySpan);
 
-    getAdvanced(
-      unref(getProps).actionColOptions || { span: BASIC_COL_LEN },
-      itemColSum,
-      true,
-    );
+    getAdvanced(unref(getProps).actionColOptions || { span: BASIC_COL_LEN }, itemColSum, true);
 
     emit('advanced-change');
   }

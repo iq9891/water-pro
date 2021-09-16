@@ -59,7 +59,7 @@ export default defineComponent({
   methods: {
     getPath(path: string, params: unknown) {
       path = (path || '').replace(/^\//, '');
-      Object.keys(params).forEach(key => {
+      Object.keys(params).forEach((key) => {
         path = path.replace(`:${key}`, params[key]);
       });
       return path;
@@ -88,7 +88,7 @@ export default defineComponent({
         if (route.children && route.children.length) {
           overlay = (
             <Menu>
-              {route.children.map(child => (
+              {route.children.map((child) => (
                 <Menu.Item key={child.path || child.breadcrumbName}>
                   {itemRender({
                     route: child,

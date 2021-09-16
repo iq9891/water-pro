@@ -19,7 +19,7 @@ import abstractTooltipProps from './abstractTooltipProps';
 const splitObject = (obj: any, keys: string[]) => {
   const picked = {};
   const omitted = { ...obj };
-  keys.forEach(key => {
+  keys.forEach((key) => {
     if (obj && key in obj) {
       picked[key] = obj[key];
       delete omitted[key];
@@ -150,7 +150,7 @@ export default defineComponent({
       const placements = this.getPlacements();
       // 当前返回的位置
       const placement = Object.keys(placements).filter(
-        key =>
+        (key) =>
           placements[key].points[0] === align.points[0] &&
           placements[key].points[1] === align.points[1],
       )[0];

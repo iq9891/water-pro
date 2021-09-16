@@ -21,7 +21,7 @@ const Table = defineComponent({
     normalize(elements = []) {
       const flattenElements = flattenChildren(elements);
       const columns = [];
-      flattenElements.forEach(element => {
+      flattenElements.forEach((element) => {
         if (!element) {
           return;
         }
@@ -47,12 +47,12 @@ const Table = defineComponent({
     updateColumns(cols = []) {
       const columns = [];
       const { $slots } = this;
-      cols.forEach(col => {
+      cols.forEach((col) => {
         const { slots = {}, ...restProps } = col;
         const column = {
           ...restProps,
         };
-        Object.keys(slots).forEach(key => {
+        Object.keys(slots).forEach((key) => {
           const name = slots[key];
           if (column[key] === undefined && $slots[name]) {
             column[key] = $slots[name];
@@ -96,7 +96,7 @@ const Table = defineComponent({
   },
 });
 /* istanbul ignore next */
-Table.install = function(app: App) {
+Table.install = function (app: App) {
   app.component(Table.name, Table);
   app.component(Table.Column.name, Table.Column);
   app.component(Table.MoreHandler.name, Table.MoreHandler);

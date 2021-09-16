@@ -29,7 +29,12 @@
         </a-popconfirm>
       </div>
       <div class="example">
-        <a-transfer :data-source="[]" show-search :target-keys="[]" :render="item => item.title" />
+        <a-transfer
+          :data-source="[]"
+          show-search
+          :target-keys="[]"
+          :render="(item) => item.title"
+        />
       </div>
       <div class="site-config-provider-calendar-wrapper">
         <a-calendar :fullscreen="false" :value="dayjs()" />
@@ -73,7 +78,7 @@ export default defineComponent({
   setup() {
     const visible = ref(false);
     const locale = ref(enUS.locale);
-    watch(locale, val => {
+    watch(locale, (val) => {
       dayjs.locale(val);
     });
     const info = () => {

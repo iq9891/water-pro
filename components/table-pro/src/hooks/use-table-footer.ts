@@ -25,8 +25,7 @@ export function useTableFooter(
   const getFooterProps = computed((): Recordable | undefined => {
     const { summaryFunc, showSummary, summaryData } = unref(propsRef);
     return showSummary && !unref(getIsEmptyData)
-      ? () =>
-          h(TableFooter, { summaryFunc, summaryData, scroll: unref(scrollRef) })
+      ? () => h(TableFooter, { summaryFunc, summaryData, scroll: unref(scrollRef) })
       : undefined;
   });
 

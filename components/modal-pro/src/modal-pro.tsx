@@ -58,20 +58,14 @@ export default defineComponent({
     }
 
     // Custom title component: get title
-    const getMergeProps = computed(
-      (): ModalProps => {
-        return {
-          ...(unref(propsRef) as any),
-          ...props,
-        };
-      },
-    );
+    const getMergeProps = computed((): ModalProps => {
+      return {
+        ...(unref(propsRef) as any),
+        ...props,
+      };
+    });
 
-    const {
-      handleFullScreen,
-      getWrapClassName,
-      fullScreenRef,
-    } = useFullScreen({
+    const { handleFullScreen, getWrapClassName, fullScreenRef } = useFullScreen({
       modalWrapperRef,
       extHeightRef,
       wrapClassName: toRef(getMergeProps.value, 'wrapClassName'),
@@ -79,29 +73,25 @@ export default defineComponent({
     });
 
     // modal component does not need title
-    const getProps = computed(
-      (): ModalProps => {
-        const opt = {
-          ...unref(getMergeProps),
-          visible: unref(visibleRef),
-          title: undefined,
-        };
-        return {
-          ...opt,
-          wrapClassName: unref(getWrapClassName),
-        };
-      },
-    );
+    const getProps = computed((): ModalProps => {
+      const opt = {
+        ...unref(getMergeProps),
+        visible: unref(visibleRef),
+        title: undefined,
+      };
+      return {
+        ...opt,
+        wrapClassName: unref(getWrapClassName),
+      };
+    });
 
-    const getBindValue = computed(
-      (): Recordable => {
-        const attr = { ...attrs, ...unref(getProps) };
-        if (unref(fullScreenRef)) {
-          return omit(attr, 'height');
-        }
-        return attr;
-      },
-    );
+    const getBindValue = computed((): Recordable => {
+      const attr = { ...attrs, ...unref(getProps) };
+      if (unref(fullScreenRef)) {
+        return omit(attr, 'height');
+      }
+      return attr;
+    });
 
     const getWrapperHeight = computed(() => {
       if (unref(fullScreenRef)) return undefined;
@@ -151,7 +141,7 @@ export default defineComponent({
      */
     function setModalProps(props: Partial<ModalProps>): void {
       // Keep the last setModalProps
-      propsRef.value = deepMerge((unref(propsRef) || {} as any), props);
+      propsRef.value = deepMerge(unref(propsRef) || ({} as any), props);
       if (!Reflect.has(props, 'visible')) return;
       visibleRef.value = !!props.visible;
     }
@@ -193,61 +183,64 @@ export default defineComponent({
   },
   render() {
     const closeSlotNode = getSlot(this, 'close');
-    const closeNode = (closeSlotNode.length ? closeSlotNode : <ModalClose
-      can-fullscreen={this.getProps.canFullscreen}
-      full-screen={this.fullScreenRef}
-      onCancel={this.handleCancel}
-      onFullscreen={this.handleFullScreen}
-    />);
+    const closeNode = closeSlotNode.length ? (
+      closeSlotNode
+    ) : (
+      <ModalClose
+        can-fullscreen={this.getProps.canFullscreen}
+        full-screen={this.fullScreenRef}
+        onCancel={this.handleCancel}
+        onFullscreen={this.handleFullScreen}
+      />
+    );
 
     const titleSlotNode = getSlot(this, 'header');
     let defaultHeader = null;
     if (this.title) {
-      defaultHeader = <ModalHeader
-        { ...this.getMergeProps }
-        { ...this.$attrs}
-        onDblclick={this.handleTitleDbClick}
-      />;
+      defaultHeader = (
+        <ModalHeader
+          {...this.getMergeProps}
+          {...this.$attrs}
+          onDblclick={this.handleTitleDbClick}
+        />
+      );
     }
 
-    const titleNode = (titleSlotNode.length ? titleSlotNode : defaultHeader)
+    const titleNode = titleSlotNode.length ? titleSlotNode : defaultHeader;
 
     const footerSlotNode = getSlot(this, 'footer');
-    const footerNode = (footerSlotNode.length ? footerSlotNode : <ModalFooter
-      { ...this.getProps }
-      onOk={this.handleOk}
-      onCancel={this.handleCancel}
-    />);
+    const footerNode = footerSlotNode.length ? (
+      footerSlotNode
+    ) : (
+      <ModalFooter {...this.getProps} onOk={this.handleOk} onCancel={this.handleCancel} />
+    );
 
     const slots = {
       closeIcon: () => closeNode,
       title: () => titleNode,
       footer: () => footerNode,
-    }
+    };
 
-    return (<AModalBase
-      { ...this.getBindValue }
-      onCancel={this.handleCancel}
-      v-slots={slots}
-    >
-      <ModalWrapper
-        ref="modalWrapperRef"
-        use-wrapper={this.getProps.useWrapper}
-        footer-offset={this.wrapperFooterOffset}
-        full-screen={this.fullScreenRef}
-        loading={this.getProps.loading}
-        loading-tip={this.getProps.loadingTip}
-        min-height={this.getProps.minHeight}
-        height={this.getWrapperHeight}
-        visible={this.visibleRef}
-        scroll-style={this.scrollStyle}
-        modal-footer-height={this.footer !== undefined && !this.footer ? 0 : undefined}
-        { ...omit(this.getProps.wrapperProps, 'visible', 'height') }
-        onExtHeight={this.handleExtHeight}
-        onHeightChange={this.handleHeightChange}
-        v-slots={this.$slots}
-      >
-      </ModalWrapper>
-    </AModalBase>)
-  }
+    return (
+      <AModalBase {...this.getBindValue} onCancel={this.handleCancel} v-slots={slots}>
+        <ModalWrapper
+          ref="modalWrapperRef"
+          use-wrapper={this.getProps.useWrapper}
+          footer-offset={this.wrapperFooterOffset}
+          full-screen={this.fullScreenRef}
+          loading={this.getProps.loading}
+          loading-tip={this.getProps.loadingTip}
+          min-height={this.getProps.minHeight}
+          height={this.getWrapperHeight}
+          visible={this.visibleRef}
+          scroll-style={this.scrollStyle}
+          modal-footer-height={this.footer !== undefined && !this.footer ? 0 : undefined}
+          {...omit(this.getProps.wrapperProps, 'visible', 'height')}
+          onExtHeight={this.handleExtHeight}
+          onHeightChange={this.handleHeightChange}
+          v-slots={this.$slots}
+        ></ModalWrapper>
+      </AModalBase>
+    );
+  },
 });

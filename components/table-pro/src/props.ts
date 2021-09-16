@@ -137,9 +137,7 @@ export const basicProps = {
     default: null,
   },
   title: {
-    type: [String, Function] as PropType<
-      string | ((data: Recordable) => string)
-    >,
+    type: [String, Function] as PropType<string | ((data: Recordable) => string)>,
     default: null,
   },
   titleHelpMessage: {
@@ -151,9 +149,7 @@ export const basicProps = {
     default: null,
   },
   rowKey: {
-    type: [String, Function] as PropType<
-      string | ((record: Recordable) => string)
-    >,
+    type: [String, Function] as PropType<string | ((record: Recordable) => string)>,
     default: '',
   },
   bordered: PropTypes.bool,
@@ -163,9 +159,7 @@ export const basicProps = {
   },
   loading: PropTypes.bool,
   rowClassName: {
-    type: Function as PropType<
-      (record: TableCustomRecord<any>, index: number) => string
-    >,
+    type: Function as PropType<(record: TableCustomRecord<any>, index: number) => string>,
   },
   scroll: {
     type: Object as PropType<{ x: number | true; y: number }>,

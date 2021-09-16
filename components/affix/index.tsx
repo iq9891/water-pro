@@ -180,7 +180,7 @@ const Affix = defineComponent({
     });
     watch(
       () => props.target,
-      val => {
+      (val) => {
         let newTarget = null;
         if (val) {
           newTarget = val() || null;

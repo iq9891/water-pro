@@ -16,7 +16,7 @@ import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
 
 import Button from '@fe6/water-pro/es/button/index';
 
-const tagModalListApi = ({params, success}) => {
+const tagModalListApi = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
@@ -47,7 +47,7 @@ const tagModalListApi = ({params, success}) => {
       },
     ]);
   }, 1000);
-}
+};
 
 export default defineComponent({
   setup() {
@@ -58,23 +58,27 @@ export default defineComponent({
         const btnProps: any = {
           type: 'link',
           onClick: () => open('http://water.chjgo.com/'),
-          style: 'margin-left: 16px'
-        }
-        return (<div>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-        </div>)
+          style: 'margin-left: 16px',
+        };
+        return (
+          <div>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+          </div>
+        );
       },
       beforeCloseFn: () => {
         return new Promise((resolve) => {
           setTimeout(() => {
             resolve(true);
           }, 1000);
-        })
+        });
       },
     };
   },

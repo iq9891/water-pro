@@ -1,7 +1,5 @@
 <template>
-  <a-table-pro
-    @register="searchTableRegister"
-  />
+  <a-table-pro @register="searchTableRegister" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -15,7 +13,7 @@ const columns = [
   },
   {
     title: 'Age',
-    dataIndex: 'age', 
+    dataIndex: 'age',
     key: 'age',
   },
   {
@@ -25,7 +23,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
@@ -40,22 +38,22 @@ export function demoListApi({params, success}) {
   }, 1000);
 }
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
         label: 'water',
-        value: 90
+        value: 90,
       },
       {
         label: 'antd',
-        value: 80
-      }
+        value: 80,
+      },
     ]);
   }, 1000);
 };
 
-const tagModalListApi = ({params, success}) => {
+const tagModalListApi = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
@@ -86,7 +84,7 @@ const tagModalListApi = ({params, success}) => {
       },
     ]);
   }, 1000);
-}
+};
 
 export function getFormConfig(): Partial<FormProps> {
   return {

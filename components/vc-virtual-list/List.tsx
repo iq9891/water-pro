@@ -46,7 +46,7 @@ function renderChildren<T>(
     });
     const key = getKey(item);
     return (
-      <Item key={key} setRef={ele => setNodeRef(item, ele as HTMLElement)}>
+      <Item key={key} setRef={(ele) => setNodeRef(item, ele as HTMLElement)}>
         {node}
       </Item>
     );
@@ -241,8 +241,8 @@ const List = defineComponent({
       useVirtual,
       isScrollAtTop,
       isScrollAtBottom,
-      offsetY => {
-        syncScrollTop(top => {
+      (offsetY) => {
+        syncScrollTop((top) => {
           const newTop = top + offsetY;
           return newTop;
         });

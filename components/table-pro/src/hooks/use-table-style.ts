@@ -6,10 +6,7 @@ import type { TableProProps, TableCustomRecord } from '../types/table';
 import { unref } from 'vue';
 import { isFunction } from '@fe6/shared';
 
-export function useTableStyle(
-  propsRef: ComputedRef<TableProProps>,
-  prefixCls: string,
-) {
+export function useTableStyle(propsRef: ComputedRef<TableProProps>, prefixCls: string) {
   function getRowClassName(record: TableCustomRecord, index: number) {
     const { striped, rowClassName } = unref(propsRef);
     if (!striped) return;

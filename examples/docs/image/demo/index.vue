@@ -24,7 +24,7 @@ const md = {
 - 需要展示图片时使用。
 - 加载大图时显示 loading 或加载失败时容错处理。
           ## 代码演示`,
-  us: `# Image 
+  us: `# Image
           TODO`,
 };
 export default {

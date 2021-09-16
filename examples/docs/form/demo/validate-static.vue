@@ -67,7 +67,7 @@ export default defineComponent({
       if (value === '') {
         return Promise.reject(new Error('Please input the password again'));
       } else if (value !== formState.pass) {
-        return Promise.reject(new Error('Two inputs don\'t match!'));
+        return Promise.reject(new Error("Two inputs don't match!"));
       } else {
         return Promise.resolve();
       }

@@ -10,5 +10,5 @@ export const navTypeName = {
   },
   utils: {
     Utils: '工具方法',
-  }
+  },
 };

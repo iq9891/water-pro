@@ -40,14 +40,14 @@ export function formatTimeStr(duration: number, format: string) {
   let leftDuration: number = duration;
 
   const escapeRegex = /\[[^\]]*\]/g;
-  const keepList = (format.match(escapeRegex) || []).map(str => str.slice(1, -1));
+  const keepList = (format.match(escapeRegex) || []).map((str) => str.slice(1, -1));
   const templateText = format.replace(escapeRegex, '[]');
 
   const replacedText = timeUnits.reduce((current, [name, unit]) => {
     if (current.indexOf(name) !== -1) {
       const value = Math.floor(leftDuration / unit);
       leftDuration -= value * unit;
-      return current.replace(new RegExp(`${name}+`, 'g'), match => {
+      return current.replace(new RegExp(`${name}+`, 'g'), (match) => {
         const len = match.length;
         return padStart(value.toString(), len, '0');
       });

@@ -9,7 +9,7 @@ const FilterDropdownMenuWrapper: FunctionalComponent<FilterDropdownMenuWrapperPr
   { slots },
 ) => {
   return (
-    <div class={props.class} onClick={e => e.stopPropagation()}>
+    <div class={props.class} onClick={(e) => e.stopPropagation()}>
       {slots.default?.()}
     </div>
   );

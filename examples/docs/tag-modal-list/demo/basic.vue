@@ -15,7 +15,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-const tagModalListApi = ({params, success}) => {
+const tagModalListApi = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
@@ -46,7 +46,7 @@ const tagModalListApi = ({params, success}) => {
       },
     ]);
   }, 1000);
-}
+};
 
 export default defineComponent({
   setup() {
@@ -54,7 +54,7 @@ export default defineComponent({
     const onReload = async () => {
       await tagModalNode.value.getTagDatas(true);
       console.log(tagModalNode.value, 'tagModalNode');
-    }
+    };
     return {
       tagModalNode,
       onReload,

@@ -6,10 +6,7 @@ import { VNode, defineComponent, createVNode, render, reactive, h } from 'vue';
 
 import Loading from './loading';
 
-export function createLoading(
-  props?: Partial<LoadingProps>,
-  target?: HTMLElement,
-) {
+export function createLoading(props?: Partial<LoadingProps>, target?: HTMLElement) {
   let vm: Nullable<VNode> = null;
   const data = reactive({
     tip: '',

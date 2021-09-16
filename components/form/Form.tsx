@@ -115,10 +115,10 @@ const Form = defineComponent({
       this.$emit('submit', e);
       const res = this.validateFields();
       res
-        .then(values => {
+        .then((values) => {
           this.$emit('finish', values);
         })
-        .catch(errors => {
+        .catch((errors) => {
           this.handleFinishFailed(errors);
         });
     },
@@ -129,7 +129,8 @@ const Form = defineComponent({
         return this.fields;
       } else {
         return this.fields.filter(
-          field => namePathList.findIndex(namePath => isEqualName(namePath, field.fieldName)) > -1,
+          (field) =>
+            namePathList.findIndex((namePath) => isEqualName(namePath, field.fieldName)) > -1,
         );
       }
     },
@@ -138,12 +139,12 @@ const Form = defineComponent({
         warning(false, 'Form', 'model is required for resetFields to work.');
         return;
       }
-      this.getFieldsByNameList(name).forEach(field => {
+      this.getFieldsByNameList(name).forEach((field) => {
         field.resetField();
       });
     },
     clearValidate(name: NamePath) {
-      this.getFieldsByNameList(name).forEach(field => {
+      this.getFieldsByNameList(name).forEach((field) => {
         field.clearValidate();
       });
     },
@@ -187,7 +188,7 @@ const Form = defineComponent({
       } else {
         const res: any = {};
         toArray(nameList as NamePath[]).forEach(
-          namePath => (res[namePath as string] = values[namePath as string]),
+          (namePath) => (res[namePath as string] = values[namePath as string]),
         );
         return res;
       }
@@ -213,7 +214,7 @@ const Form = defineComponent({
         errors: string[];
       }>[] = [];
 
-      this.fields.forEach(field => {
+      this.fields.forEach((field) => {
         // Add field if not provide `nameList`
         if (!provideNameList) {
           namePathList.push(field.getNamePath());
@@ -260,8 +261,8 @@ const Form = defineComponent({
           }
           return Promise.reject([]);
         })
-        .catch(results => {
-          const errorList = results.filter(result => result && result.errors.length);
+        .catch((results) => {
+          const errorList = results.filter((result) => result && result.errors.length);
           return Promise.reject({
             values: this.getFieldsValue(namePathList),
             errorFields: errorList,
@@ -270,7 +271,7 @@ const Form = defineComponent({
         });
 
       // Do not throw in console
-      returnPromise.catch(e => e);
+      returnPromise.catch((e) => e);
 
       return returnPromise;
     },

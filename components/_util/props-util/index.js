@@ -9,7 +9,7 @@ import { keys } from '@fe6/shared';
 //   return match ? match[1] : '';
 // }
 
-const splitAttrs = attrs => {
+const splitAttrs = (attrs) => {
   const allAttrs = Object.keys(attrs);
   const eventAttrs = {};
   const onEvents = {};
@@ -29,7 +29,7 @@ const parseStyleText = (cssText = '', camel) => {
   const res = {};
   const listDelimiter = /;(?![^(]*\))/g;
   const propertyDelimiter = /:(.+)/;
-  cssText.split(listDelimiter).forEach(function(item) {
+  cssText.split(listDelimiter).forEach(function (item) {
     if (item) {
       const tmp = item.split(propertyDelimiter);
       if (tmp.length > 1) {
@@ -49,7 +49,7 @@ const slotHasProp = (slot, prop) => {
   return hasProp(slot, prop);
 };
 
-const getScopedSlots = ele => {
+const getScopedSlots = (ele) => {
   return (ele.data && ele.data.scopedSlots) || {};
 };
 
@@ -78,7 +78,7 @@ const getSlots = (self, options = {}) => {
 const flattenChildren = (children = [], filterEmpty = true) => {
   const temp = Array.isArray(children) ? children : [children];
   const res = [];
-  temp.forEach(child => {
+  temp.forEach((child) => {
     if (Array.isArray(child)) {
       res.push(...flattenChildren(child, filterEmpty));
     } else if (child && child.type === Fragment) {
@@ -111,7 +111,7 @@ const getSlot = (self, name = 'default', options = {}) => {
   }
 };
 
-const getAllChildren = ele => {
+const getAllChildren = (ele) => {
   let componentOptions = ele.componentOptions || {};
   if (ele.$vnode) {
     componentOptions = ele.$vnode.componentOptions || {};
@@ -121,18 +121,18 @@ const getAllChildren = ele => {
 const getSlotOptions = () => {
   throw Error('使用 .type 直接取值');
 };
-const findDOMNode = instance => {
+const findDOMNode = (instance) => {
   let node = instance && (instance.$el || instance);
   while (node && !node.tagName) {
     node = node.nextSibling;
   }
   return node;
 };
-const getOptionProps = instance => {
+const getOptionProps = (instance) => {
   const res = {};
   if (instance.$ && instance.$.vnode) {
     const props = instance.$.vnode.props || {};
-    Object.keys(instance.$props).forEach(k => {
+    Object.keys(instance.$props).forEach((k) => {
       const v = instance.$props[k];
       const hyphenateKey = hyphenate(k);
       if (v !== undefined || hyphenateKey in props) {
@@ -142,11 +142,11 @@ const getOptionProps = instance => {
   } else if (isVNode(instance) && typeof instance.type === 'object') {
     const originProps = instance.props || {};
     const props = {};
-    Object.keys(originProps).forEach(key => {
+    Object.keys(originProps).forEach((key) => {
       props[camelize(key)] = originProps[key];
     });
     const options = instance.type.props || {};
-    Object.keys(options).forEach(k => {
+    Object.keys(options).forEach((k) => {
       const v = resolvePropValue(options, props, k, props[k]);
       if (v !== undefined || k in props) {
         res[k] = v;
@@ -208,7 +208,7 @@ const getComponentFromProp = (instance, prop, options = instance, execute = true
     }
     const slotsProp = [];
     const componentOptions = instance.componentOptions || {};
-    (componentOptions.children || []).forEach(child => {
+    (componentOptions.children || []).forEach((child) => {
       if (child.data && child.data.slot === prop) {
         if (child.data.attrs) {
           delete child.data.attrs.slot;
@@ -224,7 +224,7 @@ const getComponentFromProp = (instance, prop, options = instance, execute = true
   }
 };
 
-const getAllProps = ele => {
+const getAllProps = (ele) => {
   let props = getOptionProps(ele);
   if (ele.$) {
     props = { ...props, ...this.$attrs };
@@ -234,17 +234,17 @@ const getAllProps = ele => {
   return props;
 };
 
-const getPropsData = ins => {
+const getPropsData = (ins) => {
   const vnode = ins.$ ? ins.$ : ins;
   const res = {};
   const originProps = vnode.props || {};
   const props = {};
-  Object.keys(originProps).forEach(key => {
+  Object.keys(originProps).forEach((key) => {
     props[camelize(key)] = originProps[key];
   });
   const options = isPlainObject(vnode.type) ? vnode.type.props : {};
   options &&
-    Object.keys(options).forEach(k => {
+    Object.keys(options).forEach((k) => {
       const v = resolvePropValue(options, props, k, props[k]);
       if (k in props) {
         // 仅包含 props，不包含默认值
@@ -257,7 +257,7 @@ const getValueByProp = (ele, prop) => {
   return getPropsData(ele)[prop];
 };
 
-const getAttrs = ele => {
+const getAttrs = (ele) => {
   let data = ele.data;
   if (ele.$vnode) {
     data = ele.$vnode.data;
@@ -265,7 +265,7 @@ const getAttrs = ele => {
   return data ? data.attrs || {} : {};
 };
 
-const getKey = ele => {
+const getKey = (ele) => {
   let key = ele.key;
   return key;
 };
@@ -303,13 +303,13 @@ export function getClass(ele) {
   let tempCls = props.class || {};
   let cls = {};
   if (typeof tempCls === 'string') {
-    tempCls.split(' ').forEach(c => {
+    tempCls.split(' ').forEach((c) => {
       cls[c.trim()] = true;
     });
   } else if (Array.isArray(tempCls)) {
     classNames(tempCls)
       .split(' ')
-      .forEach(c => {
+      .forEach((c) => {
         cls[c.trim()] = true;
       });
   } else {
@@ -325,7 +325,7 @@ export function getStyle(ele, camel) {
   } else if (camel && style) {
     // 驼峰化
     const res = {};
-    Object.keys(style).forEach(k => (res[camelize(k)] = style[k]));
+    Object.keys(style).forEach((k) => (res[camelize(k)] = style[k]));
     return res;
   }
   return style;
@@ -353,7 +353,7 @@ export function isStringElement(c) {
 
 export function filterEmpty(children = []) {
   const res = [];
-  children.forEach(child => {
+  children.forEach((child) => {
     if (Array.isArray(child)) {
       res.push(...child);
     } else if (child.type === Fragment) {
@@ -362,10 +362,10 @@ export function filterEmpty(children = []) {
       res.push(child);
     }
   });
-  return res.filter(c => !isEmptyElement(c));
+  return res.filter((c) => !isEmptyElement(c));
 }
 const initDefaultProps = (propTypes, defaultProps) => {
-  Object.keys(defaultProps).forEach(k => {
+  Object.keys(defaultProps).forEach((k) => {
     if (propTypes[k]) {
       propTypes[k].def && (propTypes[k] = propTypes[k].def(defaultProps[k]));
     } else {

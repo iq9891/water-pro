@@ -11,7 +11,7 @@
           </a-badge>
         </router-link>
         <a-select
-          style="float:right;margin: 15px 16px 0 0;width: 200px"
+          style="float: right; margin: 15px 16px 0 0; width: 200px"
           :placeholder="`搜索${selPlaceHolder}...`"
           v-model:value="searchValue"
           showSearch
@@ -28,7 +28,11 @@
             <span class="gh-text">Star</span>
           </a>
         </span>
-        <a style="float:right;margin: 20px 0 0 64px;" href="https://www.npmjs.org/package/@fe6/water-pro" target="_blank">
+        <a
+          style="float: right; margin: 20px 0 0 64px"
+          href="https://www.npmjs.org/package/@fe6/water-pro"
+          target="_blank"
+        >
           <img src="https://img.shields.io/npm/v/@fe6/water-pro.svg?style=flat-square" />
         </a>
         <a-menu :selectedKeys="selectedKeys" mode="horizontal" class="menu-site" id="nav">
@@ -65,10 +69,10 @@ const options = (type) => {
     newOpts.push({
       value: drKey,
       label: allNewDemo[drKey].subtitle,
-    })
+    });
   });
   return newOpts;
-}
+};
 
 export default {
   inject: {
@@ -85,22 +89,25 @@ export default {
   },
   setup() {
     const { currentRoute } = useRouter();
-    const {
-      pageTrueType,
-    } = getPageType(unref(currentRoute).path);
+    const { pageTrueType } = getPageType(unref(currentRoute).path);
     const selectedKeys = ref([pageTrueType]);
     const searchValue = ref(null);
     const selOpts = ref(options(pageTrueType));
     const selPlaceHolder = ref(selDefPlaceHolder[pageTrueType]);
-    const filteredOptions = computed(() => selOpts.value.filter(o => searchValue.value ? !searchValue.value.includes(o.value) : o.value));
-    watch(() => currentRoute.value.path, (newPagePath) => {
-      const {
-        pageTrueType: newPageTrueType
-      } = getPageType(newPagePath);
-      selectedKeys.value = [newPageTrueType];
-      selPlaceHolder.value = selDefPlaceHolder[newPageTrueType];
-      selOpts.value = options(newPageTrueType);
-    })
+    const filteredOptions = computed(() =>
+      selOpts.value.filter((o) =>
+        searchValue.value ? !searchValue.value.includes(o.value) : o.value,
+      ),
+    );
+    watch(
+      () => currentRoute.value.path,
+      (newPagePath) => {
+        const { pageTrueType: newPageTrueType } = getPageType(newPagePath);
+        selectedKeys.value = [newPageTrueType];
+        selPlaceHolder.value = selDefPlaceHolder[newPageTrueType];
+        selOpts.value = options(newPageTrueType);
+      },
+    );
     return {
       selectedKeys,
       searchValue,
@@ -110,12 +117,12 @@ export default {
         if (searchValue.value) {
           const newPath = hyphenate(searchValue.value);
           router.push({
-            path: `${newPath || searchValue.value}-cn`
+            path: `${newPath || searchValue.value}-cn`,
           });
           searchValue.value = null;
         }
-      }
-    }
-  }
+      },
+    };
+  },
 };
 </script>

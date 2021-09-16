@@ -1,24 +1,23 @@
 /* eslint-disable prefer-rest-params */
 function eventListener(method, elements, events, fn, options = {}) {
+  // Normalize array
+  if (elements instanceof HTMLCollection || elements instanceof NodeList) {
+    elements = Array.from(elements);
+  } else if (!Array.isArray(elements)) {
+    elements = [elements];
+  }
 
-    // Normalize array
-    if (elements instanceof HTMLCollection || elements instanceof NodeList) {
-        elements = Array.from(elements);
-    } else if (!Array.isArray(elements)) {
-        elements = [elements];
+  if (!Array.isArray(events)) {
+    events = [events];
+  }
+
+  for (const el of elements) {
+    for (const ev of events) {
+      el[method](ev, fn, { capture: false, ...options });
     }
+  }
 
-    if (!Array.isArray(events)) {
-        events = [events];
-    }
-
-    for (const el of elements) {
-        for (const ev of events) {
-            el[method](ev, fn, {capture: false, ...options});
-        }
-    }
-
-    return Array.prototype.slice.call(arguments, 1);
+  return Array.prototype.slice.call(arguments, 1);
 }
 
 /**
@@ -47,9 +46,9 @@ export const off = eventListener.bind(null, 'removeEventListener');
  * @returns {Element | null} The element.
  */
 export function createElementFromString(html) {
-    const div = document.createElement('div');
-    div.innerHTML = html.trim();
-    return div.firstElementChild;
+  const div = document.createElement('div');
+  div.innerHTML = html.trim();
+  return div.firstElementChild;
 }
 
 /**
@@ -68,40 +67,36 @@ export function createElementFromString(html) {
  */
 
 export function createFromTemplate(str) {
+  // Removes an attribute from a HTMLElement and returns the value.
+  const removeAttribute = (el, name) => {
+    const value = el.getAttribute(name);
+    el.removeAttribute(name);
+    return value;
+  };
 
-    // Removes an attribute from a HTMLElement and returns the value.
-    const removeAttribute = (el, name) => {
-        const value = el.getAttribute(name);
-        el.removeAttribute(name);
-        return value;
-    };
+  // Recursive function to resolve template
+  const resolve = (element, base = {}) => {
+    // Check key and container attribute
+    const con = removeAttribute(element, ':obj');
+    const key = removeAttribute(element, ':ref');
+    const subtree = con ? (base[con] = {}) : base;
 
-    // Recursive function to resolve template
-    const resolve = (element, base = {}) => {
+    // Check and save element
+    key && (base[key] = element);
+    for (const child of Array.from(element.children)) {
+      const arr = removeAttribute(child, ':arr');
+      const sub = resolve(child, arr ? {} : subtree);
 
-        // Check key and container attribute
-        const con = removeAttribute(element, ':obj');
-        const key = removeAttribute(element, ':ref');
-        const subtree = con ? (base[con] = {}) : base;
+      if (arr) {
+        // Check if there is already an array and add element
+        (subtree[arr] || (subtree[arr] = [])).push(Object.keys(sub).length ? sub : child);
+      }
+    }
 
-        // Check and save element
-        key && (base[key] = element);
-        for (const child of Array.from(element.children)) {
-            const arr = removeAttribute(child, ':arr');
-            const sub = resolve(child, arr ? {} : subtree);
+    return base;
+  };
 
-            if (arr) {
-
-                // Check if there is already an array and add element
-                (subtree[arr] || (subtree[arr] = []))
-                    .push(Object.keys(sub).length ? sub : child);
-            }
-        }
-
-        return base;
-    };
-
-    return resolve(createElementFromString(str));
+  return resolve(createElementFromString(str));
 }
 
 /**
@@ -110,19 +105,19 @@ export function createFromTemplate(str) {
  * @return [String] event path.
  */
 export function eventPath(evt) {
-    let path = evt.path || (evt.composedPath && evt.composedPath());
-    if (path) {
-        return path;
-    }
-
-    let el = evt.target.parentElement;
-    path = [evt.target, el];
-    while (el = el.parentElement) {
-        path.push(el);
-    }
-
-    path.push(document, window);
+  let path = evt.path || (evt.composedPath && evt.composedPath());
+  if (path) {
     return path;
+  }
+
+  let el = evt.target.parentElement;
+  path = [evt.target, el];
+  while ((el = el.parentElement)) {
+    path.push(el);
+  }
+
+  path.push(document, window);
+  return path;
 }
 
 /**
@@ -131,16 +126,16 @@ export function eventPath(evt) {
  * @returns {null|Document|Element}
  */
 export function resolveElement(val) {
-    if (val instanceof Element) {
-        return val;
-    } else if (typeof val === 'string') {
-        return val.split(/>>/g).reduce((pv, cv, ci, a) => {
-            pv = pv.querySelector(cv);
-            return ci < a.length - 1 ? pv.shadowRoot : pv;
-        }, document);
-    }
+  if (val instanceof Element) {
+    return val;
+  } else if (typeof val === 'string') {
+    return val.split(/>>/g).reduce((pv, cv, ci, a) => {
+      pv = pv.querySelector(cv);
+      return ci < a.length - 1 ? pv.shadowRoot : pv;
+    }, document);
+  }
 
-    return null;
+  return null;
 }
 
 /**
@@ -148,34 +143,32 @@ export function resolveElement(val) {
  * @param el
  * @param mapper
  */
-export function adjustableInputNumbers(el, mapper = v => v) {
+export function adjustableInputNumbers(el, mapper = (v) => v) {
+  function handleScroll(e) {
+    const inc = [0.001, 0.01, 0.1][Number(e.shiftKey || e.ctrlKey * 2)] * (e.deltaY < 0 ? 1 : -1);
 
-    function handleScroll(e) {
-        const inc = ([0.001, 0.01, 0.1])[Number(e.shiftKey || e.ctrlKey * 2)] * (e.deltaY < 0 ? 1 : -1);
+    let index = 0;
+    let off = el.selectionStart;
+    el.value = el.value.replace(/[\d.]+/g, (v, i) => {
+      // Check if number is in cursor range and increase it
+      if (i <= off && i + v.length >= off) {
+        off = i;
+        return mapper(Number(v), inc, index);
+      }
 
-        let index = 0;
-        let off = el.selectionStart;
-        el.value = el.value.replace(/[\d.]+/g, (v, i) => {
+      index++;
+      return v;
+    });
 
-            // Check if number is in cursor range and increase it
-            if (i <= off && i + v.length >= off) {
-                off = i;
-                return mapper(Number(v), inc, index);
-            }
+    el.focus();
+    el.setSelectionRange(off, off);
 
-            index++;
-            return v;
-        });
+    // Prevent default and trigger input event
+    e.preventDefault();
+    el.dispatchEvent(new Event('input'));
+  }
 
-        el.focus();
-        el.setSelectionRange(off, off);
-
-        // Prevent default and trigger input event
-        e.preventDefault();
-        el.dispatchEvent(new Event('input'));
-    }
-
-    // Bind events
-    on(el, 'focus', () => on(window, 'wheel', handleScroll, {passive: false}));
-    on(el, 'blur', () => off(window, 'wheel', handleScroll));
+  // Bind events
+  on(el, 'focus', () => on(window, 'wheel', handleScroll, { passive: false }));
+  on(el, 'blur', () => off(window, 'wheel', handleScroll));
 }

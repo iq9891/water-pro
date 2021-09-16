@@ -1,5 +1,5 @@
 import { CSSProperties, defineComponent, inject, nextTick } from 'vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import RangeCalendar from '../vc-calendar/src/RangeCalendar';
 import TimePickerPanel from '../vc-time-picker/Panel';
 import VcDatePicker from '../vc-calendar/src/Picker';
@@ -21,12 +21,12 @@ import { isArray, isString } from '@fe6/shared';
 type RangePickerValue =
   | undefined[]
   | null[]
-  | [moment.Moment]
-  | [undefined, moment.Moment]
-  | [moment.Moment, undefined]
-  | [null, moment.Moment]
-  | [moment.Moment, null]
-  | [moment.Moment, moment.Moment];
+  | [dayjs.Dayjs]
+  | [undefined, dayjs.Dayjs]
+  | [dayjs.Dayjs, undefined]
+  | [null, dayjs.Dayjs]
+  | [dayjs.Dayjs, null]
+  | [dayjs.Dayjs, dayjs.Dayjs];
 
 export type RangePickerPresetRange = RangePickerValue | (() => RangePickerValue);
 function getShowDateFromValue(value: RangePickerValue, valueFormat: string) {
@@ -35,26 +35,24 @@ function getShowDateFromValue(value: RangePickerValue, valueFormat: string) {
   if (!start && !end) {
     return;
   }
-  const newStart = typeof start === 'string' ? moment(start, valueFormat) : start;
-  const newEnd = typeof end === 'string' ? moment(end, valueFormat) : end;
+  const newStart = typeof start === 'string' ? dayjs(start, valueFormat) : start;
+  const newEnd = typeof end === 'string' ? dayjs(end, valueFormat) : end;
   return [newStart, newEnd] as RangePickerValue;
 }
 
-function pickerValueAdapter(
-  value?: moment.Moment | RangePickerValue,
-): RangePickerValue | undefined {
+function pickerValueAdapter(value?: dayjs.Dayjs | RangePickerValue): RangePickerValue | undefined {
   if (!value) {
     return;
   }
   if (Array.isArray(value)) {
     return value;
   }
-  return [value, value.clone().add(1, 'month')];
+  return [value, value.add(1, 'month')];
 }
 
 function isEmptyArray(arr: any) {
   if (Array.isArray(arr)) {
-    return arr.length === 0 || arr.every(i => !i);
+    return arr.length === 0 || arr.every((i) => !i);
   }
   return false;
 }
@@ -149,7 +147,7 @@ export default defineComponent({
     const pickerValue = !value || isEmptyArray(value) ? this.defaultPickerValue : value;
     return {
       sValue: value as RangePickerValue,
-      sShowDate: pickerValueAdapter(pickerValue || interopDefault(moment)()),
+      sShowDate: pickerValueAdapter(pickerValue || interopDefault(dayjs)()),
       sOpen: this.open,
       sHoverValue: [],
     };
@@ -294,7 +292,7 @@ export default defineComponent({
       ) : null;
       const operations: any =
         ranges &&
-        Object.keys(ranges).map(range => {
+        Object.keys(ranges).map((range) => {
           const value: any = ranges[range];
           const hoverValue = typeof value === 'function' ? value.call(this) : value;
           return (
@@ -373,7 +371,7 @@ export default defineComponent({
     const calendarProps: any = {
       onOk: this.handleChange,
     };
-    pickerChangeHandler.onChange = changedValue => this.handleChange(changedValue);
+    pickerChangeHandler.onChange = (changedValue) => this.handleChange(changedValue);
 
     if ('mode' in props) {
       calendarProps.mode = props.mode;
@@ -452,8 +450,8 @@ export default defineComponent({
 
     const input = ({ value: inputValue }) => {
       const [start, end] = inputValue;
-      const newStart = start && isString(start) ? moment(start, this.valueFormat) : start;
-      const newEnd = end && isString(end) ? moment(end, this.valueFormat) : end;
+      const newStart = start && isString(start) ? dayjs(start, this.valueFormat) : start;
+      const newEnd = end && isString(end) ? dayjs(end, this.valueFormat) : end;
       return (
         <span class={pickerInputClass}>
           <input
@@ -484,7 +482,7 @@ export default defineComponent({
       ...pickerChangeHandler,
       calendar,
       value: isArray(value)
-        ? value.map((vItem: any) => (isString(vItem) ? moment(vItem, this.valueFormat) : vItem))
+        ? value.map((vItem: any) => (isString(vItem) ? dayjs(vItem, this.valueFormat) : vItem))
         : [],
       open,
       prefixCls: `${prefixCls}-picker-container ${prefixCls}-picker-container-time`,

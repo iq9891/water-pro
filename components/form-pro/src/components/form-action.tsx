@@ -21,15 +21,13 @@ export default defineComponent({
   props: {
     schemas: {
       type: Array as PropType<FormSchema[]>,
-      default: () => ([]),
+      default: () => [],
     },
     formProps: {
       type: Object as PropType<FormProps>,
       default: {} as FormProps,
     },
-    layout: PropTypes
-      .oneOf(['horizontal', 'vertical', 'inline'])
-      .def('horizontal'),
+    layout: PropTypes.oneOf(['horizontal', 'vertical', 'inline']).def('horizontal'),
     actionAffix: PropTypes.looseBool,
     actionTarget: PropTypes.func,
     showActionButtonGroup: PropTypes.bool.def(true),
@@ -71,16 +69,12 @@ export default defineComponent({
     });
 
     const actionColOpt = computed(() => {
-      const {
-        showAdvancedButton,
-        actionSpan: span,
-        actionColOptions,
-      } = props;
+      const { showAdvancedButton, actionSpan: span, actionColOptions } = props;
       const actionSpan = 24 - span;
       const advancedSpanObj = showAdvancedButton
-        ? { 
-          span: actionSpan < 6 ? 24 : actionSpan,
-        }
+        ? {
+            span: actionSpan < 6 ? 24 : actionSpan,
+          }
         : {};
       let actionInnerColOpt: Partial<ColEx> = {
         span: showAdvancedButton ? 6 : 4,
@@ -88,23 +82,24 @@ export default defineComponent({
         ...actionColOptions,
       };
 
-      if (props.layout !== 'vertical' && (!hasLabel.value || !isNaN(parseFloat(props.labelWidth)))) {
+      if (
+        props.layout !== 'vertical' &&
+        (!hasLabel.value || !isNaN(parseFloat(props.labelWidth)))
+      ) {
         actionInnerColOpt = {};
       }
 
       return actionInnerColOpt;
     });
 
-    const getResetBtnOptions = computed(
-      (): ButtonOptions => {
-        return Object.assign(
-          {
-            text: props.resetText,
-          },
-          props.resetButtonOptions,
-        );
-      },
-    );
+    const getResetBtnOptions = computed((): ButtonOptions => {
+      return Object.assign(
+        {
+          text: props.resetText,
+        },
+        props.resetButtonOptions,
+      );
+    });
 
     const getSubmitBtnOptions = computed(() => {
       return Object.assign(
@@ -119,12 +114,11 @@ export default defineComponent({
       emit('toggle-advanced');
     }
 
-    const {
-      resetAction,
-      submitAction,
-    } = useFormContext();
+    const { resetAction, submitAction } = useFormContext();
 
-    const hasChildrenInSchemas = schemas.value.some((sItem: FormSchema) => sItem.children && sItem.children.length > 0);
+    const hasChildrenInSchemas = schemas.value.some(
+      (sItem: FormSchema) => sItem.children && sItem.children.length > 0,
+    );
 
     return {
       hasLabel,
@@ -143,81 +137,87 @@ export default defineComponent({
     let rootNode = null;
 
     if (this.showActionButtonGroup) {
-      const widthStyle = isNaN(parseFloat(this.labelWidth)) ? '' : `padding-left: ${isNumber(this.labelWidth) ? `${this.labelWidth}px` : this.labelWidth};`;
-      
+      const widthStyle = isNaN(parseFloat(this.labelWidth))
+        ? ''
+        : `padding-left: ${isNumber(this.labelWidth) ? `${this.labelWidth}px` : this.labelWidth};`;
+
       const rootProps = {
         ...(this.itemLabelWidthProp || this.actionColOpt),
-        style: `${this.hasLabel && !this.actionAffix ? widthStyle : ''}textAlign: ${this.actionAlgin}`
-      }
+        style: `${this.hasLabel && !this.actionAffix ? widthStyle : ''}textAlign: ${
+          this.actionAlgin
+        }`,
+      };
 
       const childColProps = {
         span: 24,
-      }
+      };
 
       let resetButtonNode = null;
       if (this.showResetButton) {
-        resetButtonNode = (<AButton
-          type="default"
-          class={`${this.prefixClsNew}-action-button`}
-          {...this.getResetBtnOptions}
-          style={{
-            marginRight: this.showSubmitButton ? '12px' : 0,
-          }}
-          onClick={this.resetAction}
-        >
-          { this.getResetBtnOptions.text }
-        </AButton>)
+        resetButtonNode = (
+          <AButton
+            type="default"
+            class={`${this.prefixClsNew}-action-button`}
+            {...this.getResetBtnOptions}
+            style={{
+              marginRight: this.showSubmitButton ? '12px' : 0,
+            }}
+            onClick={this.resetAction}
+          >
+            {this.getResetBtnOptions.text}
+          </AButton>
+        );
       }
 
       let submitButtonNode = null;
       if (this.showSubmitButton) {
-        submitButtonNode = (<AButton
-          type="primary"
-          class={`${this.prefixClsNew}-action-button`}
-          {...this.getSubmitBtnOptions}
-          onClick={this.submitAction}
-        >
-          { this.getSubmitBtnOptions.text }
-        </AButton>)
+        submitButtonNode = (
+          <AButton
+            type="primary"
+            class={`${this.prefixClsNew}-action-button`}
+            {...this.getSubmitBtnOptions}
+            onClick={this.submitAction}
+          >
+            {this.getSubmitBtnOptions.text}
+          </AButton>
+        );
       }
 
       let advancedButtonNode = null;
       if (this.showAdvancedButton && !this.hideAdvanceBtn) {
-        advancedButtonNode = (<AButton
-          type="link"
-          size="small"
-          onClick={this.toggleAdvanced}
-        >
-          { this.isAdvanced ? '收起' : '展开' }
-          <BasicArrow
-            expand={!this.isAdvanced}
-            top={this.isAdvanced}
-            style="margin-left: 4px"
-          />
-        </AButton>)
+        advancedButtonNode = (
+          <AButton type="link" size="small" onClick={this.toggleAdvanced}>
+            {this.isAdvanced ? '收起' : '展开'}
+            <BasicArrow expand={!this.isAdvanced} top={this.isAdvanced} style="margin-left: 4px" />
+          </AButton>
+        );
       }
-      
-      rootNode = (<Col { ...rootProps }>
-        <Row
-          class={`${this.prefixClsNew}-item-action`}
-        >
-          <Col { ...childColProps }>
-            <div
-              class={this.actionAlgin === 'space-between' ? '' : 'ant-form-item-control'}
-              style={this.actionAlgin === 'space-between' ? 'display: flex; justify-content: space-between;' : ''}
-            >
-              {getSlot(this, 'resetBefore')}
-              {resetButtonNode}
-              {getSlot(this, 'submitBefore')}
-              {submitButtonNode}
-              {getSlot(this, 'advanceBefore')}
-              {advancedButtonNode}
-              {getSlot(this, 'advanceAfter')}
-            </div>
-          </Col>
-        </Row>
-      </Col>);
+
+      rootNode = (
+        <Col {...rootProps}>
+          <Row class={`${this.prefixClsNew}-item-action`}>
+            <Col {...childColProps}>
+              <div
+                class={this.actionAlgin === 'space-between' ? '' : 'ant-form-item-control'}
+                style={
+                  this.actionAlgin === 'space-between'
+                    ? 'display: flex; justify-content: space-between;'
+                    : ''
+                }
+              >
+                {getSlot(this, 'resetBefore')}
+                {resetButtonNode}
+                {getSlot(this, 'submitBefore')}
+                {submitButtonNode}
+                {getSlot(this, 'advanceBefore')}
+                {advancedButtonNode}
+                {getSlot(this, 'advanceAfter')}
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      );
     }
-    return (rootNode)
+    return rootNode;
   },
 });

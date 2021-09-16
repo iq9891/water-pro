@@ -8,5 +8,3 @@
     <a-typography-title :level="6">h6. Ant Design Vue</a-typography-title>
   </div>
 </template>
-
-

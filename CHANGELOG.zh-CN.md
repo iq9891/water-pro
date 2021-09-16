@@ -404,7 +404,7 @@ validateFields((err, value) => {
 
 ```js
 // v2
-validateFields().then(values => {
+validateFields().then((values) => {
   // Do something with value
 });
 ```

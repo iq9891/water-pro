@@ -11,7 +11,6 @@
 | width | 图像宽度 | string \| number |  |  |
 | bordered | 图像边框 | boolean | true | 3.31.0 |
 
-
 ## previewType
 
 ```

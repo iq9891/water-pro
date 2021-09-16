@@ -1,10 +1,6 @@
 /** @format */
 
-import type {
-  TableProProps,
-  FetchParams,
-  SorterResult,
-} from '../types/table';
+import type { TableProProps, FetchParams, SorterResult } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 
 import {
@@ -163,30 +159,17 @@ export function useDataSource(
   }
 
   function fetch(opt?: FetchParams) {
-    const {
-      api,
-      searchInfo,
-      fetchSetting,
-      beforeFetch,
-      afterFetch,
-      useSearchForm,
-      pagination,
-    } = unref(propsRef);
+    const { api, searchInfo, fetchSetting, beforeFetch, afterFetch, useSearchForm, pagination } =
+      unref(propsRef);
     if (!api || !isFunction(api)) return;
     try {
       setLoading(true);
-      const { pageField, sizeField, listField, totalField } =
-        fetchSetting || FETCH_SETTING;
+      const { pageField, sizeField, listField, totalField } = fetchSetting || FETCH_SETTING;
       let pageParams: Recordable = {};
 
-      const { current = 1, pageSize = PAGE_SIZE } = unref(
-        getPaginationInfo,
-      ) as PaginationProps;
+      const { current = 1, pageSize = PAGE_SIZE } = unref(getPaginationInfo) as PaginationProps;
 
-      if (
-        (isBoolean(pagination) && !pagination) ||
-        isBoolean(getPaginationInfo)
-      ) {
+      if ((isBoolean(pagination) && !pagination) || isBoolean(getPaginationInfo)) {
         pageParams = {};
       } else {
         pageParams[pageField] = (opt && opt.page) || current;
@@ -216,10 +199,10 @@ export function useDataSource(
         success: (res) => {
           const isArrayResult = isArray(res);
           setLoading(false);
-  
+
           let resultItems: Recordable[] = isArrayResult ? res : get(res, listField);
           const resultTotal: number = isArrayResult ? 0 : get(res, totalField);
-    
+
           // 假如数据变少，导致总页数变少并小于当前选中页码，通过getPaginationRef获取到的页码是不正确的，需获取正确的页码再次执行
           if (resultTotal) {
             const currentTotalPage = Math.ceil(resultTotal / pageSize);
@@ -230,7 +213,7 @@ export function useDataSource(
               fetch(opt);
             }
           }
-    
+
           if (afterFetch && isFunction(afterFetch)) {
             resultItems = afterFetch(resultItems) || resultItems;
           }
@@ -256,7 +239,7 @@ export function useDataSource(
           setPagination({
             total: 0,
           });
-        }
+        },
       });
     } catch (error) {
       emit('fetch-error', error);

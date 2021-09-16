@@ -1,14 +1,14 @@
 ## API
 
-``` html
+```html
 <Layout>
-  <Header>header</Header>
+  <header>header</header>
   <Layout>
     <Sider>left sidebar</Sider>
-    <Content>main content</Content>
+    <content>main content</content>
     <Sider>right sidebar</Sider>
   </Layout>
-  <Footer>footer</Footer>
+  <footer>footer</footer>
 </Layout>
 ```
 
@@ -52,13 +52,13 @@
 
 #### breakpoint width
 
-``` json
+```json
 {
-  xs: '480px',
-  sm: '576px',
-  md: '768px',
-  lg: '992px',
-  xl: '1200px',
-  xxl: '1600px',
+  "xs": "480px",
+  "sm": "576px",
+  "md": "768px",
+  "lg": "992px",
+  "xl": "1200px",
+  "xxl": "1600px"
 }
 ```

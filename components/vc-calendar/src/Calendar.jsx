@@ -15,7 +15,7 @@ import { getTimeConfig, getTodayTime, syncTime } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import { defineComponent } from 'vue';
 
-const getMomentObjectIfValid = date => {
+const getMomentObjectIfValid = (date) => {
   if (dayjs.isDayjs(date) && date.isValid()) {
     return date;
   }

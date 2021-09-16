@@ -117,7 +117,7 @@ export default {
         const componentName = isCN ? subtitle + ' ' + title : title;
         titleStr = componentName + ' - ' + titleStr;
       } else {
-        const currentKey = docsList.filter(item => {
+        const currentKey = docsList.filter((item) => {
           return item.key === name;
         });
         if (currentKey.length) {
@@ -134,14 +134,10 @@ export default {
 
   render() {
     const name = this.name;
-    const {
-      pageType,
-      pageTrueType,
-    } = getPageType(this.$route.path);
+    const { pageType, pageTrueType } = getPageType(this.$route.path);
     const isCN = isZhCN(name);
     const titleMap = {};
-    const menuConfig = {
-    };
+    const menuConfig = {};
     Object.keys(navTypeName[pageTrueType]).forEach((navKey) => {
       menuConfig[navKey] = [];
     });
@@ -182,7 +178,9 @@ export default {
           </a-menu-item>,
         );
       });
-      MenuGroup.push(<a-menu-item-group title={navTypeName[pageTrueType][type]}>{MenuItems}</a-menu-item-group>);
+      MenuGroup.push(
+        <a-menu-item-group title={navTypeName[pageTrueType][type]}>{MenuItems}</a-menu-item-group>,
+      );
     }
     pagesKey.forEach((item, index) => {
       if (item.name === name) {

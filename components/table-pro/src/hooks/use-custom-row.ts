@@ -34,13 +34,7 @@ function getKey(
 
 export function useCustomRow(
   propsRef: ComputedRef<TableProProps>,
-  {
-    setSelectedRowKeys,
-    getSelectRowKeys,
-    getAutoCreateKey,
-    clearSelectedRowKeys,
-    emit,
-  }: Options,
+  { setSelectedRowKeys, getSelectRowKeys, getAutoCreateKey, clearSelectedRowKeys, emit }: Options,
 ) {
   const customRow = (record: Recordable, index: number) => {
     return {
@@ -59,9 +53,7 @@ export function useCustomRow(
             setSelectedRowKeys([...keys, key]);
             return;
           }
-          const keyIndex = keys.findIndex(
-            (item: number | string) => item === key,
-          );
+          const keyIndex = keys.findIndex((item: number | string) => item === key);
           keys.splice(keyIndex, 1);
           setSelectedRowKeys(keys as any);
           return;

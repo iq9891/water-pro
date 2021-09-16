@@ -18,7 +18,7 @@ export interface RowProps {
   index: number;
 }
 
-const Row: FunctionalComponent<RowProps> = props => {
+const Row: FunctionalComponent<RowProps> = (props) => {
   const renderCells = (
     items: VNode[],
     { colon, prefixCls, bordered },

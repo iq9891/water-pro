@@ -62,11 +62,9 @@ export default defineComponent({
     // const { prefixCls } = useDesign('basic-form');
 
     // Get the basic configuration of the form
-    const getProps = computed(
-      (): FormProps => {
-        return { ...props, ...unref(propsRef) } as FormProps;
-      },
-    );
+    const getProps = computed((): FormProps => {
+      return { ...props, ...unref(propsRef) } as FormProps;
+    });
 
     const getFormClass = computed(() => {
       return [
@@ -78,12 +76,10 @@ export default defineComponent({
     });
 
     // Get uniform row style
-    const getRowWrapStyle = computed(
-      (): CSSProperties => {
-        const { baseRowStyle = {} } = unref(getProps);
-        return baseRowStyle;
-      },
-    );
+    const getRowWrapStyle = computed((): CSSProperties => {
+      const { baseRowStyle = {} } = unref(getProps);
+      return baseRowStyle;
+    });
 
     // 由于有 children ，所以统一处理一下
     const getTrueSchema = (schemas: FormSchema[]) => {
@@ -100,11 +96,10 @@ export default defineComponent({
       });
 
       return newSchema;
-    }
+    };
 
     const getOriginSchema = computed((): FormSchema[] => {
-      const schemas: FormSchema[] =
-        unref(schemaRef) || (unref(getProps).schemas as any);
+      const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
       for (const schema of schemas) {
         const { defaultValue, component } = schema;
         // handle date type
@@ -124,8 +119,7 @@ export default defineComponent({
     });
 
     const getSchema = computed((): FormSchema[] => {
-      const schemas: FormSchema[] =
-        unref(schemaRef) || (unref(getProps).schemas as any);
+      const schemas: FormSchema[] = unref(schemaRef) || (unref(getProps).schemas as any);
       const trueSchemas: FormSchema[] = getTrueSchema(schemas);
       for (const schema of trueSchemas) {
         const { defaultValue, component } = schema;
@@ -154,9 +148,7 @@ export default defineComponent({
       defaultValueRef,
     });
 
-    const { autoFocusFirstItem } = toRefs(
-      props,
-    );
+    const { autoFocusFirstItem } = toRefs(props);
 
     const { handleFormValues, initDefault } = useFormValues({
       defaultValueRef,
@@ -317,7 +309,7 @@ export default defineComponent({
           ...(this.formModel as any),
         } as Recordable,
         schema,
-      })
+      });
       let isShow = true;
       let isIfShow = true;
 
@@ -346,38 +338,46 @@ export default defineComponent({
 
           if (isIfShow) {
             schema.children.forEach((schemaChildItem: FormSchema) => {
-              childNodes.push(<FormItem
-                table-action={this.tableAction}
-                form-action-type={this.formActionType}
-                schema={schemaChildItem}
-                form-props={this.getProps}
-                all-default-values={this.defaultValueRef}
-                form-model={this.formModel}
-                set-form-model={this.setFormModel}
-                v-slots={$slots}
-              />)
+              childNodes.push(
+                <FormItem
+                  table-action={this.tableAction}
+                  form-action-type={this.formActionType}
+                  schema={schemaChildItem}
+                  form-props={this.getProps}
+                  all-default-values={this.defaultValueRef}
+                  form-model={this.formModel}
+                  set-form-model={this.setFormModel}
+                  v-slots={$slots}
+                />,
+              );
             });
 
-            schemaItems.push(<a-card
-              v-show={isShow}
-              title={schema.label}
-              class={`${this.prefixClsNew}-card ${this.prefixClsNew}-card-${schema.field}${this.getProps.navAffix && sIdx === 0 ? ` ${this.prefixClsNew}-card-first` : ''}`}
-              style="width: 100%"
-            >
-              {childNodes}
-            </a-card>)
+            schemaItems.push(
+              <a-card
+                v-show={isShow}
+                title={schema.label}
+                class={`${this.prefixClsNew}-card ${this.prefixClsNew}-card-${schema.field}${
+                  this.getProps.navAffix && sIdx === 0 ? ` ${this.prefixClsNew}-card-first` : ''
+                }`}
+                style="width: 100%"
+              >
+                {childNodes}
+              </a-card>,
+            );
           }
         } else {
-          schemaItems.push(<FormItem
-            table-action={this.tableAction}
-            form-action-type={this.formActionType}
-            schema={schema}
-            form-props={this.getProps}
-            all-default-values={this.defaultValueRef}
-            form-model={this.formModel}
-            set-form-model={this.setFormModel}
-            v-slots={$slots}
-          />)
+          schemaItems.push(
+            <FormItem
+              table-action={this.tableAction}
+              form-action-type={this.formActionType}
+              schema={schema}
+              form-props={this.getProps}
+              all-default-values={this.defaultValueRef}
+              form-model={this.formModel}
+              set-form-model={this.setFormModel}
+              v-slots={$slots}
+            />,
+          );
         }
       });
       return schemaItems;
@@ -385,7 +385,7 @@ export default defineComponent({
     async navClick(field: string, navScrollIdx: number) {
       await nextTick();
       const scrollNode = document.getElementsByClassName(`${this.prefixClsNew}-card-${field}`);
-      
+
       if (scrollNode.length) {
         this.navActiveKey = navScrollIdx;
         scrollNode[0].scrollIntoView({
@@ -421,60 +421,72 @@ export default defineComponent({
       ...this.advanceState,
       schemas: this.getSchema,
       onToggleAdvanced: this.handleToggleAdvanced,
-    }
+    };
 
-    const actionInnerNode = (<FormAction {...actionsProps} v-slots={slots} />)
+    const actionInnerNode = <FormAction {...actionsProps} v-slots={slots} />;
 
-    let actionNode = null
+    let actionNode = null;
     if (this.getProps.actionAffix) {
-      actionNode = (<a-affix
-        offset-bottom={this.getProps.actionOffsetBottom}
-        target={this.getProps.actionTarget}
-        style="width: 100%;"
-        class={`${this.prefixClsNew}-footer-affix`}
-      >
-        {actionInnerNode}
-      </a-affix>)
+      actionNode = (
+        <a-affix
+          offset-bottom={this.getProps.actionOffsetBottom}
+          target={this.getProps.actionTarget}
+          style="width: 100%;"
+          class={`${this.prefixClsNew}-footer-affix`}
+        >
+          {actionInnerNode}
+        </a-affix>
+      );
     } else {
-      actionNode = actionInnerNode
+      actionNode = actionInnerNode;
     }
 
     let navNode = null;
-    const hasChilds = this.getOriginSchema.filter((schema: any) => schema.children && schema.children.length > 0).length === this.getOriginSchema.length;
+    const hasChilds =
+      this.getOriginSchema.filter((schema: any) => schema.children && schema.children.length > 0)
+        .length === this.getOriginSchema.length;
     if (this.getProps.navAffix && hasChilds) {
       const tabChild = [];
 
       this.getOriginSchema.forEach((schema: FormSchema, sIdx: number) => {
         const { isIfShow } = this.getShow(schema);
         if (isIfShow) {
-          tabChild.push(<span
-            key={sIdx}
-            class={`${this.prefixClsNew}-nav-item${this.navActiveKey === sIdx ? ` ${this.prefixClsNew}-nav-item-active` : ''}`}
-            onClick={() => this.navClick(schema.field, sIdx)}
-          >{schema.label}</span>)
+          tabChild.push(
+            <span
+              key={sIdx}
+              class={`${this.prefixClsNew}-nav-item${
+                this.navActiveKey === sIdx ? ` ${this.prefixClsNew}-nav-item-active` : ''
+              }`}
+              onClick={() => this.navClick(schema.field, sIdx)}
+            >
+              {schema.label}
+            </span>,
+          );
         }
       });
 
-      navNode = (<a-affix
-        offset-top={this.getProps.navOffsetTop}
-        target={this.getProps.navTarget}
-        style="width: 100%;"
-        class={`${this.prefixClsNew}-nav-affix`}
-      >
-        <div class={`${this.prefixClsNew}-nav`}>
-          {tabChild}
-        </div>
-      </a-affix>)
+      navNode = (
+        <a-affix
+          offset-top={this.getProps.navOffsetTop}
+          target={this.getProps.navTarget}
+          style="width: 100%;"
+          class={`${this.prefixClsNew}-nav-affix`}
+        >
+          <div class={`${this.prefixClsNew}-nav`}>{tabChild}</div>
+        </a-affix>
+      );
     }
 
-    return (<Form {...formProps}>
-      <Row style={this.getRowWrapStyle} gutter={this.getProps.baseGutter}>
-        {navNode}
-        {formHeaderNode}
-        {this.renderItems()}
-        {actionNode}
-        {formFooterNode}
-      </Row>
-    </Form>)
+    return (
+      <Form {...formProps}>
+        <Row style={this.getRowWrapStyle} gutter={this.getProps.baseGutter}>
+          {navNode}
+          {formHeaderNode}
+          {this.renderItems()}
+          {actionNode}
+          {formFooterNode}
+        </Row>
+      </Form>
+    );
   },
 });

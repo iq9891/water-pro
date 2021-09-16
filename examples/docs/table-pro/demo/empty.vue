@@ -1,11 +1,8 @@
 <template>
-  <div style="height: 500px;position: relative;">
-    <a-table-pro
-      @register="searchTableRegister"
-      :emptyDataIsShowTable="false"
-    />
-    <div style="position: relative;height: 360px;">
-      <a-empty style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" />
+  <div style="height: 500px; position: relative">
+    <a-table-pro @register="searchTableRegister" :emptyDataIsShowTable="false" />
+    <div style="position: relative; height: 360px">
+      <a-empty style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%)" />
     </div>
   </div>
 </template>
@@ -21,7 +18,7 @@ const columns = [
   },
   {
     title: 'Age',
-    dataIndex: 'age', 
+    dataIndex: 'age',
     key: 'age',
   },
   {
@@ -31,7 +28,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   setTimeout(() => {
     success(arr);

@@ -19,7 +19,7 @@ export function getBoundingClientRect(element: Element): DOMRect | number {
   return element.getBoundingClientRect();
 }
 
-const trim = function(string: string) {
+const trim = function (string: string) {
   return (string || '').replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g, '');
 };
 
@@ -125,7 +125,7 @@ export function hackCss(attr: string, value: string) {
   const prefix: string[] = ['webkit', 'Moz', 'ms', 'OT'];
 
   const styleObj: any = {};
-  prefix.forEach(item => {
+  prefix.forEach((item) => {
     styleObj[`${item}${firstCapitalize(attr)}`] = value;
   });
   return {
@@ -158,7 +158,7 @@ export function off(
 
 /* istanbul ignore next */
 export function once(el: HTMLElement, event: string, fn: EventListener): void {
-  const listener = function(this: any, ...args: unknown[]) {
+  const listener = function (this: any, ...args: unknown[]) {
     if (fn) {
       fn.apply(this, args as any);
     }

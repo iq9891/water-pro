@@ -7,11 +7,7 @@ import { getSlot } from '../../_util/vue';
 
 type Mode = 'in-out' | 'out-in' | 'default' | undefined;
 
-export function createSimpleTransition(
-  name: string,
-  origin = 'top center 0',
-  mode?: Mode,
-) {
+export function createSimpleTransition(name: string, origin = 'top center 0', mode?: Mode) {
   return defineComponent({
     name,
     props: {
@@ -36,11 +32,7 @@ export function createSimpleTransition(
       return () => {
         const Tag = !props.group ? Transition : TransitionGroup;
         return (
-          <Tag
-            name={name}
-            mode={props.mode}
-            {...attrs}
-            onBeforeEnter={onBeforeEnter}>
+          <Tag name={name} mode={props.mode} {...attrs} onBeforeEnter={onBeforeEnter}>
             {() => getSlot(slots)}
           </Tag>
         );
@@ -72,7 +64,8 @@ export function createJavascriptTransition(
             onEnter={functions.enter}
             onLeave={functions.leave}
             onAfterLeave={functions.afterLeave}
-            onLeaveCancelled={functions.afterLeave}>
+            onLeaveCancelled={functions.afterLeave}
+          >
             {() => getSlot(slots)}
           </Transition>
         );

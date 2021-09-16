@@ -28,7 +28,7 @@ interface DataItem {
   name: string;
   age: number;
   address: string;
-  children?: DataItem[]
+  children?: DataItem[];
 }
 
 const data: DataItem[] = [

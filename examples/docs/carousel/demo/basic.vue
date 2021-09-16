@@ -1,8 +1,5 @@
 <template>
-  <a-carousel
-    :after-change="onChange"
-    :imgList="imgUrls"
-  />
+  <a-carousel :after-change="onChange" :imgList="imgUrls" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';

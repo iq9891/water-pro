@@ -88,7 +88,7 @@ export default defineComponent({
 
     // 如果存在 options, 优先使用
     if (options && options.length > 0) {
-      children = options.map(option => {
+      children = options.map((option) => {
         if (typeof option === 'string') {
           let strRadioNode = null;
 

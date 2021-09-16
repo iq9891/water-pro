@@ -124,7 +124,7 @@ export interface FormProps {
   navAffix?: boolean;
   navOffsetTop?: number;
   navTarget?: any;
-  
+
   showIsAdvanced?: boolean;
 
   // Show reset button
@@ -179,15 +179,15 @@ export interface FormSchema {
     | string
     | number
     | ((values: RenderCallbackParams) => string | number)
-    | (() => VNode<RendererNode, RendererElement, { [key: string]: any; }>);
+    | (() => VNode<RendererNode, RendererElement, { [key: string]: any }>);
 
   end?:
     | string
     | number
     | ((values: RenderCallbackParams) => string | number)
-    | (() => VNode<RendererNode, RendererElement, { [key: string]: any; }>);
+    | (() => VNode<RendererNode, RendererElement, { [key: string]: any }>);
 
-  wrapperWidth?: string,
+  wrapperWidth?: string;
   // Validation rules
   rules?: Rule[];
   // Check whether the information is added to the label
@@ -211,9 +211,7 @@ export interface FormSchema {
   show?: boolean | ((renderCallbackParams: ComputedRef<RenderCallbackParams>) => boolean);
 
   // Render the content in the form-item tag
-  render?: (
-    renderCallbackParams: ComputedRef<RenderCallbackParams>,
-  ) => VNode | VNode[] | string;
+  render?: (renderCallbackParams: ComputedRef<RenderCallbackParams>) => VNode | VNode[] | string;
 
   // Rendering col content requires outer wrapper form-item
   renderColContent?: (
@@ -232,9 +230,7 @@ export interface FormSchema {
   // Custom slot, similar to renderColContent
   colSlot?: string;
 
-  dynamicDisabled?:
-    | boolean
-    | ((renderCallbackParams: RenderCallbackParams) => boolean);
+  dynamicDisabled?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean);
 
   dynamicRules?: (renderCallbackParams: ComputedRef<RenderCallbackParams>) => Rule[];
 }

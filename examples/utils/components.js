@@ -19,5 +19,5 @@ export const setupComponents = (app) => {
   app.component('demo-box', demoBox);
   app.component('demo-container', demoContainer);
   app.component('demo-sort', demoSort);
-  app.component('demo', basic)
-}
+  app.component('demo', basic);
+};

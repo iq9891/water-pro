@@ -1,11 +1,9 @@
 <template>
-  <a-table-pro
-    @register="headerRegister"
-  >
+  <a-table-pro @register="headerRegister">
     <template #customTitle>
       <span>
         姓名
-        <span style="color: red;padding-left: 8px">water</span>
+        <span style="color: red; padding-left: 8px">water</span>
       </span>
     </template>
   </a-table-pro>
@@ -28,7 +26,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
@@ -44,12 +42,10 @@ export function demoListApi({params, success}) {
 
 export default defineComponent({
   setup() {
-    const [
-        headerRegister,
-      ] = useTable({
-        api: demoListApi,
-        columns,
-      });
+    const [headerRegister] = useTable({
+      api: demoListApi,
+      columns,
+    });
     return {
       headerRegister,
     };

@@ -1,8 +1,5 @@
 <template>
-  <a-table-pro
-    @register="basicRegister"
-    @drag-end="dragEnd"
-  />
+  <a-table-pro @register="basicRegister" @drag-end="dragEnd" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -26,7 +23,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
@@ -43,13 +40,11 @@ export function demoListApi({params, success}) {
 
 export default defineComponent({
   setup() {
-    const [
-        basicRegister,
-      ] = useTable({
-        api: demoListApi,
-        draggable: true,
-        columns,
-      });
+    const [basicRegister] = useTable({
+      api: demoListApi,
+      draggable: true,
+      columns,
+    });
     return {
       basicRegister,
       dragEnd(oldIndexNumber, newIndexNumber) {

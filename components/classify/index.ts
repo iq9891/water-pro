@@ -2,7 +2,7 @@ import { App, Plugin } from 'vue';
 import Classify from './src/Classify';
 
 /* istanbul ignore next */
-Classify.install = function(app: App) {
+Classify.install = function (app: App) {
   app.component(Classify.name, Classify);
   return app;
 };

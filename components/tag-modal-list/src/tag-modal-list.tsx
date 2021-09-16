@@ -72,7 +72,7 @@ export default defineComponent({
     beforeClose: {
       type: Function as PropType<(arg?: Recordable) => Promise<Recordable[]>>,
       default: () => {
-        return new Promise(reslove => {
+        return new Promise((reslove) => {
           reslove(true);
         });
       },
@@ -80,7 +80,7 @@ export default defineComponent({
     beforeOk: {
       type: Function as PropType<(arg?: Recordable) => Promise<Recordable[]>>,
       default: ({ success }: any) => {
-        return new Promise(reslove => {
+        return new Promise((reslove) => {
           success();
           reslove(true);
         });
@@ -267,7 +267,7 @@ export default defineComponent({
 
     watch(
       () => props.value,
-      async newValue => {
+      async (newValue) => {
         if (isUndefined(newValue)) {
           tagCheckList.value = [];
           await checkValue();
@@ -411,7 +411,7 @@ export default defineComponent({
               class={`${this.prefixClsNew}-tag`}
               color={
                 this.tagCheckAllList.findIndex(
-                  checkItem => checkItem[this.valueLabel] === tagItem[this.valueLabel],
+                  (checkItem) => checkItem[this.valueLabel] === tagItem[this.valueLabel],
                 ) > -1
                   ? 'blue'
                   : ''
@@ -428,7 +428,7 @@ export default defineComponent({
             class={`${this.prefixClsNew}-tag`}
             color={
               this.tagCheckAllList.findIndex(
-                checkItem => checkItem[this.valueLabel] === tagGroupItem[this.valueLabel],
+                (checkItem) => checkItem[this.valueLabel] === tagGroupItem[this.valueLabel],
               ) > -1
                 ? 'blue'
                 : ''

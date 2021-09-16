@@ -160,7 +160,7 @@ export default defineComponent({
     const iconNode = sLoading ? <LoadingOutlined /> : iconCom;
 
     const autoInsertSpace = this.configProvider.autoInsertSpaceInButton !== false;
-    const kids = children.map(child =>
+    const kids = children.map((child) =>
       this.insertSpace(child, this.isNeedInserted() && autoInsertSpace),
     );
 

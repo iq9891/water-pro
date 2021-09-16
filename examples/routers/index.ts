@@ -12,7 +12,7 @@ const routes = [
   {
     path: '/components',
     component: Layout,
-    props: route => {
+    props: (route) => {
       const name = route.path.split('/components/')[1].split('/')[0];
       return { name, showDemo: true };
     },
@@ -21,7 +21,7 @@ const routes = [
   {
     path: '/utils',
     component: Layout,
-    props: route => {
+    props: (route) => {
       const name = route.path.split('/utils/')[1].split('/')[0];
       return { name, showDemo: true };
     },

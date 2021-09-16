@@ -20,8 +20,8 @@
 ### Input 事件
 
 | 事件名称   | 说明                   | 回调参数    |
-| ---------- | ---------------------- | ----------- |
-| change     | 输入框内容变化时的回调 | function(e) |  |
+| ---------- | ---------------------- | ----------- | --- |
+| change     | 输入框内容变化时的回调 | function(e) |     |
 | pressEnter | 按下回车的回调         | function(e) |
 
 > 如果 `Input` 在 `Form.Item` 内，并且 `Form.Item` 设置了 `id` 和 `options` 属性，则 `value` `defaultValue` 和 `id` 属性会被自动设置。
@@ -29,8 +29,8 @@
 ### Input.TextArea
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| autosize | 自适应内容高度，可设置为 `true|false` 或对象：`{ minRows: 2, maxRows: 6 }` | boolean\|object | false |  |
+| --- | --- | --- | --- | --- | --- |
+| autosize | 自适应内容高度，可设置为 `true | false` 或对象：`{ minRows: 2, maxRows: 6 }` | boolean\|object | false |  |
 | defaultValue | 输入框默认内容 | string |  |  |
 | value(v-model) | 输入框内容 | string |  |  |
 | allowClear | 可以点击清除图标删除内容 | boolean |  | 1.5.0 |
@@ -80,8 +80,8 @@
 
 ### Input.SmsCode
 
-| 参数             | 说明             | 类型    | 默认值 |
-| ---------------- | ---------------- | ------- | ------ |
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
 | api | 接口请求，不支持 async 和 Promise ，只支持回调 | `(...arg: any) => Promise<any>` | - |
 | buttonOptions | [按钮配置](./button-cn) | object | - |
 | btnText | 发送验证码默认的文案 | object | 发送验证码 |
@@ -90,8 +90,7 @@
 
 ### Input.Search 事件
 
-| 事件名称 | 说明                         | 回调参数               |
-| -------- | ---------------------------- | ---------------------- |
-| on-enter | 回车的回调 | - |
-| change | 验证码输入改变的回调 | Event |
-
+| 事件名称 | 说明                 | 回调参数 |
+| -------- | -------------------- | -------- |
+| on-enter | 回车的回调           | -        |
+| change   | 验证码输入改变的回调 | Event    |

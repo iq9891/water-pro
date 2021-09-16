@@ -9,8 +9,13 @@
     <template v-slot:editableIcon><HighlightOutlined /></template>
     <template v-slot:editableTooltip>click to edit text</template>
   </a-typography-paragraph>
-  <a-typography-paragraph :size="size" v-model:content="hideTooltipStr" :editable="{ tooltip: false }" />
-  <a-typography-paragraph :size="size"
+  <a-typography-paragraph
+    :size="size"
+    v-model:content="hideTooltipStr"
+    :editable="{ tooltip: false }"
+  />
+  <a-typography-paragraph
+    :size="size"
     v-model:content="lengthLimitedStr"
     :editable="{ maxlength: 50, autoSize: { maxRows: 5, minRows: 3 } }"
   />
@@ -19,7 +24,11 @@
   <a-typography-paragraph :size="size" :copyable="{ text: 'Hello, Ant Design!' }">
     Replace copy text.
   </a-typography-paragraph>
-  <a-typography-paragraph :size="size" copyable content="Custom Copy icon and replace tooltips text.">
+  <a-typography-paragraph
+    :size="size"
+    copyable
+    content="Custom Copy icon and replace tooltips text."
+  >
     <template v-slot:copyableIcon="{ copied }">
       <SmileOutlined v-if="!copied" key="copy-icon" />
       <SmileFilled v-else key="copied-icon" />

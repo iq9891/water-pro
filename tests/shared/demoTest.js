@@ -9,13 +9,13 @@ export default function demoTest(component, options = {}) {
   const suffix = options.suffix || 'vue';
   const files = glob.sync(`./v2-doc/src/docs/${component}/demo/*.${suffix}`);
 
-  files.forEach(file => {
+  files.forEach((file) => {
     let testMethod = options.skip === true ? test.skip : test;
-    if (Array.isArray(options.skip) && options.skip.some(c => file.includes(c))) {
+    if (Array.isArray(options.skip) && options.skip.some((c) => file.includes(c))) {
       testMethod = test.skip;
     }
     testMethod(`renders ${file} correctly`, async () => {
-      MockDate.set(moment('2016-11-22'));
+      MockDate.set(dayjs('2016-11-22'));
       const demo = require(`../.${file}`).default || require(`../.${file}`);
       document.body.innerHTML = '';
       const wrapper = mount(demo, { global: { plugins: [water] }, attachTo: document.body });

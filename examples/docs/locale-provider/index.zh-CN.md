@@ -50,4 +50,3 @@ LocaleProvider 使用 Vue 的 [provide/inject](https://cn.vuejs.org/v2/api/#prov
 ### 其他国际化需求
 
 本模块仅用于组件的内建文案，若有业务文案的国际化需求，建议使用 [vue-i18n](https://github.com/kazupon/vue-i18n)
-

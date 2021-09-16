@@ -9,7 +9,7 @@ Upload.Dragger = Dragger;
 export { Upload, Dragger };
 
 /* istanbul ignore next */
-Upload.install = function(app: App) {
+Upload.install = function (app: App) {
   app.component(Upload.name, Upload);
   app.component(Dragger.name, Dragger);
   return app;

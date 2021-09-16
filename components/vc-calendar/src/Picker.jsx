@@ -13,7 +13,7 @@ const TimeType = {
   validator(value) {
     if (Array.isArray(value)) {
       return (
-        value.length === 0 || value.findIndex(val => !isNil(val) && !dayjs.isDayjs(val)) === -1
+        value.length === 0 || value.findIndex((val) => !isNil(val) && !dayjs.isDayjs(val)) === -1
       );
     } else {
       return isNil(value) || dayjs.isDayjs(value);

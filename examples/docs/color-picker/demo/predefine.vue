@@ -8,8 +8,8 @@ export default defineComponent({
     const value = ref<string>('00ff00');
     return {
       value,
-      predefine: ['red','yellow','blue','black','gray'],
+      predefine: ['red', 'yellow', 'blue', 'black', 'gray'],
     };
   },
-}); 
+});
 </script>

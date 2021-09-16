@@ -13,22 +13,18 @@ export function useTableForm(
   slots: Slots,
   fetch: (opt?: FetchParams | undefined) => any,
 ) {
-  const getFormProps = computed(
-    (): Partial<FormProps> => {
-      const { formConfig } = unref(propsRef);
-      return {
-        showAdvancedButton: true,
-        ...formConfig,
-        compact: true,
-      };
-    },
-  );
+  const getFormProps = computed((): Partial<FormProps> => {
+    const { formConfig } = unref(propsRef);
+    return {
+      showAdvancedButton: true,
+      ...formConfig,
+      compact: true,
+    };
+  });
 
   const getFormSlotKeys = computed(() => {
     const keys = Object.keys(slots);
-    return keys
-      .map((item) => (item.startsWith('form-') ? item : null))
-      .filter(Boolean);
+    return keys.map((item) => (item.startsWith('form-') ? item : null)).filter(Boolean);
   });
 
   function replaceFormSlotKey(key: string) {

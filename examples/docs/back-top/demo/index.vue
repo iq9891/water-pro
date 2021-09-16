@@ -19,7 +19,7 @@ const md = {
 ## When To Use
 - When the page content is very long.
 - When you need to go back to the top very frequently in order to view the contents.
-## Examples 
+## Examples
 `,
 };
 export default {

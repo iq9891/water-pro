@@ -35,7 +35,7 @@ const md = {
       ## When To Use
 
       It can also be used as inter-page navigation when it is needed to make the user quickly understand what the current page is and to facilitate the user to use the page function.
-      
+
       ## Examples
       `,
 };

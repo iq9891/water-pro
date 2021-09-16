@@ -22,7 +22,7 @@ export function fillRef<T>(ref, node: T) {
  */
 export function composeRef<T>(...refs: any[]) {
   return (node: T) => {
-    refs.forEach(ref => {
+    refs.forEach((ref) => {
       fillRef(ref, node);
     });
   };

@@ -1,10 +1,5 @@
 <template>
-  <a-select
-    v-model:value="value"
-    style="width: 120px"
-    :options="options"
-    @change="handleChange"
-  />
+  <a-select v-model:value="value" style="width: 120px" :options="options" @change="handleChange" />
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';

@@ -74,7 +74,7 @@ const Card = defineComponent({
     },
     isContainGrid(obj: VNode[] = []) {
       let containGrid: boolean;
-      obj.forEach(element => {
+      obj.forEach((element) => {
         if (element && isPlainObject(element.type) && (element.type as any).__ANT_CARD_GRID) {
           containGrid = true;
         }
@@ -180,7 +180,7 @@ const Card = defineComponent({
     const tabs =
       tabList && tabList.length ? (
         <Tabs {...tabsProps}>
-          {tabList.map(item => {
+          {tabList.map((item) => {
             const { tab: temp, slots } = item as CardTabListType;
             const name = slots?.tab;
             const tab = temp !== undefined ? temp : $slots[name] ? $slots[name](item) : null;

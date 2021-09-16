@@ -2,14 +2,7 @@
 
 import { unref } from 'vue';
 import type { Ref, ComputedRef } from 'vue';
-import {
-  isArray,
-  isFunction,
-  isPlainObject,
-  isString,
-  isUndefined,
-  isNull,
-} from '@fe6/shared';
+import { isArray, isFunction, isPlainObject, isString, isUndefined, isNull } from '@fe6/shared';
 
 import { dateUtil } from '../date';
 import type { FormSchema, FormProps } from '../types/form';
@@ -43,11 +36,7 @@ export function useFormValues({
       if (isPlainObject(value)) {
         value = transformDateFunc(value, schemaItem);
       }
-      if (
-        isArray(value) &&
-        value[0]._isAMomentObject &&
-        value[1]._isAMomentObject
-      ) {
+      if (isArray(value) && value[0]._isAMomentObject && value[1]._isAMomentObject) {
         value = value.map((item: any) => transformDateFunc(item, schemaItem));
       }
       // Remove spaces
@@ -67,11 +56,7 @@ export function useFormValues({
     if (!fieldMapToTime || !Array.isArray(fieldMapToTime)) {
       return values;
     }
-    for (const [
-      field,
-      [startTimeKey, endTimeKey],
-      format = 'YYYY-MM-DD',
-    ] of fieldMapToTime) {
+    for (const [field, [startTimeKey, endTimeKey], format = 'YYYY-MM-DD'] of fieldMapToTime) {
       if (!field || !startTimeKey || !endTimeKey || !values[field]) {
         continue;
       }

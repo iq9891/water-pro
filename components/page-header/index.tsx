@@ -38,7 +38,7 @@ const renderBack = (
       children={({ back }: any) => (
         <div class={`${prefixCls}-back`}>
           <TransButton
-            onClick={e => {
+            onClick={(e) => {
               instance.$emit('back', e);
             }}
             class={`${prefixCls}-back-button`}
@@ -52,7 +52,7 @@ const renderBack = (
   );
 };
 
-const renderBreadcrumb = breadcrumb => {
+const renderBreadcrumb = (breadcrumb) => {
   return <Breadcrumb {...breadcrumb} />;
 };
 

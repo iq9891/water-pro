@@ -24,7 +24,7 @@ const md = {
       ## When To Use
       - Divide sections of article.
       - Divide inline text and links such as the operation column of table.
-      ## Examples 
+      ## Examples
       `,
 };
 export default {

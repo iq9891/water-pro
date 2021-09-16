@@ -1,14 +1,7 @@
 /** @format */
 
 import type { UnwrapRef } from 'vue';
-import {
-  reactive,
-  readonly,
-  computed,
-  getCurrentInstance,
-  watchEffect,
-  toRefs,
-} from 'vue';
+import { reactive, readonly, computed, getCurrentInstance, watchEffect, toRefs } from 'vue';
 
 import { isEqual } from 'lodash-es';
 

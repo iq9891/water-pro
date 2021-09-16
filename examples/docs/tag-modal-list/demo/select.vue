@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-const tagModalListApi = ({params, success}) => {
+const tagModalListApi = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
@@ -43,7 +43,7 @@ const tagModalListApi = ({params, success}) => {
       },
     ]);
   }, 1000);
-}
+};
 
 export default defineComponent({
   setup() {

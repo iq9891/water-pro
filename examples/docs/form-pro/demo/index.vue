@@ -60,7 +60,6 @@ import Children from './children.vue';
 import ChildrenString from './children.md?raw';
 import ChildrenCodeString from './children.vue?raw';
 
-
 import CN from '../index.zh-CN.md';
 
 const md = {

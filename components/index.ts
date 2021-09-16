@@ -268,8 +268,8 @@ const components = [
   Classify,
 ];
 
-const install = function(app: App) {
-  components.forEach(component => {
+const install = function (app: App) {
+  components.forEach((component) => {
     app.use(component);
   });
 

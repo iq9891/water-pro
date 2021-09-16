@@ -21,6 +21,11 @@
       "@fe6/water-pro/es/button": ["components/button/button.tsx"]
     }
   },
-  "include": ["../components/**/*.ts", "../components/**/*.d.ts", "../components/**/*.tsx", "../components/**/*.vue"],
+  "include": [
+    "../components/**/*.ts",
+    "../components/**/*.d.ts",
+    "../components/**/*.tsx",
+    "../components/**/*.vue"
+  ],
   "exclude": ["node_modules", "dist"]
 }

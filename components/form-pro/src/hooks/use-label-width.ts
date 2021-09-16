@@ -6,10 +6,7 @@ import type { FormProps, FormSchema } from '../types/form';
 import { computed, unref } from 'vue';
 import { isNumber } from '@fe6/shared';
 
-export function useItemLabelWidth(
-  schemaItemRef: Ref<FormSchema>,
-  propsRef: Ref<FormProps>,
-) {
+export function useItemLabelWidth(schemaItemRef: Ref<FormSchema>, propsRef: Ref<FormProps>) {
   return computed(() => {
     const schemaItem = unref(schemaItemRef);
     const { labelCol = {}, wrapperCol = {} } = schemaItem.itemProps || {};
@@ -23,10 +20,7 @@ export function useItemLabelWidth(
     } = unref(propsRef);
 
     // If labelWidth is set globally, all items setting
-    if (
-      (!globalLabelWidth && !labelWidth && !globalLabelCol) ||
-      disabledLabelWidth
-    ) {
+    if ((!globalLabelWidth && !labelWidth && !globalLabelCol) || disabledLabelWidth) {
       labelCol.style = {
         textAlign: 'left',
       };
@@ -51,10 +45,7 @@ export function useItemLabelWidth(
   });
 }
 
-export function useActionLabelWidth(
-  schemasRef: Ref<FormSchema>[],
-  propsRef: Ref<FormProps>,
-) {
+export function useActionLabelWidth(schemasRef: Ref<FormSchema>[], propsRef: Ref<FormProps>) {
   return computed(() => {
     const schemas = unref(schemasRef);
     const {
@@ -64,9 +55,7 @@ export function useActionLabelWidth(
     } = unref(propsRef);
 
     // If labelWidth is set globally, all items setting
-    if (
-      (!globalLabelWidth)
-    ) {
+    if (!globalLabelWidth) {
       return globWrapperCol;
     }
     let width = globalLabelWidth || 0;

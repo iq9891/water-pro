@@ -83,7 +83,7 @@ const TreeSelect = defineComponent({
         value: 'value',
       };
       const replaceFields = { ...defaultFields, ...this.$props.replaceFields };
-      return treeData.map(item => {
+      return treeData.map((item) => {
         const { slots = {} } = item;
         const label = item[replaceFields.label];
         const title = item[replaceFields.title];
@@ -168,7 +168,7 @@ const TreeSelect = defineComponent({
     const finalClearIcon = clearIcon || <CloseCircleFilled class={`${prefixCls}-clear-icon`} />;
     const VcTreeSelectProps = {
       ...this.$attrs,
-      switcherIcon: nodeProps => this.renderSwitcherIcon(prefixCls, nodeProps),
+      switcherIcon: (nodeProps) => this.renderSwitcherIcon(prefixCls, nodeProps),
       inputIcon,
       removeIcon: finalRemoveIcon,
       clearIcon: finalClearIcon,
@@ -198,7 +198,7 @@ const TreeSelect = defineComponent({
 });
 
 /* istanbul ignore next */
-TreeSelect.install = function(app: App) {
+TreeSelect.install = function (app: App) {
   app.component(TreeSelect.name, TreeSelect);
   app.component(TreeSelect.TreeNode.displayName, TreeSelect.TreeNode);
   return app;

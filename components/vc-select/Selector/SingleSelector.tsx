@@ -110,7 +110,7 @@ const SingleSelector = defineComponent<SelectorProps>({
               value={inputValue.value}
               onKeydown={onInputKeyDown}
               onMousedown={onInputMouseDown}
-              onChange={e => {
+              onChange={(e) => {
                 inputChanged.value = true;
                 onInputChange(e as any);
               }}

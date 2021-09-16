@@ -18,9 +18,7 @@ export default defineComponent({
   },
   props: {
     title: {
-      type: [Function, String] as PropType<
-        string | ((data: Recordable) => string)
-      >,
+      type: [Function, String] as PropType<string | ((data: Recordable) => string)>,
     },
     tableSetting: {
       type: Object as PropType<TableSetting>,
@@ -42,16 +40,13 @@ export default defineComponent({
     let tableTitleNode = getSlot(this, 'tableTitle');
 
     if (!tableTitleNode.length) {
-      tableTitleNode = ([<TableTitle
-        help-message={this.titleHelpMessage}
-        title={this.title}
-      />])
+      tableTitleNode = [<TableTitle help-message={this.titleHelpMessage} title={this.title} />];
     }
 
-    let settingNode = null
+    let settingNode = null;
 
     if (this.showTableSetting) {
-      settingNode = (<TableSettingComp setting={this.tableSetting} />)
+      settingNode = <TableSettingComp setting={this.tableSetting} />;
     }
 
     return (

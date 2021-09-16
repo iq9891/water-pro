@@ -14,12 +14,12 @@ import { defineComponent, ref } from 'vue';
 const tagDatas = [
   {
     name: '这是很长的标签',
-    id: 190
+    id: 190,
   },
   {
     name: 'water',
-    id: 290
-  }
+    id: 290,
+  },
 ];
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
             createLoading.value = false;
             createDatas.value.push({
               name,
-              id: Number((Math.random() * 10).toFixed(0))
+              id: Number((Math.random() * 10).toFixed(0)),
             });
           }, 1000);
         }

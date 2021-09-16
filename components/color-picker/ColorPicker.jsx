@@ -19,7 +19,6 @@ export default {
   inject: {
     configProvider: { default: () => defaultConfigProvider },
   },
-  emits: ['update:value', 'change', 'openChange'],
   props: {
     prefixCls: PropTypes.string,
     defaultValue: PropTypes.string, //默认值
@@ -36,7 +35,7 @@ export default {
     padding: PropTypes.number.def(16), //弹框间距
     predefine: {
       type: Array,
-      default: () => ([
+      default: () => [
         'rgba(244, 67, 54, 1)',
         'rgba(233, 30, 99, 1)',
         'rgba(156, 39, 176, 1)',
@@ -51,10 +50,10 @@ export default {
         'rgba(205, 220, 57, 1)',
         'rgba(255, 235, 59, 1)',
         'rgba(255, 193, 7, 1)',
-      ]),
+      ],
     },
   },
-
+  emits: ['update:value', 'change', 'openChange'],
   data() {
     return {
       myOpen: false,
@@ -121,7 +120,7 @@ export default {
       this.createPickr();
       this.eventsBinding();
     },
-    setColor: debounce(function(val) {
+    setColor: debounce(function (val) {
       this.pickr.setColor(val);
     }, 1000),
     eventsBinding() {
@@ -137,7 +136,7 @@ export default {
         'swatchselect',
       ];
       const listeners = getListeners(this);
-      Object.keys(listeners).forEach(event => {
+      Object.keys(listeners).forEach((event) => {
         pickrEvents.includes(event) && this.pickr.on(event, listeners[event]);
       });
     },

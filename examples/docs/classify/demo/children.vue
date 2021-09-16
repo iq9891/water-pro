@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
@@ -29,12 +29,12 @@ const getSelectForOptions = ({params, success}) => {
         children: [
           {
             label: 'antd1',
-            value: 180
+            value: 180,
           },
           {
             label: '2antd',
-            value: 280
-          }
+            value: 280,
+          },
         ],
       },
       {
@@ -43,33 +43,33 @@ const getSelectForOptions = ({params, success}) => {
         children: [
           {
             label: '23antd1',
-            value: 380
+            value: 380,
           },
           {
             label: '442antd',
-            value: 480
-          }
+            value: 480,
+          },
         ],
-      }
+      },
     ]);
   }, 1000);
 };
 
-const postCreateApi = ({params, success}) => {
+const postCreateApi = ({ params, success }) => {
   console.log('create');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postEditApi = ({params, success}) => {
+const postEditApi = ({ params, success }) => {
   console.log('edit');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postRemoveApi = ({params, success}) => {
+const postRemoveApi = ({ params, success }) => {
   console.log('remote');
   setTimeout(() => {
     success([]);
@@ -89,7 +89,7 @@ const columns = [
   },
 ];
 
-const tableApi = ({params, success}) => {
+const tableApi = ({ params, success }) => {
   const arr: any = [];
   for (let index = 0; index < 100; index++) {
     arr.push({
@@ -101,8 +101,8 @@ const tableApi = ({params, success}) => {
   setTimeout(() => {
     success(arr);
   }, 1000);
-}
-const dragApi = ({params, success}) => {
+};
+const dragApi = ({ params, success }) => {
   setTimeout(() => {
     success([]);
   }, 1000);
@@ -127,20 +127,22 @@ export default defineComponent({
               maxlength: 200,
             },
             itemProps: {
-              labelAlign: 'left'
+              labelAlign: 'left',
             },
-            rules: [{
-              required: true,
-              message: '请输入所在楼层',
-              type: 'string',
-            }]
+            rules: [
+              {
+                required: true,
+                message: '请输入所在楼层',
+                type: 'string',
+              },
+            ],
           },
         ],
       },
       columns,
       tableApi,
       dragApi,
-    }
+    };
   },
 });
 </script>

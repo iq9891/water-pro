@@ -57,7 +57,7 @@ export function toOuterValues<FOT extends FlattenOptionsType>(
   let values: DefaultValueType = valueList;
 
   if (labelInValue) {
-    values = values.map(val =>
+    values = values.map((val) =>
       getLabeledValue(val, {
         options,
         prevValue,
@@ -72,7 +72,7 @@ export function toOuterValues<FOT extends FlattenOptionsType>(
 
 export function removeLastEnabledValue<
   T extends { disabled?: boolean },
-  P extends RawValueType | object
+  P extends RawValueType | object,
 >(measureValues: T[], values: P[]): { values: P[]; removedValue: P } {
   const newValues = [...values];
 

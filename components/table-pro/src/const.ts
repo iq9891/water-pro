@@ -35,13 +35,7 @@ const table = {
   },
 };
 
-const {
-  pageSizeOptions,
-  defaultPageSize,
-  fetchSetting,
-  defaultSortFn,
-  defaultFilterFn,
-} = table;
+const { pageSizeOptions, defaultPageSize, fetchSetting, defaultSortFn, defaultFilterFn } = table;
 
 export const ROW_KEY = 'key';
 

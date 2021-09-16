@@ -41,9 +41,7 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      injectFormPro,
-    ] = useForm({
+    const [injectFormPro] = useForm({
       schemas,
       actionColOptions: {
         span: 8,

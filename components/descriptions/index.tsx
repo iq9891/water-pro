@@ -149,7 +149,7 @@ const Descriptions = defineComponent({
     const screens = ref<ScreenMap>({});
 
     onMounted(() => {
-      token = ResponsiveObserve.subscribe(screen => {
+      token = ResponsiveObserve.subscribe((screen) => {
         if (typeof props.column !== 'object') {
           return;
         }
@@ -218,7 +218,7 @@ const Descriptions = defineComponent({
   },
 });
 
-Descriptions.install = function(app: App) {
+Descriptions.install = function (app: App) {
   app.component(Descriptions.name, Descriptions);
   app.component(Descriptions.Item.name, Descriptions.Item);
   return app;

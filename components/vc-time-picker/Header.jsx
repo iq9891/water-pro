@@ -90,10 +90,7 @@ const Header = {
           });
           return;
         }
-        value
-          .hour(parsed.hour())
-          .minute(parsed.minute())
-          .second(parsed.second());
+        value.hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
         // if time value not allowed, response warning.
         if (
@@ -164,7 +161,7 @@ const Header = {
       return withDirectives(
         <input
           class={`${prefixCls}-input ${invalidClass}`}
-          ref={ref => {
+          ref={(ref) => {
             this.refInput = ref;
           }}
           onKeydown={this.onKeyDown}

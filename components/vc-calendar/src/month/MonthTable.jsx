@@ -98,7 +98,7 @@ const MonthTable = {
           } else {
             // fix 日期的月选择器渲染失败
             const currentValue = value.clone().month(monthData.value);
-            content = currentValue.localeData().monthsShort()[monthIdx + index*3];
+            content = currentValue.localeData().monthsShort()[monthIdx + index * 3];
           }
           cellEl = <a class={`${prefixCls}-month`}>{content}</a>;
         }

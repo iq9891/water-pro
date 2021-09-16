@@ -6,7 +6,11 @@
           <div style="margin-bottom: 10px">Custom header</div>
           <a-row type="flex" justify="space-between">
             <a-col>
-              <a-radio-group size="small" :value="type" v-bind:change="e => onTypeChange(e.target.value)">
+              <a-radio-group
+                size="small"
+                :value="type"
+                v-bind:change="(e) => onTypeChange(e.target.value)"
+              >
                 <a-radio-button value="month">Month</a-radio-button>
                 <a-radio-button value="year">Year</a-radio-button>
               </a-radio-group>
@@ -18,7 +22,7 @@
                 class="my-year-select"
                 :value="String(value.year())"
                 v-bind:change="
-                  newYear => {
+                  (newYear) => {
                     onChange(value.clone().year(newYear));
                   }
                 "
@@ -38,7 +42,7 @@
                 :dropdown-match-select-width="false"
                 :value="String(value.month())"
                 v-bind:change="
-                  selectedMonth => {
+                  (selectedMonth) => {
                     onChange(value.clone().month(parseInt(selectedMonth, 10)));
                   }
                 "

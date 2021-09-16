@@ -1,7 +1,5 @@
 <template>
-  <a-form-pro
-    @register="childrenPro"
-  >
+  <a-form-pro @register="childrenPro">
     <template #resetBefore>
       <a-button>上一步</a-button>
     </template>
@@ -33,7 +31,7 @@ const schemas: FormSchema[] = [
         component: 'Switch',
         label: '字段2',
       },
-    ]
+    ],
   },
   {
     field: 'eaafield1',
@@ -54,7 +52,7 @@ const schemas: FormSchema[] = [
         component: 'Switch',
         label: '字段4',
       },
-    ]
+    ],
   },
   {
     field: 'eabfield2',
@@ -75,21 +73,18 @@ const schemas: FormSchema[] = [
         component: 'Switch',
         label: '字段6',
       },
-    ]
+    ],
   },
 ];
 
 export default defineComponent({
   setup() {
-    const [
-      childrenPro,
-      { getFieldsValue, setFieldsValue, getChildrenFieldsValue }
-    ] = useForm({
+    const [childrenPro, { getFieldsValue, setFieldsValue, getChildrenFieldsValue }] = useForm({
       labelWidth: 120,
       schemas,
       actionColOptions: {
         span: 24,
-        push: 0
+        push: 0,
       },
       actionAlgin: 'space-between',
       actionAffix: true,
@@ -101,7 +96,7 @@ export default defineComponent({
     // NOTO 真实场景获取详情编辑接口，设置具体曾经的数据
     setTimeout(async () => {
       setFieldsValue({
-        field1: 'water'
+        field1: 'water',
       });
     }, 100);
     return {
@@ -117,7 +112,7 @@ export default defineComponent({
       const values3 = this.getChildrenFieldsValue();
       const values4 = this.getChildrenFieldsValue(true);
       (this as any).$message.info('控制台有惊喜');
-      
+
       console.log('children 的提交数据全字段:' + JSON.stringify(values1));
       console.log('children 的提交数据过滤不显示的字段:' + JSON.stringify(values2));
       console.log('children 的提交数据children结构的字段:' + JSON.stringify(values3));

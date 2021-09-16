@@ -1,9 +1,4 @@
-import type {
-  TableProProps,
-  TableActionType,
-  SizeType,
-  BasicColumn,
-} from './types/table';
+import type { TableProProps, TableActionType, SizeType, BasicColumn } from './types/table';
 
 import { defineComponent, ref, computed, unref, onMounted, nextTick } from 'vue';
 import { omit } from 'lodash-es';
@@ -144,19 +139,10 @@ export default defineComponent({
 
     const { getHeaderProps } = useTableHeader(getProps, slots);
 
-    const { getFooterProps } = useTableFooter(
-      getProps,
-      getScrollRef,
-      tableElRef,
-      getDataSourceRef,
-    );
+    const { getFooterProps } = useTableFooter(getProps, getScrollRef, tableElRef, getDataSourceRef);
 
-    const {
-      getFormProps,
-      replaceFormSlotKey,
-      getFormSlotKeys,
-      handleSearchInfoChange,
-    } = useTableForm(getProps, slots, fetch);
+    const { getFormProps, replaceFormSlotKey, getFormSlotKeys, handleSearchInfoChange } =
+      useTableForm(getProps, slots, fetch);
 
     const getBindValues = computed(() => {
       let propsData: Recordable = {
@@ -198,7 +184,7 @@ export default defineComponent({
       const columnListEl = unref(tableElRef).$el;
       if (!columnListEl) return;
       const { initSortable } = useSortable(columnListEl.querySelector('.ant-table-tbody') as any, {
-        onEnd: evt => {
+        onEnd: (evt) => {
           const { oldIndex, newIndex } = evt;
           if (
             (isUndefined(oldIndex) && isNull(oldIndex)) ||
@@ -293,20 +279,22 @@ export default defineComponent({
     let formNode = null;
 
     if (this.getBindValues.useSearchForm) {
-      formNode = (<FormPro
-        submit-on-reset
-        {...(this.getFormProps as any)}
-        submit-button-options={{ loading: this.getLoading }}
-        reset-button-options={{ loading: this.getLoading }}
-        table-action={this.tableAction}
-        label-align={this.formLabelALigin}
-        label-col={this.formLabelCol}
-        wrapper-col={this.formWrapperCol}
-        onRegister={this.registerForm}
-        onSubmit={this.handleSearchInfoChange}
-        onAdvancedChange={this.redoHeight}
-        v-slots={this.$slots}
-      />);
+      formNode = (
+        <FormPro
+          submit-on-reset
+          {...(this.getFormProps as any)}
+          submit-button-options={{ loading: this.getLoading }}
+          reset-button-options={{ loading: this.getLoading }}
+          table-action={this.tableAction}
+          label-align={this.formLabelALigin}
+          label-col={this.formLabelCol}
+          wrapper-col={this.formWrapperCol}
+          onRegister={this.registerForm}
+          onSubmit={this.handleSearchInfoChange}
+          onAdvancedChange={this.redoHeight}
+          v-slots={this.$slots}
+        />
+      );
     }
 
     const tableSlots = {
@@ -317,39 +305,43 @@ export default defineComponent({
       tableSlots[`header-${column.dataIndex}`] = () => [<HeaderCell column={column} />];
     });
 
-    let tableNode = (<Table
-      v-show={this.getEmptyDataIsShowTable}
-      ref="tableElRef"
-      { ...this.getBindValues }
-      row-class-name={this.getRowClassName}
-      onChange={this.handleTableChange}
-      onMoreDisplayCancelSelect={this.moreDisplayCancelSelect}
-      v-slots={tableSlots}
-    >
-    </Table>);
+    let tableNode = (
+      <Table
+        v-show={this.getEmptyDataIsShowTable}
+        ref="tableElRef"
+        {...this.getBindValues}
+        row-class-name={this.getRowClassName}
+        onChange={this.handleTableChange}
+        onMoreDisplayCancelSelect={this.moreDisplayCancelSelect}
+        v-slots={tableSlots}
+      ></Table>
+    );
 
     if (this.cardable) {
-      tableNode = <Card title={this.cardTitle}
-      v-slots={this.$slots}>
-        {tableNode}
-      </Card>
+      tableNode = (
+        <Card title={this.cardTitle} v-slots={this.$slots}>
+          {tableNode}
+        </Card>
+      );
     }
 
-    return (<div
-      ref="wrapRef"
-      class={[
-        this.prefixClsNew,
-        this.$attrs.class,
-        {
-          [`${this.prefixClsNew}-cardable`]: this.cardable,
-          [`${this.prefixClsNew}-form-container`]: this.getBindValues.useSearchForm,
-          [`${this.prefixClsNew}--inset`]: this.getBindValues.inset,
-          [`${this.prefixClsNew}--drag`]: this.getBindValues.draggable,
-        },
-      ]}
-    >
-      {formNode}
-      {tableNode}
-    </div>)
+    return (
+      <div
+        ref="wrapRef"
+        class={[
+          this.prefixClsNew,
+          this.$attrs.class,
+          {
+            [`${this.prefixClsNew}-cardable`]: this.cardable,
+            [`${this.prefixClsNew}-form-container`]: this.getBindValues.useSearchForm,
+            [`${this.prefixClsNew}--inset`]: this.getBindValues.inset,
+            [`${this.prefixClsNew}--drag`]: this.getBindValues.draggable,
+          },
+        ]}
+      >
+        {formNode}
+        {tableNode}
+      </div>
+    );
   },
 });

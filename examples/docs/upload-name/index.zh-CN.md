@@ -5,8 +5,8 @@
 | value(v-model) | 上传的值 | string \| object | - | - |
 | onFormChange | 上传之后触发的方法 | function | () => {} | - |
 | mergeOriginDatas | 设置 form 提交的数据 | function | - | - |
-| headers | 上传图片的 headers 设置 | - | - | |
-| placeholder | 上传按钮的文案 | 添加图片 | - | |
+| headers | 上传图片的 headers 设置 | - | - |  |
+| placeholder | 上传按钮的文案 | 添加图片 | - |  |
 | accept | 接受上传的文件类型, 详见 [input accept Attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept) | string | 'image/png', 'image/jpeg' |  |
 | action | 上传的地址 | string | 无 |  |
 | autoUpload | 是否自动上传 | boolean | true |  |
@@ -19,7 +19,7 @@
 
 ### 事件
 
-| 事件名称 | 说明 | 回调参数 | 版本 |
-| --- | --- | --- | --- |
-| change | 上传文件改变时的状态，详见 [change](#change) | Function | 无 |  |
-| changeUpload | 上传改变，与 change 分隔，用在 form pro 配置中 | Function(file) | 无 |  |
+| 事件名称     | 说明                                           | 回调参数       | 版本 |
+| ------------ | ---------------------------------------------- | -------------- | ---- | --- |
+| change       | 上传文件改变时的状态，详见 [change](#change)   | Function       | 无   |     |
+| changeUpload | 上传改变，与 change 分隔，用在 form pro 配置中 | Function(file) | 无   |     |

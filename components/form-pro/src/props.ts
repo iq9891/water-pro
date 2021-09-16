@@ -62,8 +62,16 @@ export const basicProps = {
   transformDateFunc: {
     type: Function as PropType<Fn>,
     default: (date: any, schemaItem: FormSchema) => {
-      let format = schemaItem && (schemaItem.component === 'TimePicker' || schemaItem.component === 'TimeRangePicker') ? 'HH:mm:ss' : 'YYYY-MM-DD HH:mm:ss';
-      if (schemaItem && hasOwn(schemaItem, 'componentProps') && hasOwn(schemaItem.componentProps, 'format')) {
+      let format =
+        schemaItem &&
+        (schemaItem.component === 'TimePicker' || schemaItem.component === 'TimeRangePicker')
+          ? 'HH:mm:ss'
+          : 'YYYY-MM-DD HH:mm:ss';
+      if (
+        schemaItem &&
+        hasOwn(schemaItem, 'componentProps') &&
+        hasOwn(schemaItem.componentProps, 'format')
+      ) {
         format = (schemaItem.componentProps as any).format;
         if (isArray(format)) {
           format = format[0];
@@ -81,7 +89,7 @@ export const basicProps = {
   // 操作列Col配置
   actionColOptions: {
     type: Object as PropType<Partial<ColEx>>,
-    default: () =>({
+    default: () => ({
       span: 22,
       push: 2,
     }),
@@ -107,19 +115,17 @@ export const basicProps = {
 
   labelCol: {
     type: Object as PropType<Partial<ColEx>>,
-    default: () => ({ span: 2 })
+    default: () => ({ span: 2 }),
   },
 
-  layout: PropTypes
-    .oneOf(['horizontal', 'vertical', 'inline'])
-    .def('horizontal'),
+  layout: PropTypes.oneOf(['horizontal', 'vertical', 'inline']).def('horizontal'),
   tableAction: {
     type: Object as PropType<TableActionType>,
   },
 
   wrapperCol: {
     type: Object as PropType<Partial<ColEx>>,
-    default: () => ({ span: 22 })
+    default: () => ({ span: 22 }),
   },
 
   colon: PropTypes.bool.def(true),

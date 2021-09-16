@@ -111,9 +111,9 @@ const Panel = defineComponent({
       let disabledOptions = disabledHours();
       if (use12Hours && Array.isArray(disabledOptions)) {
         if (this.isAM()) {
-          disabledOptions = disabledOptions.filter(h => h < 12).map(h => (h === 0 ? 12 : h));
+          disabledOptions = disabledOptions.filter((h) => h < 12).map((h) => (h === 0 ? 12 : h));
         } else {
-          disabledOptions = disabledOptions.map(h => (h === 12 ? 12 : h - 12));
+          disabledOptions = disabledOptions.map((h) => (h === 12 ? 12 : h - 12));
         }
       }
       return disabledOptions;

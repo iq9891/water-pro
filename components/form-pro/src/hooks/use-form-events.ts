@@ -6,7 +6,15 @@ import type { NamePath } from '../../../form/interface';
 
 import { unref, toRaw, ref } from 'vue';
 import { cloneDeep, uniqBy } from 'lodash-es';
-import { isArray, isBoolean, isFunction, isPlainObject, isString, deepMerge, hasOwn } from '@fe6/shared';
+import {
+  isArray,
+  isBoolean,
+  isFunction,
+  isPlainObject,
+  isString,
+  deepMerge,
+  hasOwn,
+} from '@fe6/shared';
 
 import warning from '../../../_util/warning';
 import { dateItemType, handleInputNumberValue } from '../helper';
@@ -94,9 +102,7 @@ export function useFormEvents({
     const schemaList: FormSchema[] = cloneDeep(unref(getSchema));
     if (!fields) return;
 
-    let fieldList: string[] = isString(fields)
-      ? [fields as string]
-      : (fields as string[]);
+    let fieldList: string[] = isString(fields) ? [fields as string] : (fields as string[]);
     if (isString(fields)) {
       fieldList = [fields as string];
     }
@@ -121,19 +127,11 @@ export function useFormEvents({
   /**
    * @description: Insert after a certain field, if not insert the last
    */
-  async function appendSchemaByField(
-    schema: FormSchema,
-    prefixField?: string,
-    first = false,
-  ) {
+  async function appendSchemaByField(schema: FormSchema, prefixField?: string, first = false) {
     const schemaList: FormSchema[] = cloneDeep(unref(getSchema));
 
-    const index = schemaList.findIndex(
-      (schema) => schema.field === prefixField,
-    );
-    const hasInList = schemaList.some(
-      (item) => item.field === prefixField || schema.field,
-    );
+    const index = schemaList.findIndex((schema) => schema.field === prefixField);
+    const hasInList = schemaList.some((item) => item.field === prefixField || schema.field);
 
     if (!hasInList) return;
 
@@ -148,10 +146,7 @@ export function useFormEvents({
     schemaRef.value = schemaList;
   }
 
-  async function updateSchema(
-    data: Partial<FormSchema> | Partial<FormSchema>[],
-    replace = false,
-  ) {
+  async function updateSchema(data: Partial<FormSchema> | Partial<FormSchema>[], replace = false) {
     let updateData: Partial<FormSchema>[] = [];
     if (isPlainObject(data)) {
       updateData.push(data as FormSchema);
@@ -160,9 +155,7 @@ export function useFormEvents({
       updateData = [...(data as Partial<FormSchema>[])];
     }
 
-    const hasField = updateData.every(
-      (item) => Reflect.has(item, 'field') && item.field,
-    );
+    const hasField = updateData.every((item) => Reflect.has(item, 'field') && item.field);
 
     if (!hasField) {
       warning(
@@ -194,44 +187,44 @@ export function useFormEvents({
   }
 
   function getShow(schema): { isShow: boolean; isIfShow: boolean } {
-      const { show, ifShow } = schema;
-      const { showAdvancedButton, mergeDynamicData } = unref(getProps);
-      const itemIsAdvanced = showAdvancedButton
-        ? isBoolean(schema.isAdvanced)
-          ? schema.isAdvanced
-          : true
-        : true;
-      const values = {
-        ...mergeDynamicData,
-        ...(unref(defaultValueRef) as any),
-        ...(unref(formModel) as any),
-        ...handleFormValues(toRaw(unref(formModel)))
-      } as Recordable;
-      const getValues = ref({
-        field: schema.field,
-        model: formModel,
-        values,
-        schema,
-      })
+    const { show, ifShow } = schema;
+    const { showAdvancedButton, mergeDynamicData } = unref(getProps);
+    const itemIsAdvanced = showAdvancedButton
+      ? isBoolean(schema.isAdvanced)
+        ? schema.isAdvanced
+        : true
+      : true;
+    const values = {
+      ...mergeDynamicData,
+      ...(unref(defaultValueRef) as any),
+      ...(unref(formModel) as any),
+      ...handleFormValues(toRaw(unref(formModel))),
+    } as Recordable;
+    const getValues = ref({
+      field: schema.field,
+      model: formModel,
+      values,
+      schema,
+    });
 
-      let isShow = true;
-      let isIfShow = true;
+    let isShow = true;
+    let isIfShow = true;
 
-      if (isBoolean(show)) {
-        isShow = show as boolean;
-      }
-      if (isBoolean(ifShow)) {
-        isIfShow = ifShow as boolean;
-      }
-      if (isFunction(show)) {
-        isShow = (show as Function)(getValues);
-      }
-      if (isFunction(ifShow)) {
-        isIfShow = (ifShow as Function)(getValues);
-      }
-      isShow = (isShow && itemIsAdvanced) as boolean;
-      return { isShow, isIfShow };
+    if (isBoolean(show)) {
+      isShow = show as boolean;
     }
+    if (isBoolean(ifShow)) {
+      isIfShow = ifShow as boolean;
+    }
+    if (isFunction(show)) {
+      isShow = (show as Function)(getValues);
+    }
+    if (isFunction(ifShow)) {
+      isIfShow = (ifShow as Function)(getValues);
+    }
+    isShow = (isShow && itemIsAdvanced) as boolean;
+    return { isShow, isIfShow };
+  }
 
   function getFieldsValue(filterHidden?: boolean): Recordable {
     const formEl = unref(formElRef);
@@ -241,14 +234,14 @@ export function useFormEvents({
     if (filterHidden) {
       const myNewValue = {};
       getOriginSchema.value.forEach((pItem: any) => {
-        const {isIfShow: isParentIfShow} = getShow(pItem);
+        const { isIfShow: isParentIfShow } = getShow(pItem);
         if (isParentIfShow && hasOwn(myValue, pItem.field)) {
           myNewValue[pItem.field] = myValue[pItem.field];
         }
 
         if (hasOwn(pItem, 'children')) {
           pItem.children.forEach((cItem: any) => {
-            const {isIfShow: isChildIfShow} = getShow(cItem);
+            const { isIfShow: isChildIfShow } = getShow(cItem);
             if (isChildIfShow && isParentIfShow && hasOwn(myValue, cItem.field)) {
               myNewValue[cItem.field] = myValue[cItem.field];
             }
@@ -266,15 +259,18 @@ export function useFormEvents({
     const myValue = handleFormValues(toRaw(unref(formModel)));
     const myNewValue = {};
     getOriginSchema.value.forEach((pItem: any) => {
-      const {isIfShow: isParentIfShow} = getShow(pItem);
+      const { isIfShow: isParentIfShow } = getShow(pItem);
       if ((!filterHidden || isParentIfShow) && hasOwn(myValue, pItem.field)) {
         myNewValue[pItem.field] = myValue[pItem.field];
       }
 
       if (hasOwn(pItem, 'children')) {
         pItem.children.forEach((cItem: any) => {
-          const {isIfShow: isChildIfShow} = getShow(cItem);
-          if ((!filterHidden || (isChildIfShow && isParentIfShow)) && hasOwn(myValue, cItem.field)) {
+          const { isIfShow: isChildIfShow } = getShow(cItem);
+          if (
+            (!filterHidden || (isChildIfShow && isParentIfShow)) &&
+            hasOwn(myValue, cItem.field)
+          ) {
             if (!hasOwn(myNewValue, pItem.field)) {
               myNewValue[pItem.field] = {};
             }
@@ -308,10 +304,7 @@ export function useFormEvents({
     await unref(formElRef)?.clearValidate(name);
   }
 
-  async function scrollToField(
-    name: NamePath,
-    options?: ScrollOptions | undefined,
-  ) {
+  async function scrollToField(name: NamePath, options?: ScrollOptions | undefined) {
     await unref(formElRef)?.scrollToField(name, options);
   }
 

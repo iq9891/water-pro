@@ -2,9 +2,9 @@
   <a-sms-code
     :api="getSmsCodeApi"
     v-model:value="value"
-    :ajaxParams="() => ({phone: 13810902078})"
+    :ajaxParams="() => ({ phone: 13810902078 })"
     :buttonOptions="{
-      type: 'danger'
+      type: 'danger',
     }"
   >
     <template #prefix>
@@ -21,8 +21,8 @@ const getSmsCodeApi = () => {
     setTimeout(() => {
       resolve([]);
     }, 1000);
-  })
-}
+  });
+};
 
 export default defineComponent({
   components: {

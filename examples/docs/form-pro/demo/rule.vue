@@ -1,7 +1,5 @@
 <template>
-  <a-form-pro
-    @register="ruleForm"
-  >
+  <a-form-pro @register="ruleForm">
     <template #inputGroup="{ model, field }">
       <a-input-group compact>
         <a-select
@@ -34,7 +32,7 @@ const schemas: FormSchema[] = [
     helpMessage: 'NOTE: 在 form-pro 模板中对应 inputGroup 的 slot',
     subLabel: 'slot 的 select 需要手动监听 change 进行验证',
     dynamicRules: (ruleParams: ComputedRef<RenderCallbackParams>) => {
-      return [ 
+      return [
         {
           required: true,
           validator: () => {
@@ -111,27 +109,24 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      ruleForm,
-      { validateFields }
-    ] = useForm({
+    const [ruleForm, { validateFields }] = useForm({
       schemas,
       labelCol: {
-        span: 24
+        span: 24,
       },
       wrapperCol: {
-        span: 24
+        span: 24,
       },
       actionColOptions: {
         span: 24,
-        push: 0
+        push: 0,
       },
     });
     return {
       ruleForm,
       changeSelect: (a) => {
         validateFields('inputGroup');
-      }
+      },
     };
   },
 });

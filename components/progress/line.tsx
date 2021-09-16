@@ -9,7 +9,7 @@ import { validProgress } from './utils';
  *   '100%': '#ffffff'
  * }
  */
-export const sortGradient = gradients => {
+export const sortGradient = (gradients) => {
   let tempArr = [];
   // eslint-disable-next-line no-restricted-syntax
   for (const [key, value] of Object.entries(gradients)) {
@@ -41,7 +41,7 @@ export const sortGradient = gradients => {
  * And...
  * Besides women, there is the code.
  */
-export const handleGradient = strokeColor => {
+export const handleGradient = (strokeColor) => {
   const { from = '#1890ff', to = '#1890ff', direction = 'to right', ...rest } = strokeColor;
   if (Object.keys(rest).length !== 0) {
     const sortedGradients = sortGradient(rest);
@@ -51,15 +51,8 @@ export const handleGradient = strokeColor => {
 };
 
 const Line = (_, { attrs, slots }) => {
-  const {
-    prefixCls,
-    percent,
-    successPercent,
-    strokeWidth,
-    size,
-    strokeColor,
-    strokeLinecap,
-  } = attrs;
+  const { prefixCls, percent, successPercent, strokeWidth, size, strokeColor, strokeLinecap } =
+    attrs;
   let backgroundProps;
   if (strokeColor && typeof strokeColor !== 'string') {
     backgroundProps = handleGradient(strokeColor);

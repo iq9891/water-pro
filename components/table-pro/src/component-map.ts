@@ -2,7 +2,6 @@
 
 import type { Component } from 'vue';
 
-
 import type { ComponentType } from './types/component-type';
 import AutoComplete from '../../auto-complete';
 import ColorPicker from '../../color-picker';

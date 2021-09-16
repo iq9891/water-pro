@@ -29,9 +29,7 @@ export async function useAutoFocus({
     // Only open when the first form item is input type
     if (!firstItem.component.includes('Input')) return;
 
-    const inputEl = el.querySelector(
-      '.ant-row:first-child input',
-    ) as Nullable<HTMLInputElement>;
+    const inputEl = el.querySelector('.ant-row:first-child input') as Nullable<HTMLInputElement>;
     if (!inputEl) return;
     inputEl?.focus();
   });

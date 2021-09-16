@@ -27,7 +27,7 @@ const Editable = defineComponent({
     });
     watch(
       () => props.value,
-      current => {
+      (current) => {
         state.current = current;
       },
     );

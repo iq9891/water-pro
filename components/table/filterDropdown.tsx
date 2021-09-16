@@ -155,7 +155,7 @@ export default defineComponent({
       const {
         column: { filters = [] },
       } = this;
-      return filters.some(item => !!(item.children && item.children.length > 0));
+      return filters.some((item) => !!(item.children && item.children.length > 0));
     },
 
     confirmFilter2() {
@@ -168,18 +168,18 @@ export default defineComponent({
           column,
           filterDropdown
             ? selectedKeys
-            : selectedKeys.map((key: any) => valueKeys[key]).filter(key => key !== undefined),
+            : selectedKeys.map((key: any) => valueKeys[key]).filter((key) => key !== undefined),
         );
       }
     },
 
     renderMenus(items) {
       const { dropdownPrefixCls, prefixCls } = this.$props;
-      return items.map(item => {
+      return items.map((item) => {
         if (item.children && item.children.length > 0) {
           const { sKeyPathOfSelectedItem } = this;
           const containSelected = Object.keys(sKeyPathOfSelectedItem).some(
-            key => sKeyPathOfSelectedItem[key].indexOf(item.value) >= 0,
+            (key) => sKeyPathOfSelectedItem[key].indexOf(item.value) >= 0,
           );
           const subMenuCls = classNames(`${prefixCls}-dropdown-submenu`, {
             [`${dropdownPrefixCls}-submenu-contain-selected`]: containSelected,
@@ -259,7 +259,7 @@ export default defineComponent({
     if (filterDropdown instanceof Function) {
       filterDropdown = filterDropdown({
         prefixCls: `${dropdownPrefixCls}-custom`,
-        setSelectedKeys: selectedKeys => this.setSelectedKeys({ selectedKeys }),
+        setSelectedKeys: (selectedKeys) => this.setSelectedKeys({ selectedKeys }),
         selectedKeys: originSelectedKeys,
         confirm: this.handleConfirm,
         clearFilters: this.handleClearFilters,

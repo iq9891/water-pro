@@ -1,4 +1,5 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import { defineComponent } from 'vue';
 import PropTypes from '../../_util/vue-types';
 import BaseMixin from '../../_util/BaseMixin';
 import KeyCode from '../../_util/KeyCode';
@@ -7,7 +8,7 @@ import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import zhCn from './locale/zh_CN';
-import { defineComponent } from 'vue';
+
 const YearCalendar = defineComponent({
   name: 'YearCalendar',
   mixins: [BaseMixin, CommonMixin, CalendarMixin],
@@ -32,7 +33,7 @@ const YearCalendar = defineComponent({
     const props = this.$props;
     return {
       mode: 'year',
-      sValue: props.value || props.defaultValue || moment(),
+      sValue: props.value || props.defaultValue || dayjs(),
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },
@@ -46,26 +47,26 @@ const YearCalendar = defineComponent({
       switch (keyCode) {
         case KeyCode.DOWN:
           value = stateValue.clone();
-          value.add(3, 'years');
+          value = value.add(3, 'years');
           break;
         case KeyCode.UP:
           value = stateValue.clone();
-          value.add(-3, 'years');
+          value = value.add(-3, 'years');
           break;
         case KeyCode.LEFT:
           value = stateValue.clone();
           if (ctrlKey) {
-            value.add(-1, 'decade');
+            value = value.add(-1, 'decade');
           } else {
-            value.add(-1, 'years');
+            value = value.add(-1, 'years');
           }
           break;
         case KeyCode.RIGHT:
           value = stateValue.clone();
           if (ctrlKey) {
-            value.add(1, 'decade');
+            value = value.add(1, 'decade');
           } else {
-            value.add(1, 'years');
+            value = value.add(1, 'years');
           }
           break;
         case KeyCode.ENTER:

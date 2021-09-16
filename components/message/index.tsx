@@ -76,14 +76,14 @@ function notice(args: ArgsProps): MessageType {
   const iconNode = Icon ? <Icon /> : '';
 
   const target = args.key || key++;
-  const closePromise = new Promise(resolve => {
+  const closePromise = new Promise((resolve) => {
     const callback = () => {
       if (typeof args.onClose === 'function') {
         args.onClose();
       }
       return resolve(true);
     };
-    getMessageInstance(instance => {
+    getMessageInstance((instance) => {
       instance.notice({
         key: target,
         duration,
@@ -167,7 +167,7 @@ const api: any = {
   },
 };
 
-['success', 'info', 'warning', 'error', 'loading'].forEach(type => {
+['success', 'info', 'warning', 'error', 'loading'].forEach((type) => {
   api[type] = (content: JointContent, duration: ConfigDuration, onClose?: ConfigOnClose) => {
     if (isArgsProps(content)) {
       return api.open({ ...content, type });
@@ -195,7 +195,7 @@ export interface MessageApi {
 }
 
 /* istanbul ignore next */
-api.install = function(app) {
+api.install = function (app) {
   app.config.globalProperties.$message = api;
   return app;
 };

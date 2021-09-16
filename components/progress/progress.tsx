@@ -50,7 +50,8 @@ export default defineComponent({
       if (!showInfo) return null;
 
       let text;
-      const textFormatter = format || this.$slots.format || (percentNumber => `${percentNumber}%`);
+      const textFormatter =
+        format || this.$slots.format || ((percentNumber) => `${percentNumber}%`);
       const isLineType = type === 'line';
       if (
         format ||

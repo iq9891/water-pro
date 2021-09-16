@@ -3,7 +3,7 @@ import MockDate from 'mockdate';
 import { nextTick } from 'vue';
 
 export function setMockDate(dateString = '2017-09-18T03:30:07.795') {
-  MockDate.set(moment(dateString));
+  MockDate.set(dayjs(dateString));
 }
 
 export function resetMockDate() {
@@ -11,7 +11,7 @@ export function resetMockDate() {
 }
 
 export function asyncExpect(fn, timeout) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     if (typeof timeout === 'number') {
       setTimeout(() => {
         fn();
@@ -25,4 +25,4 @@ export function asyncExpect(fn, timeout) {
     }
   });
 }
-export const sleep = (timeout = 0) => new Promise(resolve => setTimeout(resolve, timeout));
+export const sleep = (timeout = 0) => new Promise((resolve) => setTimeout(resolve, timeout));

@@ -24,7 +24,7 @@ export default defineComponent({
       open: () => {
         modalMethods.openModal();
       },
-    }
+    };
   },
 });
 </script>

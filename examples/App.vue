@@ -5,6 +5,5 @@
 import { defineComponent } from 'vue';
 import './assets/style/index.less';
 
-export default defineComponent({
-});
+export default defineComponent({});
 </script>

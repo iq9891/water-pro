@@ -14,9 +14,12 @@
       <slot v-if="isZhCN" name="description" />
       <slot v-else name="us-description" />
       <a-affix class="code-box-affix" :disabled="!codeExpand">
-        <div class="code-box-actions" :class="{
-          ['code-box-actions-affix']: codeExpand
-        }">
+        <div
+          class="code-box-actions"
+          :class="{
+            ['code-box-actions-affix']: codeExpand,
+          }"
+        >
           <a-tooltip
             :title="copied ? 'Copied!' : 'Copy code'"
             :visible="copyTooltipVisible"
@@ -50,7 +53,7 @@
       <section
         v-show="codeExpand"
         class="highlight-wrapper"
-        style="position: relative;"
+        style="position: relative"
         v-html="getCode()"
       />
     </transition>
@@ -65,7 +68,7 @@ import { isZhCN } from '../utils/util';
 
 const dev = {
   componentName: 'form', // dev components
-}
+};
 
 export default {
   name: 'DemoBox',
@@ -92,10 +95,7 @@ export default {
       throw new Error(`not have usTitle`);
     }
 
-    const iframeDemoKey = usTitle
-      .split(' ')
-      .join('-')
-      .toLowerCase();
+    const iframeDemoKey = usTitle.split(' ').join('-').toLowerCase();
     const id = [
       'components',
       name.replace(/-cn\/?$/, '') || dev.componentName,
@@ -126,9 +126,7 @@ export default {
     getCode() {
       const { $slots } = this;
       const codeString = $slots.code && $slots.code()[0] ? $slots.code()[0].children : '';
-      return decodeURIComponent(
-        escape(window.atob(codeString)),
-      );
+      return decodeURIComponent(escape(window.atob(codeString)));
     },
     handleCodeExpand() {
       this.codeExpand = !this.codeExpand;

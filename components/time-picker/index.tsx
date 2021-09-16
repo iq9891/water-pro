@@ -159,7 +159,7 @@ const TimePicker = defineComponent({
         [`${prefixCls}-${size}`]: !!size,
       };
       const tempAddon = getComponent(this, 'addon', {}, false);
-      const pickerAddon = panel => {
+      const pickerAddon = (panel) => {
         return tempAddon ? (
           <div class={`${prefixCls}-panel-addon`}>
             {typeof tempAddon === 'function' ? tempAddon(panel) : tempAddon}
@@ -208,7 +208,7 @@ Object.assign(TimePicker, {
 });
 
 /* istanbul ignore next */
-TimePicker.install = function(app: App) {
+TimePicker.install = function (app: App) {
   app.component(TimePicker.name, TimePicker);
   app.component(TimeRangePicker.name, TimeRangePicker);
   return app;

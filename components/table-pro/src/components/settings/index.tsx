@@ -17,27 +17,25 @@ export default defineComponent({
   },
   setup(props) {
     const { prefixCls: prefixClsNew } = useConfigInject('table-pro-settings', props);
-    const getSetting = computed(
-      (): TableSetting => {
-        return {
-          reload: true,
-          setting: true,
-          ...props.setting,
-        };
-      },
-    );
+    const getSetting = computed((): TableSetting => {
+      return {
+        reload: true,
+        setting: true,
+        ...props.setting,
+      };
+    });
 
     return { getSetting, prefixClsNew };
   },
   render() {
     let reloadNode = null;
     if (this.getSetting.reload) {
-      reloadNode = (<ReloadSetting />);
+      reloadNode = <ReloadSetting />;
     }
 
     let settingNode = null;
     if (this.getSetting.setting) {
-      settingNode = (<ColumnSetting />);
+      settingNode = <ColumnSetting />;
     }
 
     return (
@@ -45,6 +43,6 @@ export default defineComponent({
         {reloadNode}
         {settingNode}
       </div>
-    )
+    );
   },
 });

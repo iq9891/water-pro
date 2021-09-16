@@ -6,17 +6,17 @@ import { defineComponent } from 'vue';
 
 import { FormSchema, useForm } from '@fe6/water-pro';
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
         label: 'water',
-        value: 90
+        value: 90,
       },
       {
         label: 'antd',
-        value: 80
-      }
+        value: 80,
+      },
     ]);
   }, 1000);
 };
@@ -133,10 +133,7 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      specialFormPro,
-      specialFormActions
-    ] = useForm({
+    const [specialFormPro, specialFormActions] = useForm({
       schemas,
       labelWidth: 200,
     });

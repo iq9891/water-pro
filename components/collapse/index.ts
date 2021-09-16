@@ -5,7 +5,7 @@ import CollapsePanel from './CollapsePanel';
 Collapse.Panel = CollapsePanel;
 
 /* istanbul ignore next */
-Collapse.install = function(app: App) {
+Collapse.install = function (app: App) {
   app.component(Collapse.name, Collapse);
   app.component(CollapsePanel.name, CollapsePanel);
   return app;

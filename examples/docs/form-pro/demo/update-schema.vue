@@ -20,10 +20,7 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      updateSchemaFormPro,
-      updateSchemaFormActions
-    ] = useForm({
+    const [updateSchemaFormPro, updateSchemaFormActions] = useForm({
       schemas: [],
       showActionButtonGroup: false,
     });
@@ -36,14 +33,11 @@ export default defineComponent({
     };
 
     const renderForm = async () => {
-      await updateSchemaFormActions.updateSchema(
-        schemas,
-        true,
-      );
+      await updateSchemaFormActions.updateSchema(schemas, true);
       updateSchemaFormActions.setProps({
         showActionButtonGroup: true,
       });
-    }
+    };
 
     return {
       updateSchemaFormPro,

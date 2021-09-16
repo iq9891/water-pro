@@ -1,8 +1,5 @@
 <template>
-  <a-form-pro
-    @register="loginFormPro"
-    @submit="handleSubmit"
-  />
+  <a-form-pro @register="loginFormPro" @submit="handleSubmit" />
 </template>
 <script lang="ts">
 import { defineComponent, h } from 'vue';
@@ -16,8 +13,8 @@ const getSmsCodeApi = (params: any) => {
     setTimeout(() => {
       resolve([]);
     }, 1000);
-  })
-}
+  });
+};
 
 const schemas: FormSchema[] = [
   {
@@ -58,7 +55,7 @@ const schemas: FormSchema[] = [
             phone: formModel.phone,
             ticket,
             randstr,
-          }
+          };
         },
         before(fn) {
           const captcha1 = new (window as any).TencentCaptcha('2086745153', (res) => {
@@ -70,8 +67,8 @@ const schemas: FormSchema[] = [
           });
           captcha1.show(); // 显示验证码
         },
-      }
-    }
+      };
+    },
   },
   {
     field: 'useCookie',
@@ -82,25 +79,23 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      loginFormPro,
-    ] = useForm({
+    const [loginFormPro] = useForm({
       schemas,
       showResetButton: false,
       labelCol: {
-        span: 24
+        span: 24,
       },
       wrapperCol: {
-        span:24
+        span: 24,
       },
       actionColOptions: {
         span: 24,
-        push: 0
+        push: 0,
       },
       layout: 'vertical',
       submitButtonOptions: {
-        block: true
-      }
+        block: true,
+      },
     });
     return {
       loginFormPro,

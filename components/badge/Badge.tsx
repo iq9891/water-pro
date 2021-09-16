@@ -226,7 +226,7 @@ const Badge = defineComponent({
   },
 });
 
-Badge.install = function(app: App) {
+Badge.install = function (app: App) {
   app.component(Badge.name, Badge);
   app.component(Badge.Ribbon.displayName, Badge.Ribbon);
   return app;

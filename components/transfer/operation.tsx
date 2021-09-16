@@ -17,7 +17,7 @@ export interface TransferOperationProps {
   disabled?: boolean;
 }
 
-const Operation: FunctionalComponent<TransferOperationProps> = props => {
+const Operation: FunctionalComponent<TransferOperationProps> = (props) => {
   const {
     disabled,
     moveToLeft = noop,

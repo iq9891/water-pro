@@ -102,7 +102,7 @@ const Preview = defineComponent({
     const onRotateLeft = () => {
       rotate.value -= 90;
     };
-    const onSwitchLeft: MouseEventHandler = event => {
+    const onSwitchLeft: MouseEventHandler = (event) => {
       event.preventDefault();
       // Without this mask close will abnormal
       event.stopPropagation();
@@ -111,7 +111,7 @@ const Preview = defineComponent({
       }
     };
 
-    const onSwitchRight: MouseEventHandler = event => {
+    const onSwitchRight: MouseEventHandler = (event) => {
       event.preventDefault();
       // Without this mask close will abnormal
       event.stopPropagation();
@@ -175,7 +175,7 @@ const Preview = defineComponent({
       }
     };
 
-    const onMouseDown: MouseEventHandler = event => {
+    const onMouseDown: MouseEventHandler = (event) => {
       event.preventDefault();
       // Without this mask close will abnormal
       event.stopPropagation();
@@ -186,7 +186,7 @@ const Preview = defineComponent({
       isMoving.value = true;
     };
 
-    const onMouseMove: MouseEventHandler = event => {
+    const onMouseMove: MouseEventHandler = (event) => {
       if (props.visible && isMoving.value) {
         setPosition({
           x: event.pageX - originPositionRef.deltaX,

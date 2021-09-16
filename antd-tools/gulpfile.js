@@ -95,7 +95,7 @@ function compileTs(stream) {
   return stream
     .pipe(ts(tsConfig))
     .js.pipe(
-      through2.obj(function(file, encoding, next) {
+      through2.obj(function (file, encoding, next) {
         // console.log(file.path, file.base);
         file.path = file.path.replace(/\.[jt]sx$/, '.js');
         this.push(file);
@@ -157,10 +157,7 @@ function babelify(js, modules) {
 }
 
 function copy() {
-  gulp
-    .src(['components/**/*.vue'])
-    .pipe(replace(/\.ts/gi, '.js'))
-    .pipe(gulp.dest(esDir));
+  gulp.src(['components/**/*.vue']).pipe(replace(/\.ts/gi, '.js')).pipe(gulp.dest(esDir));
 }
 
 function compile(modules) {
@@ -168,20 +165,20 @@ function compile(modules) {
   const less = gulp
     .src(['components/**/*.less'])
     .pipe(
-      through2.obj(function(file, encoding, next) {
+      through2.obj(function (file, encoding, next) {
         this.push(file.clone());
         if (
           file.path.match(/\/style\/index\.less$/) ||
           file.path.match(/\/style\/v2-compatible-reset\.less$/)
         ) {
           transformLess(file.path)
-            .then(css => {
+            .then((css) => {
               file.contents = Buffer.from(css);
               file.path = file.path.replace(/\.less$/, '.css');
               this.push(file);
               next();
             })
-            .catch(e => {
+            .catch((e) => {
               console.error(e);
             });
         } else {
@@ -312,7 +309,7 @@ function compile(modules) {
 
 gulp.task(
   'copy',
-  gulp.series(done => {
+  gulp.series((done) => {
     copy();
     done();
   }),
@@ -328,7 +325,7 @@ gulp.task(
 
 gulp.task(
   'check-git',
-  gulp.series(done => {
+  gulp.series((done) => {
     runCmd('git', ['status', '--porcelain'], (code, result) => {
       if (/^\?\?/m.test(result)) {
         return done(`There are untracked files in the working tree.\n${result}
@@ -369,26 +366,26 @@ function pub(done) {
   }
 }
 
-gulp.task('compile-with-es', done => {
+gulp.task('compile-with-es', (done) => {
   console.log(chalk.blue.bold('💦 [water tool] Compile to es...'));
   compile(false).on('finish', done);
 });
 
-gulp.task('compile-with-lib', done => {
+gulp.task('compile-with-lib', (done) => {
   console.log(chalk.blue.bold('💦 [water tool] Compile to js...'));
   compile().on('finish', done);
 });
 
 gulp.task(
   'compile',
-  gulp.series(gulp.parallel('compile-with-es', 'compile-with-lib'), done => {
+  gulp.series(gulp.parallel('compile-with-es', 'compile-with-lib'), (done) => {
     done();
   }),
 );
 
 gulp.task(
   'dist',
-  gulp.series(done => {
+  gulp.series((done) => {
     dist(done);
   }),
 );
@@ -409,7 +406,7 @@ gulp.task(
 
 gulp.task(
   'pub',
-  gulp.series('check-git', 'compile', 'copy', 'dist', done => {
+  gulp.series('check-git', 'compile', 'copy', 'dist', (done) => {
     // if (!process.env.GITHUB_TOKEN) {
     //   console.log('no GitHub token found, skip');
     // } else {
@@ -465,7 +462,6 @@ gulp.task(
 //     });
 //   }),
 // );
-
 
 // gulp.task(
 //   'guard',

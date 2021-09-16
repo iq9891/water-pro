@@ -13,7 +13,6 @@ import type { PaginationProps } from './pagination';
 import { SortOrder } from './column';
 import { ComponentType } from './component-type';
 
-
 export interface TableCurrentDataSource<T = Recordable> {
   currentDataSource: T[];
 }
@@ -29,12 +28,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when select/deselect one row
    * @type FunctionT
    */
-  onSelect?: (
-    record: T,
-    selected: boolean,
-    selectedRows: Object[],
-    nativeEvent: Event,
-  ) => any;
+  onSelect?: (record: T, selected: boolean, selectedRows: Object[], nativeEvent: Event) => any;
 
   /**
    * Callback executed when select/deselect all rows
@@ -118,10 +112,7 @@ export interface TableActionType {
   updateTableData: (index: number, key: string, value: any) => Recordable;
   setShowPagination: (show: boolean) => Promise<void>;
   getShowPagination: () => boolean;
-  setCacheColumnsByField?: (
-    dataIndex: string | undefined,
-    value: BasicColumn,
-  ) => void;
+  setCacheColumnsByField?: (dataIndex: string | undefined, value: BasicColumn) => void;
 }
 
 export interface FetchSetting {
@@ -257,9 +248,7 @@ export interface TableProProps<T = any> {
    * Expanded container render for each row
    * @type Function
    */
-  expandedRowRender?: (
-    record?: ExpandedRowRenderRecord<T>,
-  ) => VNodeChild | JSX.Element;
+  expandedRowRender?: (record?: ExpandedRowRenderRecord<T>) => VNodeChild | JSX.Element;
 
   /**
    * Customize row expand Icon.
@@ -407,15 +396,11 @@ export interface TableProProps<T = any> {
 
 export type CellFormatMap = Map<string | number, any>;
 
-export type CellFormatFn = (
-  text: string,
-  record: Recordable,
-  index: number,
-) => string | number;
+export type CellFormatFn = (text: string, record: Recordable, index: number) => string | number;
 
 export type CellFormat = string | CellFormatFn | CellFormatMap;
 
-// @ts-ignore 
+// @ts-ignore
 // ColumnProps 为表格默认参数
 // http://water.chjgo.com/components/table-cn
 export interface BasicColumn extends ColumnProps {
@@ -427,9 +412,7 @@ export interface BasicColumn extends ColumnProps {
     value: string;
     children?:
       | unknown[]
-      | (((props: Record<string, unknown>) => unknown[]) &
-          (() => unknown[]) &
-          (() => unknown[]));
+      | (((props: Record<string, unknown>) => unknown[]) & (() => unknown[]) & (() => unknown[]));
   }[];
   // 设置标致
   flag?: 'INDEX' | 'DEFAULT' | 'CHECKBOX' | 'RADIO' | 'ACTION';

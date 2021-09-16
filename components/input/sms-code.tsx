@@ -49,7 +49,7 @@ export default defineComponent({
     return {
       sendLoading: loading,
       fetch,
-    }
+    };
   },
   data() {
     return {
@@ -101,15 +101,10 @@ export default defineComponent({
     },
     sendSMSCode() {
       (this.before as Function)(async (valid) => {
-        if (
-          (!this.formTest || !valid) &&
-          !this.sendLoading &&
-          !this.start &&
-          this.go
-        ) {
+        if ((!this.formTest || !valid) && !this.sendLoading && !this.start && this.go) {
           const params = {
             phone: this.phone,
-            ...((this.ajaxParams as Function)()),
+            ...(this.ajaxParams as Function)(),
           };
           this.fetch({
             params,
@@ -124,7 +119,7 @@ export default defineComponent({
                   this.auto();
                 }
               }
-            }
+            },
           });
         }
       });
@@ -163,7 +158,9 @@ export default defineComponent({
     const inputClassName = classNames(prefixCls, className, {
       [`${prefixCls}-${size}`]: !!size,
     });
-    const isLoading = hasOwn(buttonOptions, 'loading') ? (buttonOptions.loading || this.sendLoading) : this.sendLoading;
+    const isLoading = hasOwn(buttonOptions, 'loading')
+      ? buttonOptions.loading || this.sendLoading
+      : this.sendLoading;
     const inputProps: any = {
       ...restProps,
       prefixCls: inputPrefixCls,
@@ -177,7 +174,7 @@ export default defineComponent({
       onChange: this.changeSmsCode,
       onKeyup: this.enterSms,
       ref: 'input',
-      style: smsInputStyle
+      style: smsInputStyle,
     };
 
     const btnProps: any = {
@@ -185,12 +182,14 @@ export default defineComponent({
       loading: isLoading,
       onClick: () => {
         this.sendSMSCode();
-      }
-    }
+      },
+    };
 
-    return (<AInput.Group class="ant-input-smscode" compact>
-      <a-input {...inputProps} />
-      <AButton {...btnProps}>{ this.btnContent }</AButton>
-    </AInput.Group>);
+    return (
+      <AInput.Group class="ant-input-smscode" compact>
+        <a-input {...inputProps} />
+        <AButton {...btnProps}>{this.btnContent}</AButton>
+      </AInput.Group>
+    );
   },
 });

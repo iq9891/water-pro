@@ -50,16 +50,16 @@ const Menu = {
     const addChildrenInfo = (key, info) => {
       menuChildrenInfo[key] = info;
     };
-    const removeChildrenInfo = key => {
+    const removeChildrenInfo = (key) => {
       delete menuChildrenInfo[key];
     };
-    const getActiveKey = key => {
+    const getActiveKey = (key) => {
       return key;
     }; // TODO
     const selectedParentUniKeys = ref([]);
     watch(menuChildrenInfo, () => {
       const keys = Object.values(menuChildrenInfo)
-        .filter(info => info.isSelected)
+        .filter((info) => info.isSelected)
         .reduce((allKeys, { parentUniKeys = [] }) => {
           return [...allKeys, ...toRaw(parentUniKeys)];
         }, []);
@@ -132,7 +132,7 @@ const Menu = {
     onOpenChange(event) {
       const openKeys = this.store.openKeys.concat();
       let changed = false;
-      const processSingle = e => {
+      const processSingle = (e) => {
         let oneChanged = false;
         if (e.open) {
           oneChanged = openKeys.indexOf(e.key) === -1;

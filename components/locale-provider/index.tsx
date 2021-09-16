@@ -84,7 +84,7 @@ const LocaleProvider = defineComponent({
 });
 
 /* istanbul ignore next */
-LocaleProvider.install = function(app: App) {
+LocaleProvider.install = function (app: App) {
   app.component(LocaleProvider.name, LocaleProvider);
   return app;
 };

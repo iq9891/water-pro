@@ -153,12 +153,9 @@ export default defineComponent({
       }
 
       const requiredRuleIndex: number = rules.findIndex(
-        (rule) =>
-          Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'),
+        (rule) => Reflect.has(rule, 'required') && !Reflect.has(rule, 'validator'),
       );
-      const {
-        rulesMessageJoinLabel: globalRulesMessageJoinLabel,
-      } = props.formProps;
+      const { rulesMessageJoinLabel: globalRulesMessageJoinLabel } = props.formProps;
 
       if (requiredRuleIndex !== -1) {
         const rule = rules[requiredRuleIndex];
@@ -176,8 +173,7 @@ export default defineComponent({
             : globalRulesMessageJoinLabel;
 
           rule.message =
-            rule.message ||
-            createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
+            rule.message || createPlaceholderMessage(component) + `${joinLabel ? label : ''}`;
 
           if (component.includes('Input') || component.includes('Textarea')) {
             rule.whitespace = true;
@@ -191,8 +187,7 @@ export default defineComponent({
       const characterInx = rules.findIndex((val) => val.max);
       if (characterInx !== -1 && !rules[characterInx].validator) {
         rules[characterInx].message =
-          rules[characterInx].message ||
-          `字符数应小于${rules[characterInx].max}位`;
+          rules[characterInx].message || `字符数应小于${rules[characterInx].max}位`;
       }
       return rules;
     }
@@ -203,9 +198,7 @@ export default defineComponent({
         component,
         field,
         changeEvent = 'change',
-        valueLayout = (
-          attr: unknown,
-        ) => attr,
+        valueLayout = (attr: unknown) => attr,
         valueField,
       } = props.schema;
 
@@ -221,11 +214,7 @@ export default defineComponent({
 
           const target = e ? e.target : null;
 
-          const value = target
-            ? isCheck
-              ? target.checked
-              : target.value
-            : e;
+          const value = target ? (isCheck ? target.checked : target.value) : e;
 
           props.setFormModel(field, valueLayout(value, field, props, params));
         },
@@ -245,19 +234,21 @@ export default defineComponent({
       // Fixed 修复之前是空，问题是 RangPicker 的时候设置无效
       let placeholder = unref(getComponentsProps)?.placeholder;
       // RangePicker place is an array
-      if (isCreatePlaceholder && component !== 'RangePicker' && component !== 'RangeGroupPicker' && component !== 'TimeRangePicker' && component) {
-        placeholder =
-          unref(getComponentsProps)?.placeholder ||
-          createPlaceholderMessage(component);
+      if (
+        isCreatePlaceholder &&
+        component !== 'RangePicker' &&
+        component !== 'RangeGroupPicker' &&
+        component !== 'TimeRangePicker' &&
+        component
+      ) {
+        placeholder = unref(getComponentsProps)?.placeholder || createPlaceholderMessage(component);
       }
       propsData.placeholder = placeholder;
       propsData.codeField = field;
       propsData.formValues = unref(getValues);
 
       const bindValue: Recordable = {
-        [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[
-          field
-        ],
+        [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field],
       };
 
       const compAttr: Recordable = {
@@ -275,15 +266,15 @@ export default defineComponent({
           const funSlot = (renderComponentContent as Function)(values);
           if (isString(funSlot)) {
             return {
-              default: () => <span>{funSlot}</span>
+              default: () => <span>{funSlot}</span>,
             };
           } else {
             return {
-              default: () =>(renderComponentContent as Function)(values)
+              default: () => (renderComponentContent as Function)(values),
             };
           }
         }
-      }
+      };
 
       const compSlot = isFunction(renderComponentContent)
         ? { ...getCompSlot(getValues) }
@@ -295,12 +286,7 @@ export default defineComponent({
     }
 
     function renderLabelHelpMessage() {
-      const {
-        label,
-        helpMessage,
-        helpComponentProps,
-        subLabel,
-      } = props.schema;
+      const { label, helpMessage, helpComponentProps, subLabel } = props.schema;
       let labelInnerTrue = '';
       if (isFunction(label)) {
         labelInnerTrue = (label as Function)(getValues);
@@ -314,10 +300,7 @@ export default defineComponent({
       ) : (
         labelInnerTrue
       );
-      if (
-        !helpMessage ||
-        (Array.isArray(helpMessage) && helpMessage.length === 0)
-      ) {
+      if (!helpMessage || (Array.isArray(helpMessage) && helpMessage.length === 0)) {
         return renderLabel;
       }
       return (
@@ -334,7 +317,8 @@ export default defineComponent({
     }
 
     function renderItem() {
-      const { label, itemProps, slot, render, field, suffix, component, end, wrapperWidth } = props.schema;
+      const { label, itemProps, slot, render, field, suffix, component, end, wrapperWidth } =
+        props.schema;
       const { labelCol, wrapperCol } = unref(itemLabelWidthProp);
       const { colon } = props.formProps;
 
@@ -348,29 +332,25 @@ export default defineComponent({
 
       const showSuffix = !!suffix;
 
-      const getSuffix = isFunction(suffix)
-        ? (suffix as Function)(unref(getValues))
-        : suffix;
+      const getSuffix = isFunction(suffix) ? (suffix as Function)(unref(getValues)) : suffix;
 
-        const showEnd = !!end;
-  
-        const getEnd = isFunction(end)
-          ? (end as Function)(unref(getValues))
-          : end;
+      const showEnd = !!end;
+
+      const getEnd = isFunction(end) ? (end as Function)(unref(getValues)) : end;
 
       const isAddDiyClassName = () => {
         const whiteListOfAddName = ['InputSmsCode', 'ColorPicker', 'TagGroup', 'TagModalList'];
-        return whiteListOfAddName.includes(component) 
-      }
+        return whiteListOfAddName.includes(component);
+      };
       const isInlineCpt = () => {
         const inlineCpt = ['InputSmsCode', 'InputNumber'];
-        return inlineCpt.includes(component) 
-      }
+        return inlineCpt.includes(component);
+      };
 
       const isTagModalListClassName = () => {
         const whiteListOfTagModalListName = ['TagModalList'];
-        return whiteListOfTagModalListName.includes(component) 
-      }
+        return whiteListOfTagModalListName.includes(component);
+      };
 
       let realWrapperCol = wrapperCol;
       // 如果没有 label
@@ -379,21 +359,29 @@ export default defineComponent({
       }
 
       let contentNode = null;
-      const contentInnerNode = wrapperWidth ? <div style={{width: wrapperWidth, display: 'inline-block'}}>{getContent()}</div> : getContent();
+      const contentInnerNode = wrapperWidth ? (
+        <div style={{ width: wrapperWidth, display: 'inline-block' }}>{getContent()}</div>
+      ) : (
+        getContent()
+      );
 
       if (showEnd) {
-        contentNode = <>
-          <div>
+        contentNode = (
+          <>
+            <div>
+              {contentInnerNode}
+              {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
+            </div>
+            {showEnd && <div class={`${prefixClsNew.value}-end`}>{getEnd}</div>}
+          </>
+        );
+      } else {
+        contentNode = (
+          <>
             {contentInnerNode}
             {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
-          </div>
-          {showEnd && <div class={`${prefixClsNew.value}-end`}>{getEnd}</div>}
-        </>
-      } else {
-        contentNode = <>
-          {contentInnerNode}
-          {showSuffix && <span class={`${prefixClsNew.value}-suffix`}>{getSuffix}</span>}
-        </>
+          </>
+        );
       }
 
       let labelTrue = '';
@@ -407,7 +395,7 @@ export default defineComponent({
       return (
         <Form.Item
           name={field}
-          colon={ labelTrue && labelTrue.trim() === '' ? false : colon}
+          colon={labelTrue && labelTrue.trim() === '' ? false : colon}
           class={{
             [`${prefixClsNew.value}-item-suffix`]: showSuffix,
             [`${prefixClsNew.value}-item-diy`]: isAddDiyClassName(),
@@ -418,18 +406,14 @@ export default defineComponent({
           label={renderLabelHelpMessage()}
           rules={handleRules()}
           labelCol={labelCol}
-          wrapperCol={realWrapperCol}>
+          wrapperCol={realWrapperCol}
+        >
           {contentNode}
         </Form.Item>
       );
     }
     return () => {
-      const {
-        colProps = { span: 24 },
-        colSlot,
-        renderColContent,
-        component,
-      } = props.schema;
+      const { colProps = { span: 24 }, colSlot, renderColContent, component } = props.schema;
       if (!componentMap.has(component)) return null;
 
       const { baseColProps = {} } = props.formProps;

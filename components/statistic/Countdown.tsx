@@ -70,7 +70,7 @@ export default defineComponent({
       return formatCountdown(value, { ...config, format });
     },
 
-    valueRenderHtml: node => node,
+    valueRenderHtml: (node) => node,
   },
 
   render() {

@@ -3,12 +3,8 @@
     <div class="change-locale">
       <span :style="{ marginRight: '16px' }">Change locale of components: </span>
       <a-radio-group :default-value="null" @change="changeLocale">
-        <a-radio-button key="en" :value="null">
-          English
-        </a-radio-button>
-        <a-radio-button key="cn" :value="zhCN">
-          中文
-        </a-radio-button>
+        <a-radio-button key="en" :value="null"> English </a-radio-button>
+        <a-radio-button key="cn" :value="zhCN"> 中文 </a-radio-button>
       </a-radio-group>
     </div>
     <a-locale-provider :locale="locale">
@@ -19,27 +15,17 @@
         </div>
         <div class="example">
           <a-select show-search style="width: 200px">
-            <a-select-option value="jack">
-              jack
-            </a-select-option>
-            <a-select-option value="lucy">
-              lucy
-            </a-select-option>
+            <a-select-option value="jack"> jack </a-select-option>
+            <a-select-option value="lucy"> lucy </a-select-option>
           </a-select>
           <a-date-picker />
           <a-time-picker />
-          <a-range-picker style=" width: 200px " />
+          <a-range-picker style="width: 200px" />
         </div>
         <div class="example">
-          <a-button type="primary" @click="showModal">
-            Show Modal
-          </a-button>
-          <a-button @click="info">
-            Show info
-          </a-button>
-          <a-button @click="confirm">
-            Show confirm
-          </a-button>
+          <a-button type="primary" @click="showModal"> Show Modal </a-button>
+          <a-button @click="info"> Show info </a-button>
+          <a-button @click="confirm"> Show confirm </a-button>
           <a-popconfirm title="Question?">
             <a href="#">Click to confirm</a>
           </a-popconfirm>
@@ -49,7 +35,7 @@
             :data-source="[]"
             show-search
             :target-keys="[]"
-            :render="item => item.title"
+            :render="(item) => item.title"
           />
         </div>
         <div :style="{ width: '319px', border: '1px solid #d9d9d9', borderRadius: '4px' }">

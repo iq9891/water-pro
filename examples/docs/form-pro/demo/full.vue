@@ -20,78 +20,77 @@ import CloseCircleFilled from '@ant-design/icons-vue/CloseCircleFilled';
 
 import { FormSchema, useForm, Button } from '@fe6/water-pro';
 
+const getCascaderApi = ({ success }) => {
+  setTimeout(() => {
+    success([
+      {
+        value: 'zhejiang',
+        label: 'Zhejiang',
+        children: [
+          {
+            value: 'hangzhou',
+            label: 'Hangzhou',
+            children: [
+              {
+                value: 'xihu',
+                label: 'West Lake',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        value: 'jiangsu',
+        label: 'Jiangsu',
+        children: [
+          {
+            value: 'nanjing',
+            label: 'Nanjing',
+            children: [
+              {
+                value: 'zhonghuamen',
+                label: 'Zhong Hua Men',
+              },
+            ],
+          },
+        ],
+      },
+    ]);
+  }, 1000);
+};
 
-const getCascaderApi = ({success}) => {
-    setTimeout(() => {
-      success([
-        {
-          value: 'zhejiang',
-          label: 'Zhejiang',
-          children: [
-            {
-              value: 'hangzhou',
-              label: 'Hangzhou',
-              children: [
-                {
-                  value: 'xihu',
-                  label: 'West Lake',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: 'jiangsu',
-          label: 'Jiangsu',
-          children: [
-            {
-              value: 'nanjing',
-              label: 'Nanjing',
-              children: [
-                {
-                  value: 'zhonghuamen',
-                  label: 'Zhong Hua Men',
-                },
-              ],
-            },
-          ],
-        },
-      ]);
-    }, 1000);
-}
-
-const tagModalListApi = ({success}) => {
-    setTimeout(() => {
-      success([
-        {
-          name: '组件库',
-          children: [
-            {
-              name: 'water',
-              id: 80,
-            },
-            {
-              name: 'antd',
-              id: 180,
-            },
-          ],
-        },
-        {
-          name: '官网',
-          children: [
-            {
-              name: '金茂',
-              id: 380,
-            },
-            {
-              name: '票大大',
-              id: 480,
-            },
-          ],
-        },
-      ]);
-    }, 1000);
-}
+const tagModalListApi = ({ success }) => {
+  setTimeout(() => {
+    success([
+      {
+        name: '组件库',
+        children: [
+          {
+            name: 'water',
+            id: 80,
+          },
+          {
+            name: 'antd',
+            id: 180,
+          },
+        ],
+      },
+      {
+        name: '官网',
+        children: [
+          {
+            name: '金茂',
+            id: 380,
+          },
+          {
+            name: '票大大',
+            id: 480,
+          },
+        ],
+      },
+    ]);
+  }, 1000);
+};
 
 const tagModalListConfig: FormSchema[] = [
   {
@@ -129,17 +128,21 @@ const tagModalListConfig: FormSchema[] = [
         const btnProps: any = {
           type: 'link',
           onClick: () => open('http://water.chjgo.com/'),
-          style: 'margin-left: 16px'
-        }
-        return (<div>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-        </div>)
-      }
+          style: 'margin-left: 16px',
+        };
+        return (
+          <div>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+          </div>
+        );
+      },
     },
   },
   {
@@ -153,17 +156,21 @@ const tagModalListConfig: FormSchema[] = [
         const btnProps: any = {
           type: 'link',
           onClick: () => open('http://water.chjgo.com/'),
-          style: 'margin-left: 16px'
-        }
-        return (<div>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-          <Button {...btnProps}>
-            <CloseCircleFilled />设置
-          </Button>
-        </div>)
-      }
+          style: 'margin-left: 16px',
+        };
+        return (
+          <div>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+            <Button {...btnProps}>
+              <CloseCircleFilled />
+              设置
+            </Button>
+          </div>
+        );
+      },
     },
   },
 ];
@@ -174,15 +181,15 @@ const getSelectForOptions = () => {
       selove([
         {
           label: 'water',
-          value: 90
+          value: 90,
         },
         {
           label: 'antd',
-          value: 80
-        }
+          value: 80,
+        },
       ]);
     }, 1000);
-  })
+  });
 };
 
 const selectApiConf: FormSchema = {
@@ -205,7 +212,7 @@ const selectApiConf: FormSchema = {
   },
   componentProps: {
     api: getSelectForOptions,
-  }
+  },
 };
 
 const getSmsCodeApi = () => {
@@ -213,10 +220,10 @@ const getSmsCodeApi = () => {
     setTimeout(() => {
       resolve([]);
     }, 1000);
-  })
-}
+  });
+};
 
-const schemas: FormSchema[] =[
+const schemas: FormSchema[] = [
   {
     field: 'input',
     component: 'Input',
@@ -228,7 +235,7 @@ const schemas: FormSchema[] =[
     label: '限制数字的输入框',
     componentProps: {
       maxLength: 10,
-    }
+    },
   },
   {
     field: 'inputPassword',
@@ -245,11 +252,11 @@ const schemas: FormSchema[] =[
         ajaxParams: () => {
           return {
             phone: 13810902078,
-            number: formModel.inputCount
-          }
-        }
-      }
-    }
+            number: formModel.inputCount,
+          };
+        },
+      };
+    },
   },
   {
     field: 'inputSearch',
@@ -269,7 +276,7 @@ const schemas: FormSchema[] =[
     componentProps: {
       onSearch: () => {
         console.log(222, '222');
-      }
+      },
     },
   },
   {
@@ -284,7 +291,7 @@ const schemas: FormSchema[] =[
     slot: 'inputGroup',
     helpMessage: 'NOTE: 在 form-pro 模板中对应 inputGroup 的 slot',
     dynamicRules: (ruleParams: ComputedRef<RenderCallbackParams>) => {
-      return [ 
+      return [
         {
           required: true,
           validator: () => {
@@ -315,9 +322,9 @@ const schemas: FormSchema[] =[
         {
           value: 2,
           label: 'water',
-        }
+        },
       ],
-    }
+    },
   },
   selectApiConf,
   {
@@ -326,7 +333,7 @@ const schemas: FormSchema[] =[
     label: '树形选择器',
     helpMessage: 'TODO: [feat] 暂未提供 api 自动拉去组件，后续按需求增加',
     componentProps: {
-      treeData:  [
+      treeData: [
         {
           title: 'Node1',
           value: '0-0',
@@ -358,7 +365,7 @@ const schemas: FormSchema[] =[
           ],
         },
       ],
-    }
+    },
   },
   {
     field: 'switch',
@@ -497,7 +504,7 @@ const schemas: FormSchema[] =[
       showYesterdayButton: true,
       showSevenDaysButton: true,
       showThirtyDaysButton: true,
-    }
+    },
   },
   {
     field: 'colorPicker',
@@ -546,9 +553,7 @@ const schemas: FormSchema[] =[
         }
       }
       const newValue = { name, id: name };
-      return fieldValue && fieldValue.length
-        ? [...fieldValue, newValue]
-        : [newValue];
+      return fieldValue && fieldValue.length ? [...fieldValue, newValue] : [newValue];
     },
     componentProps: {
       createable: true,
@@ -585,9 +590,7 @@ const schemas: FormSchema[] =[
 
 export default defineComponent({
   setup() {
-    const [
-      fullForm,
-    ] = useForm({
+    const [fullForm] = useForm({
       schemas,
       labelWidth: 260,
     });

@@ -52,6 +52,6 @@ export function convertChildrenToData(
         options: convertChildrenToData(child || []),
       } as any;
     })
-    .filter(data => data);
+    .filter((data) => data);
   return dd;
 }

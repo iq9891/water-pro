@@ -6,7 +6,7 @@ import { defineComponent } from 'vue';
 
 import { FormSchema, useForm } from '@fe6/water-pro';
 
-const schemas: FormSchema[] =[
+const schemas: FormSchema[] = [
   {
     field: 'date',
     component: 'DatePicker',
@@ -43,7 +43,7 @@ const schemas: FormSchema[] =[
     label: '日期时间区间',
     componentProps: {
       showTime: true,
-    }
+    },
   },
   {
     field: 'rangeGroupPicker',
@@ -54,7 +54,7 @@ const schemas: FormSchema[] =[
       showYesterdayButton: true,
       showSevenDaysButton: true,
       showThirtyDaysButton: true,
-    }
+    },
   },
   {
     field: 'rangeTime',
@@ -69,14 +69,8 @@ export default defineComponent({
       schemas,
       labelWidth: 140,
       fieldMapToTime: [
-        [
-          'rangeDate',
-          ['startDate', 'endDate'],
-        ],
-        [
-          'rangeTime',
-          ['timeStartDate', 'timeEndDate'],
-        ],
+        ['rangeDate', ['startDate', 'endDate']],
+        ['rangeTime', ['timeStartDate', 'timeEndDate']],
       ],
     });
 

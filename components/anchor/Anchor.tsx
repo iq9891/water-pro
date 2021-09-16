@@ -159,7 +159,7 @@ export default defineComponent({
       const linkSections: Array<Section> = [];
       const { getContainer } = this;
       const container = getContainer();
-      this.links.forEach(link => {
+      this.links.forEach((link) => {
         const sharpLinkMatch = sharpMatcherRegx.exec(link.toString());
         if (!sharpLinkMatch) {
           return;
@@ -242,9 +242,9 @@ export default defineComponent({
         `${sPrefixCls}-link-title-active`,
       )[0];
       if (linkNode) {
-        (this.$refs.inkNode as HTMLElement).style.top = `${linkNode.offsetTop +
-          linkNode.clientHeight / 2 -
-          4.5}px`;
+        (this.$refs.inkNode as HTMLElement).style.top = `${
+          linkNode.offsetTop + linkNode.clientHeight / 2 - 4.5
+        }px`;
       }
     },
   },

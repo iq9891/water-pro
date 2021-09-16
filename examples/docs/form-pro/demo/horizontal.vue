@@ -1,9 +1,5 @@
 <template>
-  <a-form-pro
-    :labelWidth="100"
-    :schemas="schemas"
-    @submit="handleSubmit"
-  />
+  <a-form-pro :labelWidth="100" :schemas="schemas" @submit="handleSubmit" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';

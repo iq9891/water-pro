@@ -26,7 +26,7 @@ const TransBtn: TransBtnType = (props, { slots }) => {
   return (
     <span
       class={className}
-      onMousedown={event => {
+      onMousedown={(event) => {
         event.preventDefault();
         if (onMousedown) {
           onMousedown(event);

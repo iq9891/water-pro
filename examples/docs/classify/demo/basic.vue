@@ -9,9 +9,7 @@
       :body-style="{ height: '227px' }"
       :z-index="1001"
     >
-      <a-form-pro
-        @register="handlerForm"
-      >
+      <a-form-pro @register="handlerForm">
         <template #category="{ model, field }">
           <a-classify
             v-model:value="model[field]"
@@ -40,36 +38,36 @@
 import { defineComponent, ref } from 'vue';
 import { useModal, useForm } from '@fe6/water-pro';
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
         label: 'water',
-        value: 90
+        value: 90,
       },
       {
         label: 'antd',
-        value: 80
-      }
+        value: 80,
+      },
     ]);
   }, 1000);
 };
 
-const postCreateApi = ({params, success}) => {
+const postCreateApi = ({ params, success }) => {
   console.log('create');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postEditApi = ({params, success}) => {
+const postEditApi = ({ params, success }) => {
   console.log('edit');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postRemoveApi = ({params, success}) => {
+const postRemoveApi = ({ params, success }) => {
   console.log('remote');
   setTimeout(() => {
     success([]);
@@ -89,7 +87,7 @@ const columns = [
   },
 ];
 
-const tableApi = ({params, success}) => {
+const tableApi = ({ params, success }) => {
   const arr: any = [];
   for (let index = 0; index < 100; index++) {
     arr.push({
@@ -101,8 +99,8 @@ const tableApi = ({params, success}) => {
   setTimeout(() => {
     success(arr);
   }, 1000);
-}
-const dragApi = ({params, success}) => {
+};
+const dragApi = ({ params, success }) => {
   setTimeout(() => {
     success([]);
   }, 1000);
@@ -111,14 +109,7 @@ const dragApi = ({params, success}) => {
 export default defineComponent({
   setup() {
     const { register: registerModal, methods: modalMethods } = useModal();
-    const [
-      handlerForm,
-      {
-        setFieldsValue,
-        getFieldsValue,
-        setProps,
-      }
-    ] = useForm();
+    const [handlerForm, { setFieldsValue, getFieldsValue, setProps }] = useForm();
     return {
       value3: ref(80),
       getSelectForOptions,
@@ -136,13 +127,15 @@ export default defineComponent({
               maxlength: 200,
             },
             itemProps: {
-              labelAlign: 'left'
+              labelAlign: 'left',
             },
-            rules: [{
-              required: true,
-              message: '请输入所在楼层',
-              type: 'string',
-            }]
+            rules: [
+              {
+                required: true,
+                message: '请输入所在楼层',
+                type: 'string',
+              },
+            ],
           },
         ],
       },
@@ -155,48 +148,50 @@ export default defineComponent({
       registerModal,
       open: () => {
         modalMethods.openModal();
-        setTimeout(async() => {
-        console.log(1111, '1118');
-        setProps({
-          schemas: [
-            {
-              field: 'categoryIds',
-              label: '卡券分类',
-              component: 'Input',
-              slot: 'category',
-              rules: [{
-                required: true,
-                message: '请输入卡券分类',
-                type: 'array'
-              }],
-            }
-          ],
-          labelCol: {
-            span: 24
-          },
-          wrapperCol: {
-            span: 24,
-          },
-          actionColOptions: {
-            span: 24,
-            push: 0
-          },
-          showResetButton: false,
-          actionAlgin: 'center',
-          okText: '确定',
-          submitButtonOptions: {
-            loading: false,
-          },
-        });
-        console.log(8, '8');
-        setTimeout(async() => {
-          setFieldsValue({
-            categoryIds: [90],
+        setTimeout(async () => {
+          console.log(1111, '1118');
+          setProps({
+            schemas: [
+              {
+                field: 'categoryIds',
+                label: '卡券分类',
+                component: 'Input',
+                slot: 'category',
+                rules: [
+                  {
+                    required: true,
+                    message: '请输入卡券分类',
+                    type: 'array',
+                  },
+                ],
+              },
+            ],
+            labelCol: {
+              span: 24,
+            },
+            wrapperCol: {
+              span: 24,
+            },
+            actionColOptions: {
+              span: 24,
+              push: 0,
+            },
+            showResetButton: false,
+            actionAlgin: 'center',
+            okText: '确定',
+            submitButtonOptions: {
+              loading: false,
+            },
           });
+          console.log(8, '8');
+          setTimeout(async () => {
+            setFieldsValue({
+              categoryIds: [90],
+            });
+          }, 0);
         }, 0);
-      }, 0);
       },
-    }
+    };
   },
 });
 </script>

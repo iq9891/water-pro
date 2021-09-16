@@ -4,7 +4,7 @@
     resultKey="data"
     v-model:value="list"
     :headers="headers"
-    accept='image/png,image/jpeg,image/gif'
+    accept="image/png,image/jpeg,image/gif"
   />
 </template>
 
@@ -17,8 +17,8 @@ export default defineComponent({
       headers: {
         authorization: 'authorization-text',
       },
-      list: ref([ "https://cdn.dev.mosh.cn/image/55/24/e172e9cc8c0dd981a92efffd7bbf.png" ]),
-    }
-  }
+      list: ref(['https://cdn.dev.mosh.cn/image/55/24/e172e9cc8c0dd981a92efffd7bbf.png']),
+    };
+  },
 });
 </script>

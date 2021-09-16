@@ -227,7 +227,7 @@ const MenuItem = defineComponent({
       styles.color = this.selectedColor;
     }
 
-    menuAllProps.forEach(key => delete props[key]);
+    menuAllProps.forEach((key) => delete props[key]);
     const liProps = {
       ...props,
       ...attrs,

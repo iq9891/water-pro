@@ -38,7 +38,7 @@ function getMentions(value = '', config: MentionsConfig) {
     .map((str = '') => {
       let hitPrefix = null;
 
-      prefixList.some(prefixStr => {
+      prefixList.some((prefixStr) => {
         const startStr = str.slice(0, prefixStr.length);
         if (startStr === prefixStr) {
           hitPrefix = prefixStr;
@@ -55,7 +55,7 @@ function getMentions(value = '', config: MentionsConfig) {
       }
       return null;
     })
-    .filter(entity => !!entity && !!entity.value);
+    .filter((entity) => !!entity && !!entity.value);
 }
 
 const Mentions = defineComponent({
@@ -199,7 +199,7 @@ const Mentions = defineComponent({
 });
 
 /* istanbul ignore next */
-Mentions.install = function(app: App) {
+Mentions.install = function (app: App) {
   app.component(Mentions.name, Mentions);
   app.component(Mentions.Option.name, Mentions.Option);
   return app;

@@ -333,7 +333,7 @@ export default function generateSelector<
     label?: VNodeChild;
     key?: Key;
     disabled?: boolean;
-  }[]
+  }[],
 >(config: GenerateConfig<OptionsType>) {
   const {
     prefixCls: defaultPrefixCls,
@@ -364,7 +364,7 @@ export default function generateSelector<
       const selectorRef = ref(null);
       const listRef = ref(null);
       const tokenWithEnter = computed(() =>
-        (props.tokenSeparators || []).some(tokenSeparator =>
+        (props.tokenSeparators || []).some((tokenSeparator) =>
           ['\n', '\r\n'].includes(tokenSeparator),
         ),
       );
@@ -442,29 +442,27 @@ export default function generateSelector<
         return mergedSearchValue;
       });
 
-      const mergedOptions = computed(
-        (): OptionsType => {
-          let newOptions = props.options;
-          if (newOptions === undefined) {
-            newOptions = convertChildrenToData(props.children);
-          }
+      const mergedOptions = computed((): OptionsType => {
+        let newOptions = props.options;
+        if (newOptions === undefined) {
+          newOptions = convertChildrenToData(props.children);
+        }
 
-          /**
-           * `tags` should fill un-list item.
-           * This is not cool here since TreeSelect do not need this
-           */
-          if (props.mode === 'tags' && fillOptionsWithMissingValue) {
-            newOptions = fillOptionsWithMissingValue(
-              newOptions,
-              mergedValue.value,
-              mergedOptionLabelProp.value,
-              props.labelInValue,
-            );
-          }
+        /**
+         * `tags` should fill un-list item.
+         * This is not cool here since TreeSelect do not need this
+         */
+        if (props.mode === 'tags' && fillOptionsWithMissingValue) {
+          newOptions = fillOptionsWithMissingValue(
+            newOptions,
+            mergedValue.value,
+            mergedOptionLabelProp.value,
+            props.labelInValue,
+          );
+        }
 
-          return newOptions || ([] as OptionsType);
-        },
-      );
+        return newOptions || ([] as OptionsType);
+      });
 
       const mergedFlattenOptions = computed(() => flattenOptions(mergedOptions.value, props));
 
@@ -487,7 +485,7 @@ export default function generateSelector<
         );
         if (
           mode === 'tags' &&
-          filteredOptions.every(opt => opt[optionFilterProp] !== mergedSearchValue.value)
+          filteredOptions.every((opt) => opt[optionFilterProp] !== mergedSearchValue.value)
         ) {
           filteredOptions.unshift({
             value: mergedSearchValue.value,
@@ -550,14 +548,16 @@ export default function generateSelector<
         const { internalProps = {} } = props;
         if (!internalProps.skipTriggerSelect) {
           // Skip trigger `onSelect` or `onDeselect` if configured
-          const selectValue = (mergedLabelInValue.value
-            ? getLabeledValue(newValue, {
-                options: newValueOption,
-                prevValue: mergedValue.value,
-                labelInValue: mergedLabelInValue.value,
-                optionLabelProp: mergedOptionLabelProp.value,
-              })
-            : newValue) as SingleType<ValueType>;
+          const selectValue = (
+            mergedLabelInValue.value
+              ? getLabeledValue(newValue, {
+                  options: newValueOption,
+                  prevValue: mergedValue.value,
+                  labelInValue: mergedLabelInValue.value,
+                  optionLabelProp: mergedOptionLabelProp.value,
+                })
+              : newValue
+          ) as SingleType<ValueType>;
 
           if (isSelect && props.onSelect) {
             props.onSelect(selectValue, outOption);
@@ -749,7 +749,7 @@ export default function generateSelector<
 
           if (props.mode !== 'tags') {
             patchRawValues = patchLabels
-              .map(label => {
+              .map((label) => {
                 const item = mergedFlattenOptions.value.find(
                   ({ data }) => data[mergedOptionLabelProp.value] === label,
                 );
@@ -762,7 +762,7 @@ export default function generateSelector<
             new Set<RawValueType>([...mergedRawValue.value, ...patchRawValues]),
           );
           triggerChange(newRawValues);
-          newRawValues.forEach(newRawValue => {
+          newRawValues.forEach((newRawValue) => {
             triggerSelect(newRawValue, true, 'input');
           });
 
@@ -796,7 +796,7 @@ export default function generateSelector<
           new Set<RawValueType>([...mergedRawValue.value, searchText]),
         );
         triggerChange(newRawValues);
-        newRawValues.forEach(newRawValue => {
+        newRawValues.forEach((newRawValue) => {
           triggerSelect(newRawValue, true, 'input');
         });
         setInnerSearchValue('');
@@ -957,11 +957,11 @@ export default function generateSelector<
       const activeTimeoutIds: number[] = [];
 
       onMounted(() => {
-        activeTimeoutIds.forEach(timeoutId => window.clearTimeout(timeoutId));
+        activeTimeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
         activeTimeoutIds.splice(0, activeTimeoutIds.length);
       });
       onBeforeUnmount(() => {
-        activeTimeoutIds.forEach(timeoutId => window.clearTimeout(timeoutId));
+        activeTimeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
         activeTimeoutIds.splice(0, activeTimeoutIds.length);
       });
 
@@ -1207,7 +1207,7 @@ export default function generateSelector<
         (mode === 'combobox' && getInputElement && getInputElement()) || null;
 
       const domProps = omitDOMProps ? omitDOMProps(restProps) : restProps;
-      DEFAULT_OMIT_PROPS.forEach(prop => {
+      DEFAULT_OMIT_PROPS.forEach((prop) => {
         delete domProps[prop];
       });
       const popupNode = (

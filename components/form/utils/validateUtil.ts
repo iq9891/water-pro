@@ -15,7 +15,7 @@ const AsyncValidator: any = RawAsyncValidator;
  *   `I'm ${name}` + { name: 'bamboo' } = I'm bamboo
  */
 function replaceMessage(template: string, kv: Record<string, string>): string {
-  return template.replace(/\$\{\w+\}/g, str => {
+  return template.replace(/\$\{\w+\}/g, (str) => {
     const key = str.slice(2, -1);
     return kv[key];
   });
@@ -42,7 +42,7 @@ function convertMessages(
 
   /* eslint-disable no-param-reassign */
   function fillTemplate(source: ValidateMessages, target: ValidateMessages = {}) {
-    Object.keys(source).forEach(ruleName => {
+    Object.keys(source).forEach((ruleName) => {
       const value = source[ruleName];
       if (typeof value === 'string') {
         target[ruleName] = replaceFunc(value, messageVariables);
@@ -135,7 +135,7 @@ export function validateRules(
   const name = namePath.join('.');
 
   // Fill rule with context
-  const filledRules: RuleObject[] = rules.map(currentRule => {
+  const filledRules: RuleObject[] = rules.map((currentRule) => {
     const originValidatorFunc = currentRule.validator;
 
     if (!originValidatorFunc) {
@@ -177,7 +177,7 @@ export function validateRules(
             .then(() => {
               callback();
             })
-            .catch(err => {
+            .catch((err) => {
               callback(err);
             });
         }
@@ -189,7 +189,7 @@ export function validateRules(
 
   if (validateFirst === true) {
     // >>>>> Validate by serialization
-    summaryPromise = new Promise(async resolve => {
+    summaryPromise = new Promise(async (resolve) => {
       /* eslint-disable no-await-in-loop */
       for (let i = 0; i < filledRules.length; i += 1) {
         const errors = await validateRule(name, value, filledRules[i], options, messageVariables);
@@ -204,13 +204,12 @@ export function validateRules(
     });
   } else {
     // >>>>> Validate by parallel
-    const rulePromises = filledRules.map(rule =>
+    const rulePromises = filledRules.map((rule) =>
       validateRule(name, value, rule, options, messageVariables),
     );
 
-    summaryPromise = (validateFirst
-      ? finishOnFirstFailed(rulePromises)
-      : finishOnAllFailed(rulePromises)
+    summaryPromise = (
+      validateFirst ? finishOnFirstFailed(rulePromises) : finishOnAllFailed(rulePromises)
     ).then((errors: string[]): string[] | Promise<string[]> => {
       if (!errors.length) {
         return [];
@@ -221,13 +220,13 @@ export function validateRules(
   }
 
   // Internal catch error to avoid console error log.
-  summaryPromise.catch(e => e);
+  summaryPromise.catch((e) => e);
 
   return summaryPromise;
 }
 
 async function finishOnAllFailed(rulePromises: Promise<string[]>[]): Promise<string[]> {
-  return Promise.all(rulePromises).then(errorsList => {
+  return Promise.all(rulePromises).then((errorsList) => {
     const errors = [].concat(...errorsList);
 
     return errors;
@@ -237,9 +236,9 @@ async function finishOnAllFailed(rulePromises: Promise<string[]>[]): Promise<str
 async function finishOnFirstFailed(rulePromises: Promise<string[]>[]): Promise<string[]> {
   let count = 0;
 
-  return new Promise(resolve => {
-    rulePromises.forEach(promise => {
-      promise.then(errors => {
+  return new Promise((resolve) => {
+    rulePromises.forEach((promise) => {
+      promise.then((errors) => {
         if (errors.length) {
           resolve(errors);
         }

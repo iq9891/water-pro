@@ -7,5 +7,5 @@ export const getPageType = (path) => {
     pagePath,
     pageType,
     pageTrueType,
-  }
-}
+  };
+};

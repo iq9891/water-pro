@@ -2,11 +2,7 @@
 
 import type { ModalFunc, ModalFuncProps } from '../../modal/Modal';
 
-import {
-  InfoCircleFilled,
-  CheckCircleFilled,
-  CloseCircleFilled,
-} from '@ant-design/icons-vue';
+import { InfoCircleFilled, CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons-vue';
 
 import { default as Modal } from '../../modal';
 import { default as Message } from '../../message';
@@ -25,17 +21,12 @@ export interface NotifyApi {
   destroy(): void;
 }
 
-export declare type NotificationPlacement =
-  | 'topLeft'
-  | 'topRight'
-  | 'bottomLeft'
-  | 'bottomRight';
+export declare type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight';
 export declare type IconType = 'success' | 'info' | 'error' | 'warning';
 export interface ModalOptionsEx extends Omit<ModalFuncProps, 'iconType'> {
   iconType: 'warning' | 'success' | 'error' | 'info';
 }
-export type ModalOptionsPartial = Partial<ModalOptionsEx> &
-  Pick<ModalOptionsEx, 'content'>;
+export type ModalOptionsPartial = Partial<ModalOptionsEx> & Pick<ModalOptionsEx, 'content'>;
 
 interface ConfirmOptions {
   info: ModalFunc;
@@ -72,7 +63,7 @@ function createConfirm(options: ModalOptionsEx): ConfirmOptions {
     icon: getIcon(iconType),
     ...options,
   };
-  return (Modal.confirm(opt) as unknown) as ConfirmOptions;
+  return Modal.confirm(opt) as unknown as ConfirmOptions;
 }
 
 const okText = '确认';
@@ -84,10 +75,7 @@ const getBaseOptions = () => {
   };
 };
 
-function createModalOptions(
-  options: ModalOptionsPartial,
-  icon: string,
-): ModalOptionsPartial {
+function createModalOptions(options: ModalOptionsPartial, icon: string): ModalOptionsPartial {
   return {
     ...getBaseOptions(),
     ...options,

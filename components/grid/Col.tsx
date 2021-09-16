@@ -56,7 +56,7 @@ const ACol = defineComponent<ColProps>({
       const { prefixCls: customizePrefixCls, span, order, offset, push, pull, flex } = props;
       const prefixCls = configProvider.getPrefixCls('col', customizePrefixCls);
       let sizeClassObj = {};
-      ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].forEach(size => {
+      ['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].forEach((size) => {
         let sizeProps: ColSize = {};
         const propSize = props[size];
         if (typeof propSize === 'number') {

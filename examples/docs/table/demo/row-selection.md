@@ -9,4 +9,3 @@
 Rows can be selectable by making first column as a selectable column.
 > selection happens when clicking checkbox defaultly.
 </us>
-

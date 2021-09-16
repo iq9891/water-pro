@@ -8,7 +8,7 @@
 | defaultActiveKey | 初始化选中面板的 key | string | 无 |  |
 | bordered | 带边框风格的折叠面板 | boolean | `true` |  |
 | accordion | 手风琴模式 | boolean | `false` |  |
-| expandIcon | 自定义切换图标 | Function(props):VNode \| slot="expandIcon" slot-scope="props"|#expandIcon="props" |  |
+| expandIcon | 自定义切换图标 | Function(props):VNode \| slot="expandIcon" slot-scope="props" | #expandIcon="props" |  |
 | expandIconPosition | 设置图标位置： `left`, `right` | `left` | - | 1.5.0 |
 | destroyInactivePanel | 销毁折叠隐藏的面板 | boolean | `false` |  |
 

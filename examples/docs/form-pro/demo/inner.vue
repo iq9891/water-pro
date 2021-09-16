@@ -12,7 +12,7 @@ const schemas: FormSchema[] = [
     component: 'Input',
     componentProps: {
       placeholder: '字段1',
-    }
+    },
   },
   {
     field: 'infield2',
@@ -29,15 +29,13 @@ const schemas: FormSchema[] = [
         },
       ],
       placeholder: '字段2',
-    }
+    },
   },
 ];
 
 export default defineComponent({
   setup() {
-    const [
-      injectFormPro,
-    ] = useForm({
+    const [injectFormPro] = useForm({
       schemas,
     });
     return {

@@ -17,9 +17,7 @@ interface Fn {
 export function useLoading(props: Partial<LoadingProps>): [Fn, Fn];
 export function useLoading(opt: Partial<UseLoadingOptions>): [Fn, Fn];
 
-export function useLoading(
-  opt: Partial<LoadingProps> | Partial<UseLoadingOptions>,
-): [Fn, Fn] {
+export function useLoading(opt: Partial<LoadingProps> | Partial<UseLoadingOptions>): [Fn, Fn] {
   let props: Partial<LoadingProps>;
   let target: HTMLElement | Ref<ElRef> = document.body;
 

@@ -54,9 +54,7 @@ export function usePagination(refProps: ComputedRef<TableProProps>) {
   function setPagination(info: Partial<PaginationProps>) {
     const paginationInfo = unref(getPaginationInfo);
     configRef.value = {
-      ...(!isBoolean(paginationInfo)
-        ? (paginationInfo as PaginationProps)
-        : {}),
+      ...(!isBoolean(paginationInfo) ? (paginationInfo as PaginationProps) : {}),
       ...info,
     };
   }

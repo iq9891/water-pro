@@ -1,5 +1,5 @@
 <template>
-  <div  id="components-layout-demo-basic">
+  <div id="components-layout-demo-basic">
     <a-layout>
       <a-layout-header>Header</a-layout-header>
       <a-layout-content>Content</a-layout-content>

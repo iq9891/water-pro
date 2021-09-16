@@ -1,22 +1,10 @@
 /** @format */
 
-import type {
-  ModalMethods,
-  ModalProps,
-  ReturnMethods,
-  UseModalReturnJSONType,
-} from '../types';
+import type { ModalMethods, ModalProps, ReturnMethods, UseModalReturnJSONType } from '../types';
 
 import { isEqual } from 'lodash-es';
 
-import {
-  ref,
-  onUnmounted,
-  unref,
-  reactive,
-  toRaw,
-  computed,
-} from 'vue';
+import { ref, onUnmounted, unref, reactive, toRaw, computed } from 'vue';
 
 import { isProdMode } from '../../../_util/env';
 
@@ -42,8 +30,7 @@ export function useModal(): UseModalReturnJSONType {
         loadedRef.value = false;
         dataTransferRef[unref(uidRef)] = null;
       });
-    if (unref(loadedRef) && isProdMode() && modalMethod === unref(modalRef))
-      return;
+    if (unref(loadedRef) && isProdMode() && modalMethod === unref(modalRef)) return;
 
     modalRef.value = modalMethod;
     modalMethod.emitVisible = (visible: boolean, uid: number) => {

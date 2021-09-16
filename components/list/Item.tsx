@@ -20,9 +20,9 @@ export const ListItemMetaProps = {
   title: PropTypes.any,
 };
 
-export const ListItemMeta: FunctionalComponent<Partial<
-  ExtractPropTypes<typeof ListItemMetaProps>
->> = (props, { slots }) => {
+export const ListItemMeta: FunctionalComponent<
+  Partial<ExtractPropTypes<typeof ListItemMetaProps>>
+> = (props, { slots }) => {
   // TODO [fix] 解决使用的过程中未用 configProvider 报错
   const configProvider = inject('configProvider', defaultConfigProvider) || defaultConfigProvider;
   const { getPrefixCls } = configProvider;
@@ -78,7 +78,7 @@ export default defineComponent({
     isItemContainsTextNodeAndNotSingular() {
       const children = getSlot(this) || [];
       let result;
-      children.forEach(element => {
+      children.forEach((element) => {
         if (isStringElement(element) && !isEmptyElement(element)) {
           result = true;
         }

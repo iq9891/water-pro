@@ -16,8 +16,6 @@ export { useTable } from './src/hooks/use-table';
 
 export type { FormSchema, FormProps } from '../form-pro/src/types/form';
 
-export {
-  TablePro,
-}
+export { TablePro };
 
 export default withInstall(TablePro);

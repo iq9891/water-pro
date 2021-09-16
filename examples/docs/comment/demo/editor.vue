@@ -39,7 +39,7 @@
 import { defineComponent, ref } from 'vue';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-dayjs.extend(relativeTime)
+dayjs.extend(relativeTime);
 
 type Comment = Record<string, string>;
 

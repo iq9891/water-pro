@@ -217,7 +217,7 @@ export default defineComponent({
       const { $slots } = this;
       const defaultFields = { children: 'children', title: 'title', key: 'key' };
       const replaceFields = { ...defaultFields, ...this.$props.replaceFields };
-      return treeData.map(item => {
+      return treeData.map((item) => {
         const key = item[replaceFields.key];
         const children = item[replaceFields.children];
         const { slots = {}, class: cls, style, ...restProps } = item;
@@ -270,7 +270,7 @@ export default defineComponent({
       prefixCls,
       checkable: checkable ? <span class={`${prefixCls}-checkbox-inner`} /> : checkable,
       children: getSlot(this),
-      switcherIcon: nodeProps => this.renderSwitcherIcon(prefixCls, switcherIcon, nodeProps),
+      switcherIcon: (nodeProps) => this.renderSwitcherIcon(prefixCls, switcherIcon, nodeProps),
       ref: this.setTreeRef,
       ...restAttrs,
       class: classNames(className, {

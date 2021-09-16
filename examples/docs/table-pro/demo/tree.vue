@@ -1,10 +1,6 @@
 <template>
-  <a-table-pro
-    @register="actionRegister"
-  >
-    <template #rightAction="{ record }">
-      {{record.age}}-年龄
-    </template>
+  <a-table-pro @register="actionRegister">
+    <template #rightAction="{ record }"> {{ record.age }}-年龄 </template>
     <template #action="{ record }">
       <a-table-action
         :actions="[
@@ -54,7 +50,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
@@ -74,9 +70,7 @@ export default defineComponent({
     [TableAction.name]: TableAction,
   },
   setup() {
-    const [
-      actionRegister,
-    ] = useTable({
+    const [actionRegister] = useTable({
       api: demoListApi,
       columns,
       actionColumn: {
@@ -86,18 +80,18 @@ export default defineComponent({
         slots: { customRender: 'action' },
       },
     });
-  return {
-    actionRegister,
-    handleDelete: (record) => {
-      console.log(record, 'delete');
-    },
-    handleEdit: (record) => {
-      console.log(record, 'edit');
-    },
-    handleOpen: (record) => {
-      console.log(record, 'open');
-    },
-  };
+    return {
+      actionRegister,
+      handleDelete: (record) => {
+        console.log(record, 'delete');
+      },
+      handleEdit: (record) => {
+        console.log(record, 'edit');
+      },
+      handleOpen: (record) => {
+        console.log(record, 'open');
+      },
+    };
   },
 });
 </script>

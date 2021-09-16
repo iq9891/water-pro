@@ -17,7 +17,7 @@ export function getNowByCurrentStateValue(value) {
 function isMoment(value) {
   if (Array.isArray(value)) {
     return (
-      value.length === 0 || value.findIndex(val => val === undefined || dayjs.isDayjs(val)) !== -1
+      value.length === 0 || value.findIndex((val) => val === undefined || dayjs.isDayjs(val)) !== -1
     );
   } else {
     return value === undefined || dayjs.isMoment(value);

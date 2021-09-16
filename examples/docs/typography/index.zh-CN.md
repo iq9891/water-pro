@@ -69,7 +69,7 @@
 
 ### copyable
 
-``` json
+```json
 {
   text: string,
   onCopy: function,
@@ -77,15 +77,15 @@
 }
 ```
 
-| 名称 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| text | 拷贝到剪切板里的文本 | string | | |
-| tooltip | 是否展示提示文本 | boolean | true | |
-| onCopy | 拷贝成功的回调函数 | function | | |
+| 名称    | 说明                 | 类型     | 默认值 | 版本 |
+| ------- | -------------------- | -------- | ------ | ---- |
+| text    | 拷贝到剪切板里的文本 | string   |        |      |
+| tooltip | 是否展示提示文本     | boolean  | true   |      |
+| onCopy  | 拷贝成功的回调函数   | function |        |      |
 
 ### editable
 
-``` json
+```json
 {
   tooltip: boolean,
   editing: boolean,
@@ -98,20 +98,20 @@
 }
 ```
 
-| 名称 | 说明 | 类型	 | 默认值 | 版本 |
+| 名称 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
-| autoSize | 自动 resize 文本域 | boolean | { minRows: number, maxRows: number } | |
-| editing | 控制是否是编辑中状态 | boolean | false | |
-| maxlength | 编辑中文本域最大长度 | number | | |
-| tooltip | 是否展示提示文本 | boolean | true | |
-| onCancel | 按 ESC 退出编辑状态时触发 | function | | |
-| onChange | 文本域编辑时触发 | function(event) | | |
-| onStart | 进入编辑中状态时触发 | function | | |
-| onEnd | 按 ENTER 结束编辑状态时触发 | function | | |
+| autoSize | 自动 resize 文本域 | boolean | { minRows: number, maxRows: number } |  |
+| editing | 控制是否是编辑中状态 | boolean | false |  |
+| maxlength | 编辑中文本域最大长度 | number |  |  |
+| tooltip | 是否展示提示文本 | boolean | true |  |
+| onCancel | 按 ESC 退出编辑状态时触发 | function |  |  |
+| onChange | 文本域编辑时触发 | function(event) |  |  |
+| onStart | 进入编辑中状态时触发 | function |  |  |
+| onEnd | 按 ENTER 结束编辑状态时触发 | function |  |  |
 
 ### ellipsis
 
-``` json
+```json
 {
   rows: number,
   expandable: boolean,
@@ -123,12 +123,12 @@
 }
 ```
 
-| 名称 | 说明 | 类型	 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| expandable | 是否可展开 | boolean |  |  |
-| rows | 最多显示的行数 | boolean |  |  |
-| suffix | 自定义省略内容后缀 | string |  |  |
-| symbol | 自定义展开描述文案 | string | 展开 |  |
-| tooltip | 省略时，展示提示信息 | boolean \| string |  |  |
-| onEllipsis | 触发省略时的回调 | function(ellipsis) |  |  |
-| onExpand | 点击展开时的回调 | function(event) |  |  |
+| 名称       | 说明                 | 类型               | 默认值 | 版本 |
+| ---------- | -------------------- | ------------------ | ------ | ---- |
+| expandable | 是否可展开           | boolean            |        |      |
+| rows       | 最多显示的行数       | boolean            |        |      |
+| suffix     | 自定义省略内容后缀   | string             |        |      |
+| symbol     | 自定义展开描述文案   | string             | 展开   |      |
+| tooltip    | 省略时，展示提示信息 | boolean \| string  |        |      |
+| onEllipsis | 触发省略时的回调     | function(ellipsis) |        |      |
+| onExpand   | 点击展开时的回调     | function(event)    |        |      |

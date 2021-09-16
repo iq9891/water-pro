@@ -1,7 +1,5 @@
 <template>
-  <a-form-pro
-    @register="ruleForm"
-  />
+  <a-form-pro @register="ruleForm" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -28,12 +26,10 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      ruleForm,
-    ] = useForm({
+    const [ruleForm] = useForm({
       schemas,
       labelWidth: 200,
-      colon: false
+      colon: false,
     });
     return {
       ruleForm,

@@ -29,19 +29,15 @@ export default defineComponent({
     return { prefixClsNew };
   },
   render() {
-    const {
-      helpMessage,
-    } = this;
+    const { helpMessage } = this;
     const { text } = this.$attrs;
 
     let helpNode = null;
 
     if (text || helpMessage) {
-      helpNode = (<BasicHelp
-        class={`${this.prefixClsNew}-help`}
-        text={this.helpMessage}
-        {...this.$attrs}
-      />);
+      helpNode = (
+        <BasicHelp class={`${this.prefixClsNew}-help`} text={this.helpMessage} {...this.$attrs} />
+      );
     }
 
     let titleNode: any = this.title;
@@ -52,12 +48,15 @@ export default defineComponent({
     }
 
     return (
-      <span class={[this.prefixClsNew, { [`${this.prefixClsNew}-show-span`]: this.span && (children.length > 0 || this.title) }]}>
-        <Typography.Title {...this.$attrs}>
-          {titleNode}
-        </Typography.Title>
+      <span
+        class={[
+          this.prefixClsNew,
+          { [`${this.prefixClsNew}-show-span`]: this.span && (children.length > 0 || this.title) },
+        ]}
+      >
+        <Typography.Title {...this.$attrs}>{titleNode}</Typography.Title>
         {helpNode}
       </span>
-    )
+    );
   },
 });

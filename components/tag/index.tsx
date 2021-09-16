@@ -143,7 +143,7 @@ Tag.props = tagProps;
 
 Tag.CheckableTag = CheckableTag;
 
-Tag.install = function(app: App) {
+Tag.install = function (app: App) {
   app.component(Tag.name, Tag);
   app.component(CheckableTag.name, CheckableTag);
   return app;

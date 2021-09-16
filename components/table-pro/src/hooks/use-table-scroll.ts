@@ -156,9 +156,7 @@ export function useTableScroll(
     columns.forEach((item) => {
       width += Number.parseInt(item.width as string) || 0;
     });
-    const unsetWidthColumns = columns.filter(
-      (item) => !Reflect.has(item, 'width'),
-    );
+    const unsetWidthColumns = columns.filter((item) => !Reflect.has(item, 'width'));
 
     const len = unsetWidthColumns.length;
     if (len !== 0) {

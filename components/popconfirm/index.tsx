@@ -137,7 +137,7 @@ const Popconfirm = defineComponent({
       <LocaleReceiver
         componentName="Popconfirm"
         defaultLocale={defaultLocale.Popconfirm}
-        children={popconfirmLocale => this.renderOverlay(prefixCls, popconfirmLocale)}
+        children={(popconfirmLocale) => this.renderOverlay(prefixCls, popconfirmLocale)}
       />
     );
     const tooltipProps = {

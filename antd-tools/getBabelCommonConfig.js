@@ -1,6 +1,6 @@
 const { resolve } = require('./utils/projectHelper');
 
-module.exports = function(modules) {
+module.exports = function (modules) {
   const plugins = [
     [
       resolve('@babel/plugin-transform-typescript'),
@@ -30,7 +30,7 @@ module.exports = function(modules) {
   plugins.push([
     resolve('@babel/plugin-transform-runtime'),
     {
-      "helpers": false,
+      helpers: false,
     },
   ]);
   return {

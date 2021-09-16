@@ -305,7 +305,7 @@ const Menu = defineComponent({
 });
 
 /* istanbul ignore next */
-Menu.install = function(app: App) {
+Menu.install = function (app: App) {
   app.component(Menu.name, Menu);
   app.component(Menu.Item.name, Menu.Item);
   app.component(Menu.SubMenu.name, Menu.SubMenu);

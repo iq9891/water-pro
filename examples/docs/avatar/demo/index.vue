@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style>
-[id^=components-avatar-demo-] .ant-avatar {
+[id^='components-avatar-demo-'] .ant-avatar {
   margin-top: 16px;
   margin-right: 16px;
 }

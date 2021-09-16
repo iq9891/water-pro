@@ -46,7 +46,7 @@ export default defineComponent({
       if (listType !== 'picture' && listType !== 'picture-card') {
         return;
       }
-      (items || []).forEach(file => {
+      (items || []).forEach((file) => {
         if (
           typeof document === 'undefined' ||
           typeof window === 'undefined' ||

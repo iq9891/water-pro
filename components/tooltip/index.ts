@@ -1,9 +1,7 @@
 import { withInstall } from '../_util/type';
 import ToolTip from './Tooltip';
 
-export {
-  ToolTip
-}
+export { ToolTip };
 
 export type { TooltipProps } from './Tooltip';
 

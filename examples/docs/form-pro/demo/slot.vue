@@ -1,11 +1,8 @@
 <template>
-  <a-form-pro
-    :schemas="schemas"
-    :labelWidth="200"
-  >
-  <template #sfield4="{ model, field }">
-    <span>这是 sfield4 的 slot 。 {{model}}-{{field}} 是数据</span>
-  </template>
+  <a-form-pro :schemas="schemas" :labelWidth="200">
+    <template #sfield4="{ model, field }">
+      <span>这是 sfield4 的 slot 。 {{ model }}-{{ field }} 是数据</span>
+    </template>
   </a-form-pro>
 </template>
 <script lang="ts">
@@ -98,9 +95,14 @@ const schemas: FormSchema[] = [
         console.log(e);
       },
     },
-    suffix: () => h(Tooltip, {
-      title: 'water is best!'
-    }, () => h(InfoCircleOutlined)),
+    suffix: () =>
+      h(
+        Tooltip,
+        {
+          title: 'water is best!',
+        },
+        () => h(InfoCircleOutlined),
+      ),
   },
   {
     field: 'posters',
@@ -124,33 +126,46 @@ const schemas: FormSchema[] = [
     componentProps: {
       action: 'https://api.dev.mosh.cn/public/upload/image/binary',
     },
-    end: (): any => h('div', [
-      h(Typography.Text, {
-        type: 'secondary',
-        style: {
-          display: 'block',
-          lineHeight: '22px',
-          fontSize: '12px',
-          paddingTop: '8px',
-        },
-      }, () => '1.最多可添加6张'),
-      h(Typography.Text, {
-        type: 'secondary',
-        style: {
-          display: 'block',
-          lineHeight: '22px',
-          fontSize: '12px',
-        },
-      }, () => '2.图片建议尺寸为800*800px以上'),
-      h(Typography.Text, {
-        type: 'secondary',
-        style: {
-          display: 'block',
-          lineHeight: '22px',
-          fontSize: '12px',
-        },
-      }, () => '3.支持PNG、JPG和JPEG格式，大小不超过5MB'),
-    ]),
+    end: (): any =>
+      h('div', [
+        h(
+          Typography.Text,
+          {
+            type: 'secondary',
+            style: {
+              display: 'block',
+              lineHeight: '22px',
+              fontSize: '12px',
+              paddingTop: '8px',
+            },
+          },
+          () => '1.最多可添加6张',
+        ),
+        h(
+          Typography.Text,
+          {
+            type: 'secondary',
+            style: {
+              display: 'block',
+              lineHeight: '22px',
+              fontSize: '12px',
+            },
+          },
+          () => '2.图片建议尺寸为800*800px以上',
+        ),
+        h(
+          Typography.Text,
+          {
+            type: 'secondary',
+            style: {
+              display: 'block',
+              lineHeight: '22px',
+              fontSize: '12px',
+            },
+          },
+          () => '3.支持PNG、JPG和JPEG格式，大小不超过5MB',
+        ),
+      ]),
   },
 ];
 

@@ -13,7 +13,7 @@ export function getNamePath(path: NamePath | null): InternalNamePath {
 }
 
 export function containsNamePath(namePathList: InternalNamePath[], namePath: InternalNamePath) {
-  return namePathList && namePathList.some(path => matchNamePath(path, namePath));
+  return namePathList && namePathList.some((path) => matchNamePath(path, namePath));
 }
 
 function isObject(obj: any) {
@@ -31,7 +31,7 @@ function internalSetValues<T>(store: T, values: T): T {
     return newStore;
   }
 
-  Object.keys(values).forEach(key => {
+  Object.keys(values).forEach((key) => {
     const prevValue = newStore[key];
     const value = values[key];
 

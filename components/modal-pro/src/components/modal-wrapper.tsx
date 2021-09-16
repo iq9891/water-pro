@@ -57,15 +57,13 @@ export default defineComponent({
       redoModalHeight: setModalHeight,
     });
 
-    const spinStyle = computed(
-      (): CSSProperties => {
-        return {
-          minHeight: `${props.minHeight}px`,
-          // padding 28
-          height: `${unref(realHeightRef)}px`,
-        };
-      },
-    );
+    const spinStyle = computed((): CSSProperties => {
+      return {
+        minHeight: `${props.minHeight}px`,
+        // padding 28
+        height: `${unref(realHeightRef)}px`,
+      };
+    });
 
     watchEffect(() => {
       props.useWrapper && setModalHeight();
@@ -114,8 +112,7 @@ export default defineComponent({
       await nextTick();
 
       try {
-        const modalDom =
-          bodyDom.parentElement && bodyDom.parentElement.parentElement;
+        const modalDom = bodyDom.parentElement && bodyDom.parentElement.parentElement;
         if (!modalDom) return;
 
         const modalRect = getComputedStyle(modalDom).top;
@@ -142,10 +139,7 @@ export default defineComponent({
 
         if (props.fullScreen) {
           realHeightRef.value =
-            window.innerHeight -
-            props.modalFooterHeight -
-            props.modalHeaderHeight -
-            28;
+            window.innerHeight - props.modalFooterHeight - props.modalHeaderHeight - 28;
         } else {
           realHeightRef.value = props.height
             ? props.height
@@ -162,21 +156,14 @@ export default defineComponent({
     return { wrapperRef, spinRef, spinStyle, scrollTop, setModalHeight };
   },
   render() {
-    return (<ContainerScroll
-      ref="wrapperRef"
-      style={this.scrollStyle}
-    >
-      <ASpin
-        spinning={this.loading}
-        tip={this.loadingTip}
-      >
-        <div
-          ref="spinRef"
-          style={this.spinStyle}
-        >
-          { getSlot(this) }
-        </div>
-      </ASpin>
-    </ContainerScroll>);
+    return (
+      <ContainerScroll ref="wrapperRef" style={this.scrollStyle}>
+        <ASpin spinning={this.loading} tip={this.loadingTip}>
+          <div ref="spinRef" style={this.spinStyle}>
+            {getSlot(this)}
+          </div>
+        </ASpin>
+      </ContainerScroll>
+    );
   },
 });

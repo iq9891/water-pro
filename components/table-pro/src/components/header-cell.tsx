@@ -35,19 +35,14 @@ export default defineComponent({
     let headerCellNode = null;
 
     if (this.getIsEdit) {
-      headerCellNode = (<EditTableHeaderCell>
-        { this.getTitle }
-      </EditTableHeaderCell>)
+      headerCellNode = <EditTableHeaderCell>{this.getTitle}</EditTableHeaderCell>;
     } else {
       headerCellNode = this.getTitle;
     }
 
     let helpNode = null;
     if (this.getHelpMessage) {
-      helpNode = (<BasicHelp
-        text={this.getHelpMessage}
-        class={`${this.prefixClsNew}__help`}
-      />);
+      helpNode = <BasicHelp text={this.getHelpMessage} class={`${this.prefixClsNew}__help`} />;
     }
 
     return (

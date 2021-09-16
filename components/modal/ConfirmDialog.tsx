@@ -10,7 +10,7 @@ interface ConfirmDialogProps extends ModalFuncProps {
   autoFocusButton?: null | 'ok' | 'cancel';
 }
 
-const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = props => {
+const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = (props) => {
   const {
     icon,
     onCancel,
@@ -68,7 +68,7 @@ const ConfirmDialog: FunctionalComponent<ConfirmDialogProps> = props => {
       prefixCls={prefixCls}
       class={classString}
       wrapClassName={classNames({ [`${contentPrefixCls}-centered`]: !!centered })}
-      onCancel={e => close({ triggerCancel: true }, e)}
+      onCancel={(e) => close({ triggerCancel: true }, e)}
       visible={visible}
       title=""
       transitionName={transitionName}

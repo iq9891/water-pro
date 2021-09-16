@@ -10,7 +10,7 @@ export default function useSelectTriggerControl(
     const elements = [refs[0]?.value, refs[1]?.value?.getPopupElement()];
     if (
       open.value &&
-      elements.every(element => element && !element.contains(target) && element !== target)
+      elements.every((element) => element && !element.contains(target) && element !== target)
     ) {
       // Should trigger close
       triggerOpen(false);

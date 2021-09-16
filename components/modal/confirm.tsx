@@ -33,7 +33,7 @@ export default function confirm(config: ModalFuncProps & { parentContext?: any }
       confirmDialogInstance = null;
       div.parentNode.removeChild(div);
     }
-    const triggerCancel = args.some(param => param && param.triggerCancel);
+    const triggerCancel = args.some((param) => param && param.triggerCancel);
     if (config.onCancel && triggerCancel) {
       config.onCancel(...args);
     }

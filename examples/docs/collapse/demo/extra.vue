@@ -37,7 +37,7 @@ export default defineComponent({
       // If you don't want click extra trigger collapse, you can prevent this:
       event.stopPropagation();
     };
-    watch(activeKey, val => {
+    watch(activeKey, (val) => {
       console.log(val);
     });
 

@@ -30,7 +30,7 @@ export default defineComponent({
       close: () => {
         modalMethods.openModal(false);
       },
-    }
+    };
   },
 });
 </script>

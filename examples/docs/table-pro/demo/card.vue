@@ -1,9 +1,5 @@
 <template>
-  <a-table-pro
-    @register="toolbarRegister"
-    cardable
-    cardTitle="列表"
-  >
+  <a-table-pro @register="toolbarRegister" cardable cardTitle="列表">
     <template #extra>
       <a-button>下载</a-button>
     </template>
@@ -50,19 +46,19 @@ const columns = [
     title: 'name',
     dataIndex: 'name',
     key: 'name',
-      width: 300,
+    width: 300,
   },
   {
     title: 'Age',
     dataIndex: 'age',
     key: 'age',
-      width: 300,
+    width: 300,
   },
   {
     title: 'Address',
     dataIndex: 'address',
     key: 'address',
-      width: 1300,
+    width: 1300,
   },
   {
     title: '开始时间',
@@ -81,7 +77,7 @@ const columns = [
   },
 ];
 
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 10; index++) {
     arr.push({
@@ -100,9 +96,7 @@ export function demoListApi({params, success}) {
 
 export default defineComponent({
   setup() {
-    const [
-      toolbarRegister,
-    ] = useTable({
+    const [toolbarRegister] = useTable({
       api: demoListApi,
       columns,
       useSearchForm: true,

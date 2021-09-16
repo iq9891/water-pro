@@ -53,7 +53,7 @@ function pickerValueAdapter(value?: dayjs.Dayjs | RangePickerValue): RangePicker
 
 function isEmptyArray(arr: any) {
   if (Array.isArray(arr)) {
-    return arr.length === 0 || arr.every(i => !i);
+    return arr.length === 0 || arr.every((i) => !i);
   }
   return false;
 }
@@ -253,7 +253,7 @@ export default defineComponent({
       ) : null;
       const operations =
         ranges &&
-        Object.keys(ranges).map(range => {
+        Object.keys(ranges).map((range) => {
           const value = ranges[range];
           const hoverValue = typeof value === 'function' ? value.call(this) : value;
           return (
@@ -338,7 +338,7 @@ export default defineComponent({
       onOk: this.handleChange,
     };
     if (props.timePicker) {
-      pickerChangeHandler.onChange = changedValue => this.handleChange(changedValue);
+      pickerChangeHandler.onChange = (changedValue) => this.handleChange(changedValue);
     } else {
       calendarProps = {};
     }
@@ -422,7 +422,7 @@ export default defineComponent({
     let todayBtnNode = null;
     if (showTodayButton) {
       const todayHandle = () => {
-        this.handleChange([moment(), moment()]);
+        this.handleChange([dayjs(), dayjs()]);
       };
       todayBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={todayHandle}>
@@ -434,7 +434,7 @@ export default defineComponent({
     let yesterdayBtnNode = null;
     if (showYesterdayButton) {
       const yesterdayHandle = () => {
-        this.handleChange([moment().subtract(1, 'days'), moment().subtract(1, 'days')]);
+        this.handleChange([dayjs().subtract(1, 'days'), dayjs().subtract(1, 'days')]);
       };
       yesterdayBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={yesterdayHandle}>
@@ -446,7 +446,7 @@ export default defineComponent({
     let sevenDaysBtnNode = null;
     if (showSevenDaysButton) {
       const sevenDaysHandle = () => {
-        this.handleChange([moment().subtract(6, 'days'), moment()]);
+        this.handleChange([dayjs().subtract(6, 'days'), dayjs()]);
       };
       sevenDaysBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>
@@ -458,7 +458,7 @@ export default defineComponent({
     let thirtyDaysBtnNode = null;
     if (showThirtyDaysButton) {
       const sevenDaysHandle = () => {
-        this.handleChange([moment().subtract(29, 'days'), moment()]);
+        this.handleChange([dayjs().subtract(29, 'days'), dayjs()]);
       };
       thirtyDaysBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>

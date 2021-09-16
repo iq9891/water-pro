@@ -204,7 +204,7 @@ export default defineComponent({
     setUncontrolledState(state: unknown) {
       const newState = omit(
         state,
-        Object.keys(getOptionProps(this)).map(p => `_${p}`),
+        Object.keys(getOptionProps(this)).map((p) => `_${p}`),
       );
       if (Object.keys(newState).length) {
         this.setState(newState);

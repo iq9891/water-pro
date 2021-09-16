@@ -43,18 +43,18 @@ function genType() {
   ];
 }
 
-export function setComponentRuleType(
-  rule: ValidationRule,
-  component: ComponentType,
-) {
-  if (
-    ['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'].includes(
-      component,
-    )
-  ) {
+export function setComponentRuleType(rule: ValidationRule, component: ComponentType) {
+  if (['DatePicker', 'MonthPicker', 'WeekPicker', 'TimePicker'].includes(component)) {
     rule.type = 'object';
   } else if (
-    ['RangePicker', 'RangeGroupPicker', 'TimeRangePicker', 'Upload', 'CheckboxGroup', 'TimePicker'].includes(component)
+    [
+      'RangePicker',
+      'RangeGroupPicker',
+      'TimeRangePicker',
+      'Upload',
+      'CheckboxGroup',
+      'TimePicker',
+    ].includes(component)
   ) {
     rule.type = 'array';
   } else if (['InputNumber'].includes(component)) {
@@ -64,11 +64,7 @@ export function setComponentRuleType(
 
 export function handleInputNumberValue(component?: ComponentType, val?: any) {
   if (!component) return val || '';
-  if (
-    ['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(
-      component,
-    )
-  ) {
+  if (['Input', 'InputPassword', 'InputSearch', 'InputTextArea'].includes(component)) {
     return val && isNumber(val) ? `${val}` : val;
   }
   return val;

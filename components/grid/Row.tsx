@@ -46,7 +46,7 @@ const ARow = defineComponent<RowProps>({
     let token: number;
 
     onMounted(() => {
-      token = ResponsiveObserve.subscribe(screen => {
+      token = ResponsiveObserve.subscribe((screen) => {
         const currentGutter = props.gutter || 0;
         if (
           (!Array.isArray(currentGutter) && typeof currentGutter === 'object') ||

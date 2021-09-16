@@ -1,9 +1,9 @@
 ## API
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- | --- |
 | clickToRowSelect | 点击行选中 | boolean | - |  |
-| isTreeTable | 是否是树形表格，如果数据里面有 ***children*** 字段，表格自动为树形表格。当 isTreeTable = true 的时候，数据中设置 `flag: 'INDEX'` 不起作用 | boolean | - |  |
+| isTreeTable | 是否是树形表格，如果数据里面有 **_children_** 字段，表格自动为树形表格。当 isTreeTable = true 的时候，数据中设置 `flag: 'INDEX'` 不起作用 | boolean | - |  |
 | showIndexColumn | 是否显示序号列 | boolean | - |  |
 | inset | 取消表格外部的默认 `padding` | boolean | - |  |
 | autoCreateKey | 是否自动生成 rowKey 配置 | boolean | - |  |
@@ -26,7 +26,7 @@
 | titleHelpMessage | 标题右侧提示 | string \| `string[]` | - |  |
 | title | 表格标题 | string | - |  |
 | size | 表格紧密度 | [SizeType](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#L94) | default |  |
-| tableSetting | 设置右上角显示的icon | [TableSetting](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#L143) | - | - |
+| tableSetting | 设置右上角显示的 icon | [TableSetting](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#L143) | - | - |
 | sortFn | 自定义排序方法 | Function | - |  |
 | filterFn | 自定义筛选方法 | Function | - |  |
 | summaryFunc | 计算合计行的方法 | Function | - |  |
@@ -52,7 +52,7 @@
 ### 事件
 
 | 事件名称 | 说明 | 回调参数 |
-| --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | register | 使用 useTable 的回调 | Function([formActionType](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L29)) |  |
 | fetch-success | api 参数请求成功的回调 | Function({ items: 结果数据, total: 总数, params: 参数 }) |  |
 | fetch-error | api 参数请求失败的回调 | Function(error: any) |  |
@@ -65,6 +65,7 @@
 | row-mouseleave | 表格 row-mouseleave 的回调 | `Function(record: Recordable<any>, index: number, e: Event)` |  |
 
 ### useTable 返回的方法 ( TableActionType )
+
 > 更多参数参考 [TableProProps](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#102)
 
 | 事件名称 | 说明 | 回调参数 |
@@ -88,28 +89,28 @@
 
 ### a-table-image API
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| imgList | 图片的数据 | string[] | - |  |
+| 参数    | 说明       | 类型     | 默认值 | 版本 |
+| ------- | ---------- | -------- | ------ | ---- |
+| imgList | 图片的数据 | string[] | -      |      |
 
 ### a-table-card API
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| imgSize | 图片的尺寸 | number | 80 | 3.33.0 |
-| imgUrl | 图片的地址 | string | '' | 3.33.0 |
-| imgBorderd | 图片的边框 | boolean | true | 3.33.0 |
-| imgPreview | 图片的预览 | boolean | false | 3.33.0 |
-| imgErrorImage | 图片加载错误展示 | string | - | 3.33.0 |
-| title | 标题 | string | - | 3.33.0 |
-| titleMaxLength | 标题最大展示长度 | number | 14 | 3.33.0 |
-| desc | 描述 | string | - | 3.33.0 |
-| descMaxLength | 描述最大展示长度 | number | 14 | 3.34.0 |
-| cardable | 卡片表格 | boolean | false | 3.35.0 |
-| cardTitle | 卡片标题 | string | - | 3.35.0 |
+| 参数           | 说明             | 类型    | 默认值 | 版本   |
+| -------------- | ---------------- | ------- | ------ | ------ |
+| imgSize        | 图片的尺寸       | number  | 80     | 3.33.0 |
+| imgUrl         | 图片的地址       | string  | ''     | 3.33.0 |
+| imgBorderd     | 图片的边框       | boolean | true   | 3.33.0 |
+| imgPreview     | 图片的预览       | boolean | false  | 3.33.0 |
+| imgErrorImage  | 图片加载错误展示 | string  | -      | 3.33.0 |
+| title          | 标题             | string  | -      | 3.33.0 |
+| titleMaxLength | 标题最大展示长度 | number  | 14     | 3.33.0 |
+| desc           | 描述             | string  | -      | 3.33.0 |
+| descMaxLength  | 描述最大展示长度 | number  | 14     | 3.34.0 |
+| cardable       | 卡片表格         | boolean | false  | 3.35.0 |
+| cardTitle      | 卡片标题         | string  | -      | 3.35.0 |
 
 ### a-table-card slots
 
-| 名称 | 说明 | 参数 | 默认值 | 版本 |
-| --- | --- | --- | --- | --- |
-| titleSuffix | 标题末尾的追加 |  | - | 3.33.0 |
+| 名称        | 说明           | 参数 | 默认值 | 版本   |
+| ----------- | -------------- | ---- | ------ | ------ |
+| titleSuffix | 标题末尾的追加 |      | -      | 3.33.0 |

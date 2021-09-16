@@ -48,20 +48,13 @@ export default defineComponent({
     const getColumns = computed(() => {
       const dataSource = unref(getDataSource);
       const columns: BasicColumn[] = cloneDeep(table.getColumns());
-      const index = columns.findIndex(
-        (item) => item.flag === INDEX_COLUMN_FLAG,
-      );
-      const hasRowSummary = dataSource.some((item) =>
-        Reflect.has(item, SUMMARY_ROW_KEY),
-      );
-      const hasIndexSummary = dataSource.some((item) =>
-        Reflect.has(item, SUMMARY_INDEX_KEY),
-      );
+      const index = columns.findIndex((item) => item.flag === INDEX_COLUMN_FLAG);
+      const hasRowSummary = dataSource.some((item) => Reflect.has(item, SUMMARY_ROW_KEY));
+      const hasIndexSummary = dataSource.some((item) => Reflect.has(item, SUMMARY_INDEX_KEY));
 
       if (index !== -1) {
         if (hasIndexSummary) {
-          columns[index].customRender = ({ record }) =>
-            record[SUMMARY_INDEX_KEY];
+          columns[index].customRender = ({ record }) => record[SUMMARY_INDEX_KEY];
           columns[index].ellipsis = false;
         } else {
           Reflect.deleteProperty(columns[index], 'customRender');
@@ -87,16 +80,18 @@ export default defineComponent({
     let footerNode = null;
 
     if (this.summaryFunc || this.summaryData) {
-      footerNode = (<Table
-        show-header={false}
-        bordered={false}
-        pagination={false}
-        data-source={this.getDataSource}
-        row-key={(r) => r[this.rowKey]}
-        columns={this.getColumns}
-        table-layout='fixed'
-        scroll={this.scroll}
-      />)
+      footerNode = (
+        <Table
+          show-header={false}
+          bordered={false}
+          pagination={false}
+          data-source={this.getDataSource}
+          row-key={(r) => r[this.rowKey]}
+          columns={this.getColumns}
+          table-layout="fixed"
+          scroll={this.scroll}
+        />
+      );
     }
 
     return footerNode;

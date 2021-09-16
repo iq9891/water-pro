@@ -67,7 +67,7 @@ export default {
 
     const footer = renderFooter && renderFooter('decade');
     const decadesEls = decades.map((row, decadeIndex) => {
-      const tds = row.map(decadeData => {
+      const tds = row.map((decadeData) => {
         const dStartDecade = decadeData.startDecade;
         const dEndDecade = decadeData.endDecade;
         const isLast = dStartDecade < startYear;

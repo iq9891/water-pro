@@ -38,7 +38,7 @@ function warningProps(props: SelectProps) {
 
   // `combobox` & `tags` should option be `string` type
   if (mode === 'tags' || mode === 'combobox') {
-    const hasNumberValue = mergedOptions.some(item => {
+    const hasNumberValue = mergedOptions.some((item) => {
       if (item.options) {
         return item.options.some(
           (opt: OptionData) => typeof ('value' in opt ? opt.value : opt.key) === 'number',
@@ -88,7 +88,7 @@ function warningProps(props: SelectProps) {
     const values = toArray<RawValueType | LabelValueType>(value);
     warning(
       !labelInValue ||
-        values.every(val => typeof val === 'object' && ('key' in val || 'value' in val)),
+        values.every((val) => typeof val === 'object' && ('key' in val || 'value' in val)),
       '`value` should in shape of `{ value: string | number, label?: any }` when you set `labelInValue` to `true`',
     );
 
@@ -137,9 +137,9 @@ function warningProps(props: SelectProps) {
     if (invalidateChildType) {
       warning(
         false,
-        `\`children\` should be \`Select.Option\` or \`Select.OptGroup\` instead of \`${invalidateChildType.displayName ||
-          invalidateChildType.name ||
-          invalidateChildType}\`.`,
+        `\`children\` should be \`Select.Option\` or \`Select.OptGroup\` instead of \`${
+          invalidateChildType.displayName || invalidateChildType.name || invalidateChildType
+        }\`.`,
       );
     }
 

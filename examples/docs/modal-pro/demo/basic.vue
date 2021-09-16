@@ -1,9 +1,7 @@
 <template>
   <div>
     <AButton @click="open">打开</AButton>
-    <AModalPro @register="registerModal" title="water">
-      这里面是简单的内容
-    </AModalPro>
+    <AModalPro @register="registerModal" title="water"> 这里面是简单的内容 </AModalPro>
   </div>
 </template>
 <script lang="ts">
@@ -18,7 +16,7 @@ export default defineComponent({
       open: () => {
         modalMethods.openModal();
       },
-    }
+    };
   },
 });
 </script>

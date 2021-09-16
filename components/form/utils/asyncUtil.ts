@@ -11,11 +11,11 @@ export function allPromiseFinish(promiseList: Promise<FieldError>[]): Promise<Fi
   return new Promise((resolve, reject) => {
     promiseList.forEach((promise, index) => {
       promise
-        .catch(e => {
+        .catch((e) => {
           hasError = true;
           return e;
         })
-        .then(result => {
+        .then((result) => {
           count -= 1;
           results[index] = result;
 

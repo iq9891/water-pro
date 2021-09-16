@@ -1,24 +1,20 @@
 <template>
-   <a-select-api
-    style="width: 200px"
-    :api="getSelectForOptions"
-    v-model:value="selectApiValue"
-  />
+  <a-select-api style="width: 200px" :api="getSelectForOptions" v-model:value="selectApiValue" />
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   setTimeout(() => {
     success([
       {
         label: 'water',
-        value: 90
+        value: 90,
       },
       {
         label: 'antd',
-        value: 80
-      }
+        value: 80,
+      },
     ]);
   }, 1000);
 };
@@ -28,10 +24,9 @@ export default defineComponent({
     const selectApiValue = ref('');
     return {
       focus,
-        getSelectForOptions,
-        selectApiValue,
+      getSelectForOptions,
+      selectApiValue,
     };
   },
 });
 </script>
-

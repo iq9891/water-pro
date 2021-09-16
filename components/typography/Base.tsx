@@ -126,18 +126,16 @@ const Base = defineComponent<InternalBlockProps>({
 
     const contentRef = ref();
     const editIcon = ref();
-    const ellipsis = computed(
-      (): EllipsisConfig => {
-        const ellipsis = props.ellipsis;
-        if (!ellipsis) return {};
+    const ellipsis = computed((): EllipsisConfig => {
+      const ellipsis = props.ellipsis;
+      if (!ellipsis) return {};
 
-        return {
-          rows: 1,
-          expandable: false,
-          ...(typeof ellipsis === 'object' ? ellipsis : null),
-        };
-      },
-    );
+      return {
+        rows: 1,
+        expandable: false,
+        ...(typeof ellipsis === 'object' ? ellipsis : null),
+      };
+    });
     onMounted(() => {
       state.clientRendered = true;
     });
@@ -304,7 +302,11 @@ const Base = defineComponent<InternalBlockProps>({
       // Do not measure if css already support ellipsis
       if (canUseCSSEllipsis.value) return;
 
-      const { content, text, ellipsis: ell } = measure(
+      const {
+        content,
+        text,
+        ellipsis: ell,
+      } = measure(
         contentRef.value?.$el,
         { rows, suffix },
         props.content,
@@ -439,7 +441,7 @@ const Base = defineComponent<InternalBlockProps>({
     }
 
     function renderOperations(forceRenderExpanded?: boolean) {
-      return [renderExpand(forceRenderExpanded), renderEdit(), renderCopy()].filter(node => node);
+      return [renderExpand(forceRenderExpanded), renderEdit(), renderCopy()].filter((node) => node);
     }
 
     return () => {
@@ -460,7 +462,14 @@ const Base = defineComponent<InternalBlockProps>({
         <LocaleReceiver
           componentName="Text"
           children={(locale: Locale) => {
-            const { type, disabled, content, class: className, style, ...restProps } = {
+            const {
+              type,
+              disabled,
+              content,
+              class: className,
+              style,
+              ...restProps
+            } = {
               ...props,
               ...attrs,
             };

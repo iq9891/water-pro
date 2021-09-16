@@ -60,7 +60,7 @@ Typography.props = {
   styleReset: PropTypes.looseBool,
 };
 
-Typography.install = function(app: App) {
+Typography.install = function (app: App) {
   app.component(Typography.name, Typography);
   app.component(Typography.Text.displayName, Text);
   app.component(Typography.Title.displayName, Title);

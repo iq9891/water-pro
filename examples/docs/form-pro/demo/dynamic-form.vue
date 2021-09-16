@@ -15,164 +15,161 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import { useForm, FormSchema } from '@fe6/water-pro';
 
-  const schemas: FormSchema[] = [
-    {
-      field: 'dffield1',
-      component: 'Input',
-      label: '字段1',
-      colProps: {
-        span: 8,
-      },
-      show: (showParams) => {
-        const { values } = showParams.value;
-        return !!values.dffield4;
-      },
+const schemas: FormSchema[] = [
+  {
+    field: 'dffield1',
+    component: 'Input',
+    label: '字段1',
+    colProps: {
+      span: 8,
     },
-    {
-      field: 'dffield2',
-      component: 'Input',
-      label: '字段2',
-      colProps: {
-        span: 8,
-      },
-      ifShow: (ifShowParams) => {
-        const { values } = ifShowParams.value;
-        return !!values.dffield3;
-      },
+    show: (showParams) => {
+      const { values } = showParams.value;
+      return !!values.dffield4;
     },
-    {
-      field: 'dffield3',
-      component: 'DatePicker',
-      label: '字段3',
-      colProps: {
-        span: 8,
-      },
-      dynamicRules: (ruleParams) => {
-        const { values } = ruleParams.value;
-        return !!values.dffield3 ? [{ required: true, type: 'string', message: '字段3必填' }] : [];
-      },
-      componentProps: {
-        valueFormat: 'YYYY-MM-DD'
-      }
+  },
+  {
+    field: 'dffield2',
+    component: 'Input',
+    label: '字段2',
+    colProps: {
+      span: 8,
     },
-    {
-      field: 'dffield4',
-      component: 'Select',
-      label: '字段4',
-      colProps: {
-        span: 8,
-      },
-      dynamicRules: (ruleParams) => {
-        const { values } = ruleParams.value
-        return values.dffield8 ? [{ required: true, message: '字段4必填' }] : [];
-      },
-      componentProps: {
-        options: [
-          {
-            label: '选项1',
-            value: '1',
-            key: '1',
-          },
-          {
-            label: '选项2',
-            value: '2',
-            key: '2',
-          },
-        ],
-      },
+    ifShow: (ifShowParams) => {
+      const { values } = ifShowParams.value;
+      return !!values.dffield3;
     },
-  ];
+  },
+  {
+    field: 'dffield3',
+    component: 'DatePicker',
+    label: '字段3',
+    colProps: {
+      span: 8,
+    },
+    dynamicRules: (ruleParams) => {
+      const { values } = ruleParams.value;
+      return !!values.dffield3 ? [{ required: true, type: 'string', message: '字段3必填' }] : [];
+    },
+    componentProps: {
+      valueFormat: 'YYYY-MM-DD',
+    },
+  },
+  {
+    field: 'dffield4',
+    component: 'Select',
+    label: '字段4',
+    colProps: {
+      span: 8,
+    },
+    dynamicRules: (ruleParams) => {
+      const { values } = ruleParams.value;
+      return values.dffield8 ? [{ required: true, message: '字段4必填' }] : [];
+    },
+    componentProps: {
+      options: [
+        {
+          label: '选项1',
+          value: '1',
+          key: '1',
+        },
+        {
+          label: '选项2',
+          value: '2',
+          key: '2',
+        },
+      ],
+    },
+  },
+];
 
-  const schemas1: FormSchema[] = [
-    {
-      field: 'f1',
-      component: 'Input',
-      label: 'F1',
-      colProps: {
-        span: 12,
-      },
-      componentProps: ({ formModel }) => {
-        return {
-          placeholder: '同步f2的值为f1',
-          onChange: (e: ChangeEvent) => {
-            formModel.f2 = e.target.value;
-          },
-        };
-      },
+const schemas1: FormSchema[] = [
+  {
+    field: 'f1',
+    component: 'Input',
+    label: 'F1',
+    colProps: {
+      span: 12,
     },
-    {
-      field: 'f2',
-      component: 'Input',
-      label: 'F2',
-      colProps: {
-        span: 12,
-      },
-      componentProps: { disabled: true },
-    },
-    {
-      field: 'f3',
-      component: 'Input',
-      label: 'F3',
-      colProps: {
-        span: 12,
-      },
-      // @ts-ignore
-      componentProps: ({ formActionType }) => {
-        return {
-          placeholder: '值改变时执行查询,查看控制台',
-          onChange: async () => {
-            const { validate } = formActionType;
-            // tableAction只适用于在表格内开启表单的例子
-            // const { reload } = tableAction;
-            const res = await validate();
-            console.log(res);
-          },
-        };
-      },
-    },
-  ];
-
-  export default defineComponent({
-    setup() {
-      const [
-        register,
-        { setProps, appendSchemaByField, removeSchemaByFiled },
-      ] = useForm({
-        labelWidth: 200,
-        schemas,
-      });
-      const [regist1] = useForm({
-        labelWidth: 200,
-        actionAlgin: 'center',
-        schemas: schemas1,
-      });
-
-      function appendField() {
-        appendSchemaByField(
-          {
-            field: 'dffield10',
-            label: '字段10',
-            component: 'Input',
-            colProps: {
-              span: 8,
-            },
-          },
-          'dffield3'
-        );
-      }
-      function deleteField() {
-        removeSchemaByFiled('dffield4');
-      }
+    componentProps: ({ formModel }) => {
       return {
-        register,
-        regist1,
-        setProps,
-        appendField,
-        deleteField,
+        placeholder: '同步f2的值为f1',
+        onChange: (e: ChangeEvent) => {
+          formModel.f2 = e.target.value;
+        },
       };
     },
-  });
+  },
+  {
+    field: 'f2',
+    component: 'Input',
+    label: 'F2',
+    colProps: {
+      span: 12,
+    },
+    componentProps: { disabled: true },
+  },
+  {
+    field: 'f3',
+    component: 'Input',
+    label: 'F3',
+    colProps: {
+      span: 12,
+    },
+    // @ts-ignore
+    componentProps: ({ formActionType }) => {
+      return {
+        placeholder: '值改变时执行查询,查看控制台',
+        onChange: async () => {
+          const { validate } = formActionType;
+          // tableAction只适用于在表格内开启表单的例子
+          // const { reload } = tableAction;
+          const res = await validate();
+          console.log(res);
+        },
+      };
+    },
+  },
+];
+
+export default defineComponent({
+  setup() {
+    const [register, { setProps, appendSchemaByField, removeSchemaByFiled }] = useForm({
+      labelWidth: 200,
+      schemas,
+    });
+    const [regist1] = useForm({
+      labelWidth: 200,
+      actionAlgin: 'center',
+      schemas: schemas1,
+    });
+
+    function appendField() {
+      appendSchemaByField(
+        {
+          field: 'dffield10',
+          label: '字段10',
+          component: 'Input',
+          colProps: {
+            span: 8,
+          },
+        },
+        'dffield3',
+      );
+    }
+    function deleteField() {
+      removeSchemaByFiled('dffield4');
+    }
+    return {
+      register,
+      regist1,
+      setProps,
+      appendField,
+      deleteField,
+    };
+  },
+});
 </script>

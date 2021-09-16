@@ -10,21 +10,10 @@ import type {
 } from '../types/table';
 import type { PaginationProps } from '../types/pagination';
 import { unref, ComputedRef, Ref, computed, watch, ref, toRaw } from 'vue';
-import {
-  isBoolean,
-  isArray,
-  isString,
-  isPlainObject,
-  isFunction,
-} from '@fe6/shared';
+import { isBoolean, isArray, isString, isPlainObject, isFunction } from '@fe6/shared';
 import { isEqual, cloneDeep } from 'lodash-es';
 
-import {
-  DEFAULT_ALIGN,
-  PAGE_SIZE,
-  INDEX_COLUMN_FLAG,
-  ACTION_COLUMN_FLAG,
-} from '../const';
+import { DEFAULT_ALIGN, PAGE_SIZE, INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG } from '../const';
 import { formatToDate } from '../date';
 
 // TODO [feat] 因为 /directives/click-outside.ts yarn pub 报错，所以暂缓支持
@@ -50,10 +39,7 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
   }
 }
 
-function handleChildren(
-  children: BasicColumn[] | undefined,
-  ellipsis: boolean,
-) {
+function handleChildren(children: BasicColumn[] | undefined, ellipsis: boolean) {
   if (!children) return;
   children.forEach((item) => {
     const { children } = item;
@@ -75,9 +61,7 @@ function handleIndexColumn(
   }
 
   columns.forEach(() => {
-    const indIndex = columns.findIndex(
-      (column) => column.flag === INDEX_COLUMN_FLAG,
-    );
+    const indIndex = columns.findIndex((column) => column.flag === INDEX_COLUMN_FLAG);
     if (showIndexColumn) {
       pushIndexColumns = indIndex === -1;
     } else if (!showIndexColumn && indIndex !== -1) {
@@ -99,10 +83,7 @@ function handleIndexColumn(
       if (isBoolean(getPagination)) {
         return `${index + 1}`;
       }
-      const {
-        current = 1,
-        pageSize = PAGE_SIZE,
-      } = getPagination as PaginationProps;
+      const { current = 1, pageSize = PAGE_SIZE } = getPagination as PaginationProps;
       return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1;
     },
     ...(isFixedLeft
@@ -114,16 +95,11 @@ function handleIndexColumn(
   });
 }
 
-function handleActionColumn(
-  propsRef: ComputedRef<TableProProps>,
-  columns: BasicColumn[],
-) {
+function handleActionColumn(propsRef: ComputedRef<TableProProps>, columns: BasicColumn[]) {
   const { actionColumn } = unref(propsRef);
   if (!actionColumn) return;
 
-  const hasIndex = columns.findIndex(
-    (column) => column.flag === ACTION_COLUMN_FLAG,
-  );
+  const hasIndex = columns.findIndex((column) => column.flag === ACTION_COLUMN_FLAG);
   if (hasIndex === -1) {
     columns.push({
       ...columns[hasIndex],
@@ -138,9 +114,7 @@ export function useColumns(
   propsRef: ComputedRef<TableProProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
 ) {
-  const columnsRef = (ref(unref(propsRef).columns) as unknown) as Ref<
-    BasicColumn[]
-  >;
+  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<BasicColumn[]>;
   let cacheColumns = unref(propsRef).columns;
 
   const getColumnsRef = computed(() => {
@@ -159,9 +133,7 @@ export function useColumns(
 
       handleItem(
         item,
-        Reflect.has(item, 'ellipsis')
-          ? !!item.ellipsis
-          : !!ellipsis && !customRender && !slots,
+        Reflect.has(item, 'ellipsis') ? !!item.ellipsis : !!ellipsis && !customRender && !slots,
       );
     });
     return cloneColumns;
@@ -187,9 +159,7 @@ export function useColumns(
         column.customTitle = column.customTitle || column.title;
         Reflect.deleteProperty(column, 'title');
       }
-      const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(
-        flag!,
-      );
+      const isDefaultAction = [INDEX_COLUMN_FLAG, ACTION_COLUMN_FLAG].includes(flag!);
       if (!customRender && format && !edit && !isDefaultAction) {
         column.customRender = ({ text, record, index }) => {
           return formatCell(text, format, record, index);
@@ -216,10 +186,7 @@ export function useColumns(
   //   cacheColumns = columns?.filter((item) => !item.flag) ?? [];
   // });
 
-  function setCacheColumnsByField(
-    dataIndex: string | undefined,
-    value: Partial<BasicColumn>,
-  ) {
+  function setCacheColumnsByField(dataIndex: string | undefined, value: Partial<BasicColumn>) {
     if (!dataIndex || !value) {
       return;
     }
@@ -319,22 +286,15 @@ function sortFixedColumn(columns: BasicColumn[]) {
     }
     defColumns.push(column);
   }
-  const resultColumns = [
-    ...fixedLeftColumns,
-    ...defColumns,
-    ...fixedRightColumns,
-  ].filter((item) => !item.defaultHidden);
+  const resultColumns = [...fixedLeftColumns, ...defColumns, ...fixedRightColumns].filter(
+    (item) => !item.defaultHidden,
+  );
 
   return resultColumns;
 }
 
 // format cell
-export function formatCell(
-  text: string,
-  format: CellFormat,
-  record: Recordable,
-  index: number,
-) {
+export function formatCell(text: string, format: CellFormat, record: Recordable, index: number) {
   if (!format) {
     return text;
   }

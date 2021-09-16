@@ -126,7 +126,7 @@ export default defineComponent({
 
     watch(
       () => props.value,
-      newValue => {
+      (newValue) => {
         options.value = newValue;
       },
     );

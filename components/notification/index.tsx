@@ -185,7 +185,7 @@ function notice(args: ArgsProps) {
       getContainer,
       closeIcon,
     },
-    notification => {
+    (notification) => {
       notification.notice({
         content: () => (
           <div class={iconNode ? `${prefixCls}-with-icon` : ''}>
@@ -215,21 +215,21 @@ function notice(args: ArgsProps) {
 const api: any = {
   open: notice,
   close(key: string) {
-    Object.keys(notificationInstance).forEach(cacheKey =>
+    Object.keys(notificationInstance).forEach((cacheKey) =>
       notificationInstance[cacheKey].removeNotice(key),
     );
   },
   config: setNotificationConfig,
   destroy() {
-    Object.keys(notificationInstance).forEach(cacheKey => {
+    Object.keys(notificationInstance).forEach((cacheKey) => {
       notificationInstance[cacheKey].destroy();
       delete notificationInstance[cacheKey];
     });
   },
 };
 
-['success', 'info', 'warning', 'error'].forEach(type => {
-  api[type] = args =>
+['success', 'info', 'warning', 'error'].forEach((type) => {
+  api[type] = (args) =>
     api.open({
       ...args,
       type,
@@ -239,7 +239,7 @@ const api: any = {
 api.warn = api.warning;
 
 /* istanbul ignore next */
-api.install = function(app) {
+api.install = function (app) {
   app.config.globalProperties.$notification = api;
   return app;
 };

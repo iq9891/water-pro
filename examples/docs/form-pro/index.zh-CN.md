@@ -20,12 +20,12 @@
 | showActionButtonGroup | 是否显示操作按钮 | boolean | true |  |
 | showResetButton | 是否显示重置按钮 | boolean | true |  |
 | showSubmitButton | 是否显示确认按钮 | boolean | true |  |
-| autoFocusFirstItem | 是否聚焦第一个输入框，只在第一个表单项为input的时候作用 | boolean | - |  |
+| autoFocusFirstItem | 是否聚焦第一个输入框，只在第一个表单项为 input 的时候作用 | boolean | - |  |
 | showAdvancedButton | 是否显示收起展开按钮 | boolean | - |  |
 | autoAdvancedLine | 超过几行自动折叠 | number | 3 |  |
 | emptySpan | 展开空占位的 span | number \| [ColEx](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/index.ts#L4) | 0 |  |
 | transformDateFunc | 转化时间方法 | Function | `(date: any) => date._isAMomentObject ? date?.format('YYYY-MM-DD HH:mm:ss') : date` |  |
-| hideRequiredMark | 是否显示标签必填的标识( * )， 只能在 form-pro 标签中设置 | boolean | - |  |
+| hideRequiredMark | 是否显示标签必填的标识( \* )， 只能在 form-pro 标签中设置 | boolean | - |  |
 | colon | 是否显示标签文字的冒号 | boolean | true |  |
 | compact | 是否紧凑模式 | boolean | - |  |
 | resetClearValidate | 点击重置按钮是否清除验证提示 | boolean | true |  |
@@ -46,17 +46,17 @@
 
 ### FormPro 事件
 
-| 事件名称 | 说明                   | 回调参数          | 版本 |
-| -------- | ---------------------- | ----------------- | --- |
+| 事件名称 | 说明 | 回调参数 | 版本 |
+| --- | --- | --- | --- |
 | register | 使用 useForm 的回调 | Function([formActionType](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L29)) |  |
-| advanced-change   | 折叠的回调 | - |  |
+| advanced-change | 折叠的回调 | - |  |
 | reset | 重置回调 | function(formModel(表单数据对象)) |  |
 | submit | 验证成功的确定回调 | function(formModel(表单数据对象)) |  |
 
 ### useForm 事件
 
-| 事件名称 | 说明                   | 回调参数          | 版本 |
-| -------- | ---------------------- | ----------------- | --- |
+| 事件名称 | 说明 | 回调参数 | 版本 |
+| --- | --- | --- | --- |
 | scrollToField | 滚动到验证失败 | [NamePath](https://github.com/fe6/water-pro/blob/next/components/form/interface.ts#L4), ScrollOptions) \| options |  |
 | setProps | 设置属性 | - |  |
 | resetAllModel | 重置所有数据 | - |  |
@@ -67,7 +67,7 @@
 | getFieldsValue | 获取所有字段的值，传 true 过滤不显示的字段 | filterHidden |  |
 | getChildrenFieldsValue | 获取所有字段的值，符合 schema 结构，传 true 过滤不显示的字段 | filterHidden | 3.19.0 |
 | setFieldsValue | 设置所有字段的值 | 设置的值 (object) |  |
-| appendSchemaByField | 添加新字段 | schema(规则， [FormSchema](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L126))，参照的字段，是否在前面添加  |  |
+| appendSchemaByField | 添加新字段 | schema(规则， [FormSchema](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L126))，参照的字段，是否在前面添加 |  |
 | submit | 提交方法 | - |  |
 | validate | 验证表单某些字段 | 字段的名字([NamePath](https://github.com/fe6/water-pro/blob/next/components/form/interface.ts#L4)) |  |
 | validateFields | 真正所有表单字段 | 字段的名字([NamePath](https://github.com/fe6/water-pro/blob/next/components/form/interface.ts#L4)) |  |

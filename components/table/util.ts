@@ -1,7 +1,7 @@
 export function flatArray(data = [], childrenName = 'children') {
   const result = [];
-  const loop = array => {
-    array.forEach(item => {
+  const loop = (array) => {
+    array.forEach((item) => {
       if (item[childrenName]) {
         const newItem = { ...item };
         delete newItem[childrenName];

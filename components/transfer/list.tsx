@@ -119,7 +119,7 @@ export default defineComponent({
       if (checkedKeys.length === 0) {
         return 'none';
       }
-      if (filteredItems.every(item => checkedKeys.indexOf(item.key) >= 0 || !!item.disabled)) {
+      if (filteredItems.every((item) => checkedKeys.indexOf(item.key) >= 0 || !!item.disabled)) {
         return 'all';
       }
       return 'part';
@@ -129,7 +129,7 @@ export default defineComponent({
       const filteredItems = [];
       const filteredRenderItems = [];
 
-      dataSource.forEach(item => {
+      dataSource.forEach((item) => {
         const renderedItem = this.renderItemHtml(item);
         const { renderedText } = renderedItem;
 
@@ -220,7 +220,7 @@ export default defineComponent({
             // Only select enabled items
             this.$emit(
               'itemSelectAll',
-              filteredItems.filter(item => !item.disabled).map(({ key }) => key),
+              filteredItems.filter((item) => !item.disabled).map(({ key }) => key),
               !checkedAll,
             );
           }}
@@ -232,7 +232,7 @@ export default defineComponent({
 
     _handleSelect(selectedItem: DataSourceItem) {
       const { checkedKeys } = this.$props;
-      const result = checkedKeys.some(key => key === selectedItem.key);
+      const result = checkedKeys.some((key) => key === selectedItem.key);
       this.handleSelect(selectedItem, !result);
     },
     _handleFilter(e: RadioChangeEvent) {
@@ -278,7 +278,7 @@ export default defineComponent({
       };
     },
     filterNull(arr: unknown[]) {
-      return arr.filter(item => {
+      return arr.filter((item) => {
         return item !== null;
       });
     },

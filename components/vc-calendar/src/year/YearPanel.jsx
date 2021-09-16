@@ -74,7 +74,7 @@ export default {
     const prefixCls = `${this.rootPrefixCls}-year-panel`;
 
     const yeasEls = years.map((row, index) => {
-      const tds = row.map(yearData => {
+      const tds = row.map((yearData) => {
         const classNameMap = {
           [`${prefixCls}-cell`]: 1,
           [`${prefixCls}-selected-cell`]: yearData.year === currentYear,

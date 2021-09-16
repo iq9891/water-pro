@@ -77,7 +77,7 @@ export default defineComponent({
     };
 
     // Remove falsy items
-    const truthyItems = timeLineItems.filter(item => !!item);
+    const truthyItems = timeLineItems.filter((item) => !!item);
     const itemsCount = truthyItems.length;
     const lastCls = `${prefixCls}-item-last`;
     const items = truthyItems.map((ele, idx) => {

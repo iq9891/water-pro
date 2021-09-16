@@ -7,4 +7,3 @@
 #### Countdown
 Countdown component.
 </us>
-

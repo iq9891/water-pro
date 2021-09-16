@@ -1,5 +1,5 @@
 <template>
-<div>
+  <div>
     <!-- <a-date-picker v-model:value="value1" mode="year" />
     <a-range-picker v-model:value="value33" />
     <a-week-picker v-model:value="value43" /> -->
@@ -10,35 +10,35 @@
     <br />
     <ARangePicker v-model:value="value323" show-time valueFormat="YYYY-MM-DD HH:mm" @change="change" />
     <br/> -->
-  <a-classify
-    v-model:value="value3"
-    style="width: 200px"
-    placeholder="请选择房价分类"
-    allowClear
-    :api="getSelectForOptions"
-    :createFormConfig="createFormConfig"
-    :createApi="postCreateApi"
-    :editApi="postEditApi"
-    :removeApi="postRemoveApi"
-    removeTip="确定要删除吗"
-    :drawerTableApi="tableApi"
-    :drawerTableColumns="columns"
-    showSearch
-    drawerTableDraggable
-    :drawerTableDragApi="dragApi"
-    subLabelKey="subLabel"
-  />
-  <a-classify
-    v-model:value="value4"
-    style="width: 300px"
-    mode="multiple"
-    :maxTagCount="2"
-    :api="getSelect1ForOptions"
-  />
-  {{value3}}
+    <a-classify
+      v-model:value="value3"
+      style="width: 200px"
+      placeholder="请选择房价分类"
+      allowClear
+      :api="getSelectForOptions"
+      :createFormConfig="createFormConfig"
+      :createApi="postCreateApi"
+      :editApi="postEditApi"
+      :removeApi="postRemoveApi"
+      removeTip="确定要删除吗"
+      :drawerTableApi="tableApi"
+      :drawerTableColumns="columns"
+      showSearch
+      drawerTableDraggable
+      :drawerTableDragApi="dragApi"
+      subLabelKey="subLabel"
+    />
+    <a-classify
+      v-model:value="value4"
+      style="width: 300px"
+      mode="multiple"
+      :maxTagCount="2"
+      :api="getSelect1ForOptions"
+    />
+    {{ value3 }}
   </div>
-    <!-- 滚动的时候颜色选择器有问题 -->
-    <!-- <AColorPicker
+  <!-- 滚动的时候颜色选择器有问题 -->
+  <!-- <AColorPicker
     ></AColorPicker> -->
 </template>
 <script lang="tsx">
@@ -56,25 +56,25 @@ import '@fe6/water-pro/es/date-picker/style';
 // import ColorPicker from '@fe6/water-pro/es/color-picker/index';
 // import '@fe6/water-pro/es/color-picker/style';
 
-const getSelectForOptions = ({params, success}) => {
+const getSelectForOptions = ({ params, success }) => {
   console.log('下拉配置初始化');
   setTimeout(() => {
     success([
       {
         label: '水滴',
         value: 90,
-        subLabel: 'Water is 最棒'
+        subLabel: 'Water is 最棒',
       },
       {
         label: '阿里',
         value: 80,
-        subLabel: 'Antd is 最棒'
-      }
+        subLabel: 'Antd is 最棒',
+      },
     ]);
   }, 1000);
 };
 
-const getSelect1ForOptions = ({params, success}) => {
+const getSelect1ForOptions = ({ params, success }) => {
   console.log('111下拉配置初始化');
   setTimeout(() => {
     success([
@@ -84,12 +84,12 @@ const getSelect1ForOptions = ({params, success}) => {
         children: [
           {
             label: 'antd1',
-            value: 180
+            value: 180,
           },
           {
             label: '2antd',
-            value: 280
-          }
+            value: 280,
+          },
         ],
       },
       {
@@ -98,33 +98,33 @@ const getSelect1ForOptions = ({params, success}) => {
         children: [
           {
             label: '23antd1',
-            value: 380
+            value: 380,
           },
           {
             label: '442antd',
-            value: 480
-          }
+            value: 480,
+          },
         ],
-      }
+      },
     ]);
   }, 1000);
 };
 
-const postCreateApi = ({params, success}) => {
+const postCreateApi = ({ params, success }) => {
   console.log('create');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postEditApi = ({params, success}) => {
+const postEditApi = ({ params, success }) => {
   console.log('edit');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
-const postRemoveApi = ({params, success}) => {
+const postRemoveApi = ({ params, success }) => {
   console.log('remote');
   setTimeout(() => {
     success([]);
@@ -144,7 +144,7 @@ const columns = [
   },
 ];
 
-const tableApi = ({params, success}) => {
+const tableApi = ({ params, success }) => {
   const arr: any = [];
   for (let index = 0; index < 100; index++) {
     arr.push({
@@ -156,15 +156,14 @@ const tableApi = ({params, success}) => {
   setTimeout(() => {
     success(arr);
   }, 1000);
-}
+};
 
-const dragApi = ({params, success}) => {
+const dragApi = ({ params, success }) => {
   console.log('drag');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
-
 
 export default defineComponent({
   components: {
@@ -194,13 +193,15 @@ export default defineComponent({
               maxlength: 200,
             },
             itemProps: {
-              labelAlign: 'left'
+              labelAlign: 'left',
             },
-            rules: [{
-              required: true,
-              message: '请输入所在楼层',
-              type: 'string',
-            }]
+            rules: [
+              {
+                required: true,
+                message: '请输入所在楼层',
+                type: 'string',
+              },
+            ],
           },
         ],
       },
@@ -216,7 +217,7 @@ export default defineComponent({
       change(sss) {
         console.log(sss, 'sss');
       },
-    }
-  }
+    };
+  },
 });
 </script>

@@ -6,7 +6,9 @@
       <a-radio-button value="large">Large</a-radio-button>
     </a-radio-group>
     <a-typography-text :size="size">Ant Design Vue (default)</a-typography-text>
-    <a-typography-text styleReset :size="size" type="secondary">Ant Design Vue (secondary)</a-typography-text>
+    <a-typography-text styleReset :size="size" type="secondary"
+      >Ant Design Vue (secondary)</a-typography-text
+    >
     <a-typography-text :size="size" type="success">Ant Design Vue (success)</a-typography-text>
     <a-typography-text :size="size" type="warning">Ant Design Vue (warning)</a-typography-text>
     <a-typography-text :size="size" type="danger">Ant Design Vue (danger)</a-typography-text>

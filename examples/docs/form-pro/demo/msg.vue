@@ -17,9 +17,7 @@ const schemas: FormSchema[] = [
 
 export default defineComponent({
   setup() {
-    const [
-      msgFormPro,
-    ] = useForm({
+    const [msgFormPro] = useForm({
       schemas,
     });
     return {

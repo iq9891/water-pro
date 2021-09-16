@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a-space style="flex-wrap: wrap;">
+    <a-space style="flex-wrap: wrap">
       <a-button @click="reloadTable"> 还原 </a-button>
       <a-button @click="changeLoading"> 开启loading </a-button>
       <a-button @click="changeColumns"> 更改Columns </a-button>
@@ -19,12 +19,8 @@
       <a-button @click="toGetForm"> 获取表格 </a-button>
       <a-button @click="setShowMoreHandler">showMoreHandler 显示批量操作 </a-button>
     </a-space>
-    <a-table-pro
-      @register="useMethodsRegister"
-    >
-      <template #action="{ record }">
-        123
-      </template>
+    <a-table-pro @register="useMethodsRegister">
+      <template #action="{ record }"> 123 </template>
       <template #moreHandler>
         <a-button>批量删除</a-button>
       </template>
@@ -42,8 +38,7 @@ import '@fe6/water-pro/es/button/style';
 import Space from '@fe6/water-pro/es/space/index';
 import '@fe6/water-pro/es/space/style';
 
-
-export function demoListApi({params, success}) {
+export function demoListApi({ params, success }) {
   const arr: any = [];
   for (let index = 0; index < 40; index++) {
     arr.push({
@@ -169,148 +164,148 @@ export default defineComponent({
     [TableAction.name]: TableAction,
   },
   setup() {
-      const [
-        useMethodsRegister,
-        {
-          setLoading,
-          setColumns,
-          getColumns,
-          getDataSource,
-          reload,
-          getPaginationRef,
-          setPagination,
-          getSelectRows,
-          getSelectRowKeys,
-          setSelectedRowKeys,
-          clearSelectedRowKeys,
-          deleteSelectRowByKey,
-          setTableData,
-          setProps,
-          getSize,
-          getForm,
+    const [
+      useMethodsRegister,
+      {
+        setLoading,
+        setColumns,
+        getColumns,
+        getDataSource,
+        reload,
+        getPaginationRef,
+        setPagination,
+        getSelectRows,
+        getSelectRowKeys,
+        setSelectedRowKeys,
+        clearSelectedRowKeys,
+        deleteSelectRowByKey,
+        setTableData,
+        setProps,
+        getSize,
+        getForm,
+      },
+    ] = useTable();
+
+    const getConfig = async () => {
+      await demoListApi({ params: {}, success: () => {} });
+    };
+
+    onMounted(async () => {
+      await getConfig();
+      setProps({
+        // title: 'useTable示例',
+        // titleHelpMessage: '使用useTable调用表格内方法',
+        api: demoListApi,
+        columns: getBasicColumns(),
+        rowKey: 'id',
+        rowSelection: {
+          type: 'checkbox', // radio or checkbox
         },
-      ] = useTable();
-
-      const getConfig = async () => {
-        await demoListApi({params: {}, success: () => {}});
-      }
-
-      onMounted(async () => {
-        await getConfig();
-        setProps({
-          // title: 'useTable示例',
-          // titleHelpMessage: '使用useTable调用表格内方法',
-          api: demoListApi,
-          columns: getBasicColumns(),
-          rowKey: 'id',
-          rowSelection: {
-            type: 'checkbox', // radio or checkbox
-          },
-          useSearchForm: true,
-          formConfig: getFormConfig(),
-          actionColumn: {
-            width: 80,
-            title: 'Action',
-            dataIndex: 'action',
-            slots: { customRender: 'action' },
-          },
-        });
+        useSearchForm: true,
+        formConfig: getFormConfig(),
+        actionColumn: {
+          width: 80,
+          title: 'Action',
+          dataIndex: 'action',
+          slots: { customRender: 'action' },
+        },
       });
+    });
 
-      function changeLoading() {
-        setLoading(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
-      }
-      function changeColumns() {
-        setColumns(getBasicShortColumns());
-      }
-      function reloadTable() {
-        setColumns(getBasicColumns());
+    function changeLoading() {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+    function changeColumns() {
+      setColumns(getBasicShortColumns());
+    }
+    function reloadTable() {
+      setColumns(getBasicColumns());
 
-        reload({
-          page: 1,
-        });
-      }
-      function getColumn() {
-        console.log(getColumns());
-      }
+      reload({
+        page: 1,
+      });
+    }
+    function getColumn() {
+      console.log(getColumns());
+    }
 
-      function getTableData() {
-        console.log(getDataSource());
-      }
+    function getTableData() {
+      console.log(getDataSource());
+    }
 
-      function getPagination() {
-        console.log(getPaginationRef());
-      }
+    function getPagination() {
+      console.log(getPaginationRef());
+    }
 
-      function toDeleteSelectRowByKey() {
-        deleteSelectRowByKey('1');
-      }
+    function toDeleteSelectRowByKey() {
+      deleteSelectRowByKey('1');
+    }
 
-      function setPaginationInfo() {
-        setPagination({
-          current: 2,
-        });
-        reload();
-      }
-      function getSelectRowList() {
-        console.log(getSelectRows());
-      }
-      function getSelectRowKeyList() {
-        console.log(getSelectRowKeys());
-      }
-      function setSelectedRowKeyList() {
-        setSelectedRowKeys(['0', '1', '2']);
-      }
-      function toSetTableData() {
-        setTableData(getNewData);
-      }
-      function toSetProps() {
-        setProps({
-          ellipsis: false,
-        });
-      }
+    function setPaginationInfo() {
+      setPagination({
+        current: 2,
+      });
+      reload();
+    }
+    function getSelectRowList() {
+      console.log(getSelectRows());
+    }
+    function getSelectRowKeyList() {
+      console.log(getSelectRowKeys());
+    }
+    function setSelectedRowKeyList() {
+      setSelectedRowKeys(['0', '1', '2']);
+    }
+    function toSetTableData() {
+      setTableData(getNewData);
+    }
+    function toSetProps() {
+      setProps({
+        ellipsis: false,
+      });
+    }
 
-      const moreHandlerStatus = ref(false);
-      function setShowMoreHandler() {
-        moreHandlerStatus.value = !moreHandlerStatus.value;
-        setProps({
-          showMoreHandler: moreHandlerStatus.value,
-        });
-      }
-      
-      function toGetSize() {
-        console.log(getSize());
-      }
-      function toGetForm() {
-        console.log(getForm());
-      }
-      function clearSelect() {
-        clearSelectedRowKeys();
-      }
+    const moreHandlerStatus = ref(false);
+    function setShowMoreHandler() {
+      moreHandlerStatus.value = !moreHandlerStatus.value;
+      setProps({
+        showMoreHandler: moreHandlerStatus.value,
+      });
+    }
 
-      return {
-        useMethodsRegister,
-        changeLoading,
-        changeColumns,
-        reloadTable,
-        getColumn,
-        getTableData,
-        getPagination,
-        setPaginationInfo,
-        getSelectRowList,
-        getSelectRowKeyList,
-        setSelectedRowKeyList,
-        clearSelect,
-        toDeleteSelectRowByKey,
-        toSetTableData,
-        toSetProps,
-        toGetSize,
-        toGetForm,
-        setShowMoreHandler,
-      };
+    function toGetSize() {
+      console.log(getSize());
+    }
+    function toGetForm() {
+      console.log(getForm());
+    }
+    function clearSelect() {
+      clearSelectedRowKeys();
+    }
+
+    return {
+      useMethodsRegister,
+      changeLoading,
+      changeColumns,
+      reloadTable,
+      getColumn,
+      getTableData,
+      getPagination,
+      setPaginationInfo,
+      getSelectRowList,
+      getSelectRowKeyList,
+      setSelectedRowKeyList,
+      clearSelect,
+      toDeleteSelectRowByKey,
+      toSetTableData,
+      toSetProps,
+      toGetSize,
+      toGetForm,
+      setShowMoreHandler,
+    };
   },
 });
 </script>

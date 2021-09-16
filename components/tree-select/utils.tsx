@@ -2,7 +2,7 @@ import { flattenChildren, isValidElement } from '../_util/props-util';
 
 export function convertChildrenToData(nodes: any[]): any[] {
   return flattenChildren(nodes)
-    .map(node => {
+    .map((node) => {
       if (!isValidElement(node) || !node.type) {
         return null;
       }
@@ -18,7 +18,7 @@ export function convertChildrenToData(nodes: any[]): any[] {
         value,
         ...restProps,
       };
-      Object.keys(restSlot).forEach(p => {
+      Object.keys(restSlot).forEach((p) => {
         if (typeof restSlot[p] === 'function') {
           data[p] = <>{restSlot[p]()}</>;
         }
@@ -30,5 +30,5 @@ export function convertChildrenToData(nodes: any[]): any[] {
 
       return data;
     })
-    .filter(data => data);
+    .filter((data) => data);
 }

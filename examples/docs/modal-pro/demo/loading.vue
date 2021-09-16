@@ -37,7 +37,7 @@ export default defineComponent({
         }, 1500);
       },
       modalLoading,
-    }
-  }
+    };
+  },
 });
 </script>

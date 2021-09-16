@@ -125,7 +125,7 @@ export default defineComponent({
         const closeIcon = closable ? (
           <CloseOutlined
             class={`${prefixCls}-close-x`}
-            onClick={e => this.removeTab(child.key, e)}
+            onClick={(e) => this.removeTab(child.key, e)}
           />
         ) : null;
         childrenWithClose.push(

@@ -8,7 +8,7 @@ export type { TimeLineItemProps } from './TimelineItem';
 Timeline.Item = TimelineItem;
 
 /* istanbul ignore next */
-Timeline.install = function(app: App) {
+Timeline.install = function (app: App) {
   app.component(Timeline.name, Timeline);
   app.component(TimelineItem.name, TimelineItem);
   return app;

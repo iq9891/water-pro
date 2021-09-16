@@ -135,7 +135,7 @@ export default defineComponent({
       const { remove: onRemove } = this;
       const { sFileList: fileList } = this.$data;
 
-      Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove).then(ret => {
+      Promise.resolve(typeof onRemove === 'function' ? onRemove(file) : onRemove).then((ret) => {
         // Prevent removing file
         if (ret === false) {
           return;
@@ -185,7 +185,7 @@ export default defineComponent({
       if (result === false) {
         this.handleChange({
           file,
-          fileList: uniqBy(stateFileList.concat(fileList.map(fileToObject)), item => item.uid),
+          fileList: uniqBy(stateFileList.concat(fileList.map(fileToObject)), (item) => item.uid),
         });
         return false;
       }

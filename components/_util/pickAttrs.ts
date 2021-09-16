@@ -59,7 +59,7 @@ export default function pickAttrs(props: object, ariaOnly: boolean | PickConfig 
   }
 
   const attrs = {};
-  Object.keys(props).forEach(key => {
+  Object.keys(props).forEach((key) => {
     if (
       // Aria
       (mergedConfig.aria && (key === 'role' || match(key, ariaPrefix))) ||
