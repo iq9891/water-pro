@@ -350,7 +350,7 @@ const OptionList = defineComponent<OptionListProps, { state?: any }>({
                 aria-selected={selected}
                 class={optionClassName}
                 title={optionTitle}
-                onMousemove={(e) => {
+                onMouseenter={(e) => {
                   if (otherProps.onMousemove) {
                     otherProps.onMousemove(e);
                   }

@@ -8,11 +8,13 @@ import {
   watchEffect,
   nextTick,
 } from 'vue';
+import Omit from 'omit.js';
 import { hasOwn, isUndefined } from '@fe6/shared';
 import { LoadingOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons-vue';
 import { isEmpty, merge } from 'lodash';
 
 import ASelect from '../../select';
+import { Option as SelectOption } from '../../vc-select';
 import ADivider from '../../divider';
 import AModal from '../../modal';
 import AButton from '../../button';
@@ -26,7 +28,7 @@ import PRESENTED_IMAGE_SIMPLE from '../../empty/simple';
 import useConfigInject from '../../_util/hooks/useConfigInject';
 import useFetch from '../../_util/hooks/use-fetch';
 import PropTypes from '../../_util/vue-types';
-import { useRuleFormItem } from '../../_util/hooks/use-form-item';
+// import { useRuleFormItem } from '../../_util/hooks/use-form-item';
 
 const VNodes = (_, { attrs }) => attrs.vnodes;
 
@@ -106,7 +108,7 @@ export default defineComponent({
   setup(props) {
     const { prefixCls: prefixClsNew } = useConfigInject('classify', props);
 
-    const [state] = useRuleFormItem(props);
+    // const [state] = useRuleFormItem(props);
     const { fetch } = useFetch(props.api);
 
     const [formRegister, formMethods] = useForm();
@@ -227,7 +229,8 @@ export default defineComponent({
 
     const apiValue = ref('');
     watchEffect(() => {
-      apiValue.value = (state as any).value || props.value;
+      apiValue.value = props.value;
+      // apiValue.value = (state as any).value || props.value;
       if (props.selectOptions) {
         options.value = props.selectOptions;
       }
@@ -434,43 +437,52 @@ export default defineComponent({
     );
 
     if (optChilds.length) {
-      optChilds.forEach((oItem: any) => {
+      optChilds.forEach((oItem: any, oIdx: number) => {
         const ocNode = [];
-        oItem.children.forEach((ocItem: any) => {
-          let childInner = ocItem[this.labelKey];
+        oItem.children.forEach((ocItem: any, ocIdx: number) => {
+          let childInner = <div key={`${oIdx}-${ocIdx}-box`}>{ocItem[this.labelKey]}</div>;
           if (this.subLabelKey) {
             childInner = (
-              <>
-                <div>{ocItem[this.labelKey]}</div>
-                <APypography.Text type="secondary" size="small">
+              <div key={`${oIdx}-${ocIdx}-box`}>
+                <div key={`${oIdx}-${ocIdx}-label`}>{ocItem[this.labelKey]}</div>
+                <APypography.Text key={`${oIdx}-${ocIdx}-text`} type="secondary" size="small">
                   {ocItem[this.subLabelKey]}
                 </APypography.Text>
-              </>
+              </div>
             );
           }
-          ocNode.push(<ASelect.Option value={ocItem[this.valueKey]}>{childInner}</ASelect.Option>);
+          ocNode.push(
+            <ASelect.Option key={`${oIdx}-${ocIdx}-opts`} value={ocItem[this.valueKey]}>
+              {childInner}
+            </ASelect.Option>,
+          );
         });
         optNodes.push(
           <ASelect.OptGroup
             label={oItem[this.labelKey]}
+            key={oIdx}
             v-slots={{ default: () => ocNode }}
           ></ASelect.OptGroup>,
         );
       });
     } else {
-      this.options.forEach((oItem: any) => {
-        let childInner = oItem[this.labelKey];
+      this.options.forEach((oItem: any, oIdx: number) => {
+        let childInner = <div key={`${oIdx}-box`}>{oItem[this.labelKey]}</div>;
         if (this.subLabelKey) {
           childInner = (
-            <>
-              <div>{oItem[this.labelKey]}</div>
-              <APypography.Text type="secondary" size="small">
+            <div key={`${oIdx}-box`}>
+              <div key={`${oIdx}-inner`}>{oItem[this.labelKey]}</div>
+              <APypography.Text key={`${oIdx}-text`} type="secondary" size="small">
                 {oItem[this.subLabelKey]}
               </APypography.Text>
-            </>
+            </div>
           );
         }
-        optNodes.push(<ASelect.Option value={oItem[this.valueKey]}>{childInner}</ASelect.Option>);
+        optNodes.push(
+          <SelectOption key={oIdx} value={oItem[this.valueKey]}>
+            {childInner}
+          </SelectOption>,
+        );
       });
     }
 
@@ -496,11 +508,11 @@ export default defineComponent({
     return (
       <>
         <ASelect
+          {...Omit(this.$attrs, ['onUpdate:value'])}
           value={this.apiValue}
           loading={this.loading}
           virtual
           class={`${this.prefixClsNew}-select`}
-          {...this.$attrs}
           filter-option={this.filterOption}
           onDropdownVisibleChange={this.dropdownVisibleChange}
           v-slots={selectSlot}
