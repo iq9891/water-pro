@@ -380,6 +380,12 @@
     }
 
     &-title {
+      // Fix 打包生产环境的时候省略号不起作用
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-all;
+
       & .ant-tag {
         margin-left: 4px !important;
       }
