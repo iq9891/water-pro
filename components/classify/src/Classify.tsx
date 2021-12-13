@@ -396,7 +396,7 @@ export default defineComponent({
       };
       notFoundNode = (
         <div>
-          <AEmpty description={this.classifyLang.loading} v-slots={emptySlots} />
+          <AEmpty description={this.classifyLang?.loading||'正在加载'} v-slots={emptySlots} />
         </div>
       );
     } else {
@@ -420,10 +420,10 @@ export default defineComponent({
           <ADivider style={{ margin: '4px 0' }} />
           <div style="text-align: right;">
             <AButton size="small" type="link" onClick={this.handleCreateModalStatus}>
-              {createIconNode} {this.classifyLang.dropdownAdd}
+              {createIconNode} {this.classifyLang?.dropdownAdd||'添加'}
             </AButton>
             <AButton size="small" type="link" onClick={this.handleDrawerStatus}>
-              {drawerIconNode} {this.classifyLang.dropdownHandle}
+              {drawerIconNode} {this.classifyLang?.dropdownHandle||'管理'}
             </AButton>
           </div>
         </div>
@@ -496,11 +496,11 @@ export default defineComponent({
         <TableAction
           actions={[
             {
-              label: this.classifyLang.editTitle,
+              label: this.classifyLang?.editTitle||'编辑',
               onClick: () => this.handleEdit(record),
             },
             {
-              label: this.classifyLang.remove,
+              label: this.classifyLang?.remove||'删除',
               color: 'danger',
               loading: this.removeLoadingId === record[this.removeKey],
               onClick: () => this.handleDelete(record),
@@ -511,7 +511,7 @@ export default defineComponent({
     };
 
     const tableTitleActionNode = () => {
-      return this.classifyLang.action;
+      return this.classifyLang?.action||'操作';
     };
 
     return (
@@ -529,11 +529,11 @@ export default defineComponent({
         <AModal
           visible={this.createModalStatus}
           centered
-          cancel-text={this.classifyLang.cancelText}
-          ok-text={this.classifyLang.okText}
+          cancel-text={this.classifyLang?.cancelText||'取消'}
+          ok-text={this.classifyLang?.okText||'确定'}
           mask-closable={false}
           z-index={1002}
-          title={this.isEdit > -1 ? (this.editTitle || this.classifyLang.editTitle) : (this.createTitle || this.classifyLang.createTitle)}
+          title={this.isEdit > -1 ? (this.classifyLang?.editTitle||'编辑') : (this.classifyLang?.createTitle||'添加')}
           okButtonProps={{
             loading: this.createLoading,
           }}
@@ -545,7 +545,7 @@ export default defineComponent({
         <ADrawer
           visible={this.drawerStatus}
           centered
-          title={this.drawerTitle || this.classifyLang.drawerTitle}
+          title={this.classifyLang?.drawerTitle||'管理'}
           width={this.drawerWidth}
           onClose={this.handleDrawerStatus}
           placement="right"
@@ -555,7 +555,7 @@ export default defineComponent({
           }`}
         >
           <AButton block={true} onClick={this.handleCreateModalStatus}>
-            <PlusOutlined /> {this.drawerCreateButtonText || this.classifyLang.drawerCreateButtonText}
+            <PlusOutlined /> {this.classifyLang?.drawerCreateButtonText||'添加'}
           </AButton>
           <Spin spinning={this.drawerLoading}>
             <TablePro

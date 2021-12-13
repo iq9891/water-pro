@@ -105,7 +105,7 @@ export default defineComponent({
 
     let loadingNode = [
       <div v-show={!this.loading}>
-        <p class={`${this.prefixClsNew}-tip`}>{this.configProvider.locale?.UploadImage.placeholder}</p>
+        <p class={`${this.prefixClsNew}-tip`}>{this.configProvider.locale?.UploadImage.placeholder || '上传'}</p>
         {placeholderNode}
       </div>,
     ];

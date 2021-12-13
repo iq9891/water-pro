@@ -436,7 +436,7 @@ export default defineComponent({
       };
       todayBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={todayHandle}>
-          {locale.lang.today}
+          {locale.lang.today || '今日'}
         </AButton>
       );
     }
@@ -448,7 +448,7 @@ export default defineComponent({
       };
       yesterdayBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={yesterdayHandle}>
-          {locale.lang.yesterday}
+          {locale.lang.yesterday || '昨日'}
         </AButton>
       );
     }
@@ -460,7 +460,7 @@ export default defineComponent({
       };
       sevenDaysBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>
-          {locale.lang.nearlySeven}
+          {locale.lang.nearlySeven || '近7日'}
         </AButton>
       );
     }
@@ -472,7 +472,7 @@ export default defineComponent({
       };
       thirtyDaysBtnNode = (
         <AButton class={`${prefixCls}-range-picker-group-btn`} onClick={sevenDaysHandle}>
-          {locale.lang.nearlyThirty}
+          {locale.lang.nearlyThirty || '近30日'}
         </AButton>
       );
     }

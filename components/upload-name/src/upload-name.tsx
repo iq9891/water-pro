@@ -112,7 +112,7 @@ export default defineComponent({
               loading={this.loading}
               style={{ marginLeft: this.loading ? '14px' : 0 }}
             >
-              {this.placeholder || this.configProvider.locale?.UploadName.placeholder}
+              {this.configProvider.locale?.UploadName.placeholder || '添加图片'}
             </AButton>
           </Upload>
           <div
