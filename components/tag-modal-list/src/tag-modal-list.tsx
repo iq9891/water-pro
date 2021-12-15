@@ -101,8 +101,6 @@ export default defineComponent({
     const tagCheckAllList = ref<Recordable[]>([]);
     const tagCheckAllOldList = ref<Recordable[]>([]);
 
-    `${prefixClsNew}-select`;
-
     const copyCheckData = () => {
       tagCheckAllOldList.value = tagCheckAllList.value.slice();
       tagCheckOldList.value = tagCheckList.value.slice();
@@ -263,6 +261,9 @@ export default defineComponent({
       async newValue => {
         if (isUndefined(newValue)) {
           tagCheckList.value = [];
+          tagCheckAllOldList.value = [];
+          tagCheckOldList.value = [];
+          tagCheckAllList.value = [];
           await checkValue();
         }
       },

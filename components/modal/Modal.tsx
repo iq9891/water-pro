@@ -197,9 +197,9 @@ export default defineComponent({
       return (
         <div>
           <Button {...cancelBtnProps}>
-            {getComponent(this, 'cancelText') || locale.cancelText}
+            {getComponent(this, 'cancelText') || locale.cancelText || '取消'}
           </Button>
-          <Button {...okBtnProps}>{getComponent(this, 'okText') || locale.okText}</Button>
+          <Button {...okBtnProps}>{getComponent(this, 'okText') || locale.okText || '确定'}</Button>
         </div>
       );
     },
