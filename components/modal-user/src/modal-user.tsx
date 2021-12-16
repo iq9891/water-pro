@@ -30,6 +30,7 @@ import { convertTreeToEntities } from '../../vc-tree/src/util';
 import { getSlot } from '../../_util/tsx';
 
 import { renderTreeNodes, rendetUser, defaultFields } from './utils';
+import zhCn from '../locale/zh_CN';
 
 export default defineComponent({
   name: 'AModalUser',
@@ -338,7 +339,7 @@ export default defineComponent({
   },
   render() {
     let btnNode: any;
-    const theLocal = this.configProvider.locale?.ModalUser;
+    const theLocal = this.configProvider.locale.ModalUser || zhCn;
     let modalTitleNode: any = this.modalTitle || theLocal.select;
     let selectNodes = null;
     let checkedNodes = [];
