@@ -339,7 +339,7 @@ export default defineComponent({
   },
   render() {
     let btnNode: any;
-    const theLocal = this.configProvider.locale.ModalUser || zhCn;
+    const theLocal = this.configProvider && this.configProvider.locale && this.configProvider.locale.ModalUser ? this.configProvider.locale.ModalUser: zhCn;
     let modalTitleNode: any = this.modalTitle || theLocal.select;
     let selectNodes = null;
     let checkedNodes = [];
