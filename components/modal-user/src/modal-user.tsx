@@ -573,7 +573,6 @@ export default defineComponent({
           ok-button-props={{
             loading: this.loading,
           }}
-          local={this.configProvider.locale}
           onCancel={() => this.cancelModal(allKeysEntities)}
           v-slots={{
             header: () => modalTitleNode,

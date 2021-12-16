@@ -186,6 +186,38 @@ const schemas: FormSchema[] = [
     },
   },
   {
+    field: 'spfield3auto',
+    component: 'UploadName',
+    changeEvent: 'changeUpload',
+    label: 'UploadName',
+    dynamicRules: (ruleParams) => {
+      const { values } = ruleParams.value;
+      return [
+        {
+          required: true,
+          trigger: 'blur',
+          validator: () => {
+            const { spfield3 } = values;
+            if (!spfield3) {
+              return Promise.reject(new Error('上传 UploadName'));
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
+    componentProps: () => {
+      return {
+        accept: '*',
+        action: 'https://qiwei-api.dev.mosh.cn/api/v1/upload/file/binary',
+        headers: {
+          Authorization: 'Bearer XLP8KP3RhblzIiunsEMukNOznUYrEubCFUMJ8QqUsm1IxqrpitnV4LjseVtxMw/ai1Y/aEokl/Rd7FT/r9LzPQ==',
+        },
+        placeholder: 'UploadName 自动上传',
+      };
+    },
+  },
+  {
     field: 'spfield3',
     component: 'UploadName',
     changeEvent: 'changeUpload',
