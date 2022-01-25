@@ -15,7 +15,7 @@ import { useTable, FormProps } from '@fe6/water-pro';
 
 const columns = [
   {
-    title: 'name',
+    title: '1name',
     dataIndex: 'name',
     key: 'name',
   },
@@ -115,6 +115,7 @@ export function getFormConfig(): Partial<FormProps> {
         span: 8,
       } as any,
     },
+    submitOnReset: false,
     schemas: [
       {
         field: 'couponName',

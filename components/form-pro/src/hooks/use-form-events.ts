@@ -322,7 +322,7 @@ export function useFormEvents({
    */
   async function handleSubmit(e?: Event): Promise<void> {
     e && e.preventDefault();
-    const { submitFunc } = unref(getProps);
+    const { submitFunc, submitOnReset } = unref(getProps);
     if (submitFunc && isFunction(submitFunc)) {
       await submitFunc();
       return;
@@ -334,6 +334,9 @@ export function useFormEvents({
     try {
       const values = await validate();
       emit('submit', values);
+      if (submitOnReset) {
+        resetFields(false);
+      }
     } catch (error) {}
   }
 
