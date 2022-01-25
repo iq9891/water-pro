@@ -19,14 +19,14 @@ export function useUpload(props: Recordable, params: Recordable, configProvider:
       const isJpgOrPng = accept.includes('*') ? true : accept.includes(String(file.type));
       const uploadLocale = configProvider.locale?.Upload;
       if (!isJpgOrPng) {
-        message.error(uploadLocale.uploadFormatError || '请上传正确格式的文件');
+        message.error(uploadLocale?.uploadFormatError || '请上传正确格式的文件');
         loading.value = false;
         reject(false);
       }
       const uploadLimitSize = props.limitSize || 2;
       const isLt2M = file.size / 1024 / 1024 < uploadLimitSize;
       if (!isLt2M) {
-        message.error(`${uploadLocale.uploadLimitMinError || '图片必须小于'} ${uploadLimitSize}MB!`);
+        message.error(`${uploadLocale?.uploadLimitMinError || '图片必须小于'} ${uploadLimitSize}MB!`);
         loading.value = false;
         reject(false);
       }
