@@ -22,6 +22,7 @@
 | size | 设置按钮大小，可选值为 `small` `large` 或者不设 | string | `default` |  |
 | maxUploadCount | 最多上传多少张 | number | - |  |
 | objectFit | 确定图片如何适应容器框，同原生 [object-fit](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit) | contain \| cover | - |  |
+| multiple | 是否支持多选文件，`ie10+` 支持。开启后按住 ctrl 可选择多个文件。 | boolean | false | 3.47.0 |
  
 ### 事件
 

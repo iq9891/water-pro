@@ -51,6 +51,7 @@ export default defineComponent({
     maxUploadCount: PropTypes.number,
     objectFit: PropTypes.string.def('contain'),
     draggable: PropTypes.looseBool,
+    multiple: PropTypes.looseBool,
   },
   emits: ['changeUpload', 'change'],
   setup(props, params: Recordable) {
@@ -227,6 +228,7 @@ export default defineComponent({
           disabled={this.disabled}
           before-upload={this.beforeUploadFn}
           onChange={this.handleMoreChange}
+          multiple={this.multiple}
         >
           <div v-show={canUpload} class={`${this.prefixClsNew}-btn`}>
             <LoadingOutlined v-show={this.moreLoading} />
