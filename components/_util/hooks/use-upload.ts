@@ -58,10 +58,10 @@ export function useUpload(props: Recordable, params: Recordable, configProvider:
     }
     if (info.file.status === 'done') {
       loading.value = false;
-      const imageData =
+      const imageData = props.handleAfterAjax ? props.handleAfterAjax(info) :(
         props.resultKey && hasOwn(info.file.response, props.resultKey)
           ? info.file.response[props.resultKey]
-          : info.file.response;
+          : info.file.response);
       imageName.value = imageData[props.nameKey];
       imageUrl.value = imageData[props.urlKey];
 

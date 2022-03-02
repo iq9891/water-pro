@@ -28,5 +28,4 @@
 
 | 事件名称 | 说明 | 回调参数 | 版本 |
 | --- | --- | --- | --- |
-| change | 上传文件改变时的状态，详见 [change](#change) | Function | 无 |  |
-| changeUpload | 上传改变，与 change 分隔，用在 form pro 配置中 | Function(file) | 无 |  |
+| changeUpload | 上传改变，用在 form pro 配置中 | Function(file) | 无 |  |

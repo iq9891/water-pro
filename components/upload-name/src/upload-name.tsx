@@ -42,6 +42,7 @@ export default defineComponent({
     urlKey: PropTypes.string.def('url'),
     limitSize: PropTypes.number.def(2),
     disabled: PropTypes.bool,
+    handleAfterAjax: PropTypes.func,
     size: PropTypes.oneOf(ButtonSizes).def('default'),
   },
   emits: ['changeUpload', 'change'],

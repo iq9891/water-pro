@@ -16,6 +16,7 @@
 | limitSize | 图片限制的大小 | number | 2(M) |  |
 | disabled | 禁用 | boolean | - |  |
 | size | 设置按钮大小，可选值为 `small` `large` 或者不设 | string | `default` |  |
+| handleAfterAjax | 上传之后处理数据显示 | function | - | 3.48.0 |
 
 ### 事件
 

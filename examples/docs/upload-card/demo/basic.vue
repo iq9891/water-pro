@@ -6,6 +6,7 @@
     :headers="headers"
     multiple
     accept='image/png,image/jpeg,image/gif'
+    @changeUpload="theChange"
   />
 </template>
 
@@ -15,6 +16,9 @@ import { defineComponent, ref } from 'vue';
 export default defineComponent({
   setup() {
     return {
+      theChange: (a) => {
+        console.log(a, 'change');
+      },
       headers: {
         authorization: 'authorization-text',
       },
