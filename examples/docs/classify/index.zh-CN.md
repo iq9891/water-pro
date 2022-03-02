@@ -32,6 +32,7 @@
 | labelKey | 文字的字段 | string | - | label |
 | valueKey | 值的字段 | string | - | value |
 | selectOptions | selectOptions 数据 | array&lt;{value, label, [subLabel]}> | - |
+| showDropdownAdd | 是否显示下拉中的添加按钮 | boolean | - | true |
 
 ### 事件
 

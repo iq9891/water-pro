@@ -77,6 +77,7 @@ export default defineComponent({
       type: Function as PropType<(arg?: any) => Promise<any[]>>,
       default: null,
     },
+    showDropdownAdd: PropTypes.bool.def(true),
     createApiParams: PropTypes.object.def({}),
     createTitle: PropTypes.string,
     editTitle: PropTypes.string,
@@ -414,14 +415,18 @@ export default defineComponent({
     const drawerIconNode = this.drawerLoading ? <LoadingOutlined /> : <EditOutlined />;
 
     const dropdownRender = ({ menuNode }: any) => {
+      let addNode: any;
+      if (this.showDropdownAdd) {
+        addNode = <AButton size="small" type="link" onClick={this.handleCreateModalStatus}>
+          {createIconNode} {this.classifyLang?.dropdownAdd||'添加'}
+        </AButton>;
+      }
       return (
         <div>
           <VNodes vnodes={menuNode} />
           <ADivider style={{ margin: '4px 0' }} />
           <div style="text-align: right;">
-            <AButton size="small" type="link" onClick={this.handleCreateModalStatus}>
-              {createIconNode} {this.classifyLang?.dropdownAdd||'添加'}
-            </AButton>
+            {addNode}
             <AButton size="small" type="link" onClick={this.handleDrawerStatus}>
               {drawerIconNode} {this.classifyLang?.dropdownHandle||'管理'}
             </AButton>
@@ -555,7 +560,7 @@ export default defineComponent({
           }`}
         >
           <AButton block={true} onClick={this.handleCreateModalStatus}>
-            <PlusOutlined /> {this.classifyLang?.drawerCreateButtonText||'添加'}
+            <PlusOutlined /> {this.drawerCreateButtonText || this.classifyLang?.drawerCreateButtonText||'添加'}
           </AButton>
           <Spin spinning={this.drawerLoading}>
             <TablePro

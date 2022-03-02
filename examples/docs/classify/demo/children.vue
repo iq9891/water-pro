@@ -12,6 +12,8 @@
     removeTip="确定要删除吗"
     :drawerTableApi="tableApi"
     :drawerTableColumns="columns"
+    drawerCreateButtonText="添加一级分类"
+    :showDropdownAdd="false"
     showSearch
     drawerTableDraggable
     :drawerTableDragApi="dragApi"
@@ -96,6 +98,11 @@ const tableApi = ({params, success}) => {
       id: `${index}`,
       name: `${Math.random() + index}-water`,
       age: `1${index}`,
+      children: [{
+      id: `child-${index}`,
+      name: `child-${Math.random() + index}-water`,
+      age: `child-age${index}`,
+    }]
     });
   }
   setTimeout(() => {
