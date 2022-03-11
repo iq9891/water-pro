@@ -337,7 +337,9 @@ export function useFormEvents({
       if (submitOnReset) {
         resetFields(false);
       }
-    } catch (error) {}
+    } catch (error) {
+      emit('submit-error', error);
+    }
   }
 
   return {
