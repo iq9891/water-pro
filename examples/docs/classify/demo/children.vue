@@ -5,11 +5,15 @@
     placeholder="请选择房价分类"
     allowClear
     :api="getSelectForOptions"
-    :createFormConfig="createFormConfig"
+    :createFormConfig="formOneConfig"
     :createApi="postCreateApi"
     :editApi="postEditApi"
     :removeApi="postRemoveApi"
     removeTip="确定要删除吗"
+    :createSubFormConfig="formTwoConfig"
+    :createSubApi="postCreateApi"
+    :editSubApi="postEditApi"
+    :removeSubApi="postRemoveApi"
     :drawerTableApi="tableApi"
     :drawerTableColumns="columns"
     drawerCreateButtonText="添加一级分类"
@@ -17,10 +21,13 @@
     showSearch
     drawerTableDraggable
     :drawerTableDragApi="dragApi"
+    :drawerWidth="700"
+    subClassify
   />
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, h } from 'vue';
+import { Switch } from '@fe6/water-pro';
 
 const getSelectForOptions = ({params, success}) => {
   setTimeout(() => {
@@ -89,20 +96,49 @@ const columns = [
     dataIndex: 'age',
     key: 'age',
   },
+  {
+    title: '显示',
+    dataIndex: 'show',
+    key: 'show',
+    customRender: ({ record }) => {
+      return {
+        children: h(Switch, {
+          checked: record.show,
+          onChange: () => {
+            setTimeout(() => {
+              record.show = !record.show;
+            }, 1000);
+          }
+        }),
+        props: {
+          colSpan: 1,
+        },
+      };
+    },
+  },
 ];
 
 const tableApi = ({params, success}) => {
   const arr: any = [];
+  arr.push({
+    id: -1,
+    name: '全部',
+    age: '-',
+    children: [],
+  });
+
   for (let index = 0; index < 100; index++) {
     arr.push({
       id: `${index}`,
-      name: `${Math.random() + index}-water`,
+      name: `${Math.floor(Math.random() + index)}-water`,
       age: `1${index}`,
+      show: Math.floor(Math.random()* 10)>5,
       children: [{
-      id: `child-${index}`,
-      name: `child-${Math.random() + index}-water`,
-      age: `child-age${index}`,
-    }]
+        id: `child-${index}`,
+        show: Math.floor(Math.random()* 10)>5,
+        name: `child-${Math.random() + index}-water`,
+        age: `child-age${index}`,
+      }]
     });
   }
   setTimeout(() => {
@@ -123,7 +159,7 @@ export default defineComponent({
       postCreateApi,
       postEditApi,
       postRemoveApi,
-      createFormConfig: {
+      formOneConfig: {
         schemas: [
           {
             field: 'name',
@@ -135,6 +171,24 @@ export default defineComponent({
             },
             itemProps: {
               labelAlign: 'left'
+            },
+            rules: [{
+              required: true,
+              message: '请输入所在楼层',
+              type: 'string',
+            }]
+          },
+        ],
+      },
+      formTwoConfig: {
+        schemas: [
+          {
+            field: 'age',
+            component: 'Input',
+            label: '数字',
+            componentProps: {
+              placeholder: '请输入内容',
+              maxlength: 200,
             },
             rules: [{
               required: true,

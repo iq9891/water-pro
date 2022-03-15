@@ -2,11 +2,11 @@
 
 > 扩展于 Select 组件。更多参数参考 [select](./select-cn)
 
-| 参数 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| value(v-model) | 指定当前选中的条目 | string\|string\[]\|number\|number\[] | - |
+| 参数 | 说明 | 类型 | 默认值 | 版本 |
+| --- | --- | --- | --- | --- |
+| value(v-model) | 指定当前选中的条目 | string\|string\[]\|number\|number\[] | - |  |
 | api | 下拉接口请求，不支持 async 和 Promise ，只支持回调 | `(...arg: any) => Promise<any>` | - |  |
-| apiParams | 下拉接口附带的参数 | object | {} |
+| apiParams | 下拉接口附带的参数 | object | {} |  |
 | removeApi | 删除接口请求，不支持 async 和 Promise ，只支持回调 | `(...arg: any) => Promise<any>` | - |  |
 | removeApiParams | 删除接口附带的参数 | object | {} |  |
 | removeTip | 删除接口提示 | string | - |  |
@@ -29,10 +29,12 @@
 | drawerTableDragKey | 会返回所有排好序的 id 值的数组 | string | id |  |
 | drawerTableDragApi | 拖拽排序接口请求，不支持 async 和 Promise ，只支持回调 | `(...arg: any) => Promise<any>` | - |  |
 | subLabelKey | 子选项的描述字段，当设置才会显示 | string | - |  |
-| labelKey | 文字的字段 | string | - | label |
-| valueKey | 值的字段 | string | - | value |
-| selectOptions | selectOptions 数据 | array&lt;{value, label, [subLabel]}> | - |
-| showDropdownAdd | 是否显示下拉中的添加按钮 | boolean | - | true |
+| labelKey | 文字的字段 | string | label |  |
+| valueKey | 值的字段 | string | value |  |
+| selectOptions | selectOptions 数据 | array&lt;{value, label, [subLabel]}> | - |  |
+| showDropdownAdd | 是否显示下拉中的添加按钮 | boolean | true |  |
+| subClassify | 是否存在子分类，操作会有点不一样 | boolean | false | 3.50.0 |
+| isAllClassify | 是否是全部 | Fucntion | (params: any)=>false | 3.50.0 |
 
 ### 事件
 

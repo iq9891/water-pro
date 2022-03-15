@@ -104,6 +104,11 @@ export default defineComponent({
     labelKey: PropTypes.string.def('label'),
     subLabelKey: PropTypes.string.def('subLabel'),
     valueKey: PropTypes.string.def('value'),
+    subClassify: PropTypes.bool.def(false),
+    isAllClassify: {
+      type: Function as PropType<(arg?: any) => Promise<any[]>>,
+      default: ({record}: any) => record.id === -1,
+    },
   },
   emits: ['on-edit', 'on-remove'],
   setup(props) {
@@ -283,11 +288,11 @@ export default defineComponent({
     };
   },
   methods: {
-    async handleCreateModalStatus() {
+    async handleCreateModalStatus(isOneClassify?: boolean) {
       this.createModalStatus = !this.createModalStatus;
       await nextTick();
       if (this.createModalStatus && !isEmpty(this.createFormConfig)) {
-        this.formMethods.setProps(merge(createDefFormConfig, this.createFormConfig));
+        this.formMethods.setProps(merge(createDefFormConfig, isOneClassify?this.createFormConfig: this.createSubFormConfig));
       }
     },
     async createOk() {
@@ -367,11 +372,14 @@ export default defineComponent({
         });
       }
     },
-    async handleEdit(editData: any) {
+    async handleEdit(editData: any, isSub?: boolean) {
       this.isEdit = editData.id;
-      this.handleCreateModalStatus();
+      const isOneEdit = typeof isSub === 'undefined' ? (editData.children && editData.children.length > 0):isSub;
+      this.handleCreateModalStatus(isOneEdit);
       await nextTick();
-      this.formMethods.setFieldsValue(editData);
+      if (typeof isSub === 'undefined' || isOneEdit) {
+        this.formMethods.setFieldsValue(editData);
+      }
     },
     tableDragEnd(oldNum: number, newNum: number) {
       const dragList = this.tableDatas.map((tdItem: any) => tdItem[this.drawerTableDragKey]);
@@ -417,7 +425,7 @@ export default defineComponent({
     const dropdownRender = ({ menuNode }: any) => {
       let addNode: any;
       if (this.showDropdownAdd) {
-        addNode = <AButton size="small" type="link" onClick={this.handleCreateModalStatus}>
+        addNode = <AButton size="small" type="link" onClick={() => this.handleCreateModalStatus(true)}>
           {createIconNode} {this.classifyLang?.dropdownAdd||'添加'}
         </AButton>;
       }
@@ -496,21 +504,47 @@ export default defineComponent({
 
     selectSlot.default = () => optNodes;
 
-    const tableActionNode = ({ record }: any) => {
+    const tableActionNode = (params: any) => {
+      const { record } = params;
+
+      const oneAction = [
+        {
+          label: this.classifyLang?.editTitle||'编辑',
+          onClick: () => this.handleEdit(record),
+        },
+        {
+          label: this.classifyLang?.remove||'删除',
+          color: 'danger' as any,
+          loading: this.removeLoadingId === record[this.removeKey],
+          onClick: () => this.handleDelete(record),
+        },
+      ];
+
+      const twoAction = this.isAllClassify(params) ? [] : [
+        {
+          label: this.classifyLang?.editTitle||'编辑',
+          onClick: () => this.handleEdit(record),
+        },
+        {
+          label: this.classifyLang?.remove||'删除',
+          color: 'danger',
+          loading: this.removeLoadingId === record[this.removeKey],
+          onClick: () => this.handleDelete(record),
+        },
+      ];
+
+      const addSub = {
+        label: this.classifyLang?.editSubTitle||'新增二级',
+        onClick: () => this.handleEdit(record, false),
+      };
+
+      if (!this.isAllClassify(params) && record.children && record.children.length > 0) {
+        twoAction.splice(1, 0, addSub);
+      }
+
       return (
         <TableAction
-          actions={[
-            {
-              label: this.classifyLang?.editTitle||'编辑',
-              onClick: () => this.handleEdit(record),
-            },
-            {
-              label: this.classifyLang?.remove||'删除',
-              color: 'danger',
-              loading: this.removeLoadingId === record[this.removeKey],
-              onClick: () => this.handleDelete(record),
-            },
-          ]}
+          actions={this.subClassify ? twoAction:oneAction}
         />
       );
     };
@@ -559,7 +593,7 @@ export default defineComponent({
             this.drawerTableDraggable ? ` ${this.prefixClsNew}-drawer-drag` : ''
           }`}
         >
-          <AButton block={true} onClick={this.handleCreateModalStatus}>
+          <AButton block={true} onClick={() => this.handleCreateModalStatus(true)}>
             <PlusOutlined /> {this.drawerCreateButtonText || this.classifyLang?.drawerCreateButtonText||'添加'}
           </AButton>
           <Spin spinning={this.drawerLoading}>
