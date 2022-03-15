@@ -109,6 +109,7 @@ export default defineComponent({
       type: Function as PropType<(arg?: any) => Promise<any[]>>,
       default: ({record}: any) => record.id === -1,
     },
+    createSubFormConfig: PropTypes.object.def({}),
   },
   emits: ['on-edit', 'on-remove'],
   setup(props) {
@@ -291,7 +292,7 @@ export default defineComponent({
     async handleCreateModalStatus(isOneClassify?: boolean) {
       this.createModalStatus = !this.createModalStatus;
       await nextTick();
-      if (this.createModalStatus && !isEmpty(this.createFormConfig)) {
+      if (this.createModalStatus && (!isEmpty(this.createFormConfig) || !isEmpty(this.createSubFormConfig))) {
         this.formMethods.setProps(merge(createDefFormConfig, isOneClassify?this.createFormConfig: this.createSubFormConfig));
       }
     },
