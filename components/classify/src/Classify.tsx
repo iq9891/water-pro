@@ -543,7 +543,7 @@ export default defineComponent({
           onClick: () => this.handleDelete(record),
         },
       ];
-
+ 
       const addSub = {
         label: this.classifyLang?.editSubTitle||'新增二级',
         onClick: () => this.handleEdit(record, false, false),
@@ -553,7 +553,7 @@ export default defineComponent({
         oneAction.splice(1, 0, addSub);
       }
 
-      return (
+      return this.isAllClassify(params) ? null : (
         <TableAction
           actions={this.isOneClassify(params) ? oneAction : twoAction}
         />
