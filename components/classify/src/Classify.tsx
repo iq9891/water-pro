@@ -550,12 +550,12 @@ export default defineComponent({
       };
 
       if (!this.isAllClassify(params) && this.isOneClassify(params)) {
-        twoAction.splice(1, 0, addSub);
+        oneAction.splice(1, 0, addSub);
       }
 
       return (
         <TableAction
-          actions={this.subClassify ? twoAction : oneAction}
+          actions={this.isOneClassify(params) ? oneAction : twoAction}
         />
       );
     };
