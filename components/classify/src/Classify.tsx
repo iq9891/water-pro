@@ -384,7 +384,7 @@ export default defineComponent({
       await nextTick();
       if (!isSub && !isEdit) {
         await this.formMethods.setFieldsValue({
-          [this.parentIdLabel]: editData[this.parentIdLabel],
+          [this.parentIdLabel]: editData.id,
         });
       }
       if (isEdit) {
