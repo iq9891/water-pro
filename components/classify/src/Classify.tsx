@@ -110,6 +110,11 @@ export default defineComponent({
       default: ({record}: any) => record.id === -1,
     },
     createSubFormConfig: PropTypes.object.def({}),
+    parentIdLabel: PropTypes.string.def('parentId'),
+    isOneClassify: {
+      type: Function as PropType<(arg?: any) => Promise<any[]>>,
+      default: ({record}: any) =>  record.parentId === 0,
+    },
   },
   emits: ['on-edit', 'on-remove'],
   setup(props) {
@@ -289,17 +294,18 @@ export default defineComponent({
     };
   },
   methods: {
-    async handleCreateModalStatus(isOneClassify?: boolean) {
+    async handleCreateModalStatus(isTheOne?: boolean) {
       this.createModalStatus = !this.createModalStatus;
       await nextTick();
       if (this.createModalStatus && (!isEmpty(this.createFormConfig) || !isEmpty(this.createSubFormConfig))) {
-        this.formMethods.setProps(merge(createDefFormConfig, isOneClassify?this.createFormConfig: this.createSubFormConfig));
+        this.formMethods.setProps(merge(createDefFormConfig, isTheOne?this.createFormConfig: this.createSubFormConfig));
       }
     },
     async createOk() {
       if (!this.createLoading) {
-        const myFormData = await this.formMethods.validateFields();
-        if (myFormData) {
+        const thePass = await this.formMethods.validateFields();
+        if (thePass) {
+          const myFormData = await this.formMethods.getFieldsValue();
           this.createLoading = true;
           const params =
             this.isEdit > -1
@@ -321,7 +327,7 @@ export default defineComponent({
               }
               await this.createCandel();
               this.getOptionDatas();
-              this.$emit('on-edit');
+              this.$emit('on-edit', this.isEdit);
             },
             error: () => {
               this.createLoading = false;
@@ -373,12 +379,16 @@ export default defineComponent({
         });
       }
     },
-    async handleEdit(editData: any, isSub?: boolean) {
-      this.isEdit = editData.id;
-      const isOneEdit = typeof isSub === 'undefined' ? (editData.children && editData.children.length > 0):isSub;
-      this.handleCreateModalStatus(isOneEdit);
+    async handleEdit(editData: any, isSub: boolean, isEdit?: boolean) {
+      this.handleCreateModalStatus(isSub);
       await nextTick();
-      if (typeof isSub === 'undefined' || isOneEdit) {
+      if (!isSub && !isEdit) {
+        await this.formMethods.setFieldsValue({
+          [this.parentIdLabel]: editData[this.parentIdLabel],
+        });
+      }
+      if (isEdit) {
+        this.isEdit = editData.id;
         this.formMethods.setFieldsValue(editData);
       }
     },
@@ -511,7 +521,7 @@ export default defineComponent({
       const oneAction = [
         {
           label: this.classifyLang?.editTitle||'编辑',
-          onClick: () => this.handleEdit(record),
+          onClick: () => this.handleEdit(record, true),
         },
         {
           label: this.classifyLang?.remove||'删除',
@@ -524,7 +534,7 @@ export default defineComponent({
       const twoAction = this.isAllClassify(params) ? [] : [
         {
           label: this.classifyLang?.editTitle||'编辑',
-          onClick: () => this.handleEdit(record),
+          onClick: () => this.handleEdit(record, false, true),
         },
         {
           label: this.classifyLang?.remove||'删除',
@@ -536,16 +546,16 @@ export default defineComponent({
 
       const addSub = {
         label: this.classifyLang?.editSubTitle||'新增二级',
-        onClick: () => this.handleEdit(record, false),
+        onClick: () => this.handleEdit(record, false, false),
       };
 
-      if (!this.isAllClassify(params) && record.children && record.children.length > 0) {
+      if (!this.isAllClassify(params) && this.isOneClassify(params)) {
         twoAction.splice(1, 0, addSub);
       }
 
       return (
         <TableAction
-          actions={this.subClassify ? twoAction:oneAction}
+          actions={this.subClassify ? twoAction : oneAction}
         />
       );
     };

@@ -34,7 +34,8 @@
 | selectOptions | selectOptions 数据 | array&lt;{value, label, [subLabel]}> | - |  |
 | showDropdownAdd | 是否显示下拉中的添加按钮 | boolean | true |  |
 | subClassify | 是否存在子分类，操作会有点不一样 | boolean | false | 3.50.0 |
-| isAllClassify | 是否是全部 | Fucntion | (params: any)=>false | 3.50.0 |
+| isAllClassify | 是否是全部分类 | Fucntion | (params: any)=>false | 3.50.0 |
+| isOneClassify | 是否一级分类 | Fucntion | (params: any)=>params.parentId === 0 | 3.50.0 |
 
 ### 事件
 

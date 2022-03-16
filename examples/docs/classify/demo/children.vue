@@ -11,9 +11,6 @@
     :removeApi="postRemoveApi"
     removeTip="确定要删除吗"
     :createSubFormConfig="formTwoConfig"
-    :createSubApi="postCreateApi"
-    :editSubApi="postEditApi"
-    :removeSubApi="postRemoveApi"
     :drawerTableApi="tableApi"
     :drawerTableColumns="columns"
     drawerCreateButtonText="添加一级分类"
@@ -65,14 +62,14 @@ const getSelectForOptions = ({params, success}) => {
 };
 
 const postCreateApi = ({params, success}) => {
-  console.log('create');
+  console.log(params, 'create');
   setTimeout(() => {
     success([]);
   }, 1000);
 };
 
 const postEditApi = ({params, success}) => {
-  console.log('edit');
+  console.log(params, 'edit');
   setTimeout(() => {
     success([]);
   }, 1000);
@@ -133,7 +130,9 @@ const tableApi = ({params, success}) => {
       name: `${Math.floor(Math.random() + index)}-water`,
       age: `1${index}`,
       show: Math.floor(Math.random()* 10)>5,
+      parentId: 0,
       children: [{
+        parentId: `pid-${index}`,
         id: `child-${index}`,
         show: Math.floor(Math.random()* 10)>5,
         name: `child-${Math.random() + index}-water`,
@@ -196,6 +195,12 @@ export default defineComponent({
               type: 'string',
             }]
           },
+          {
+            field: 'parentId',
+            label: '',
+            component: 'Input',
+            ifShow: () => false,
+          }
         ],
       },
       columns,
