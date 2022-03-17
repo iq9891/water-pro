@@ -47,6 +47,7 @@
 | rowClassName | row 的 class 名字 | `(record: TableCustomRecord<T>) => string` | - |  |
 | rowSelection | row 的 selection 配置 | [TableRowSelection](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#21) | - |  |
 | emptyPlaceholderClassName | 空数据的时候定制展示的 class 名 | () => string | () => '' | 3.39.0 |
+| dragOtions | 拖拽的[配置](https://github.com/SortableJS/Sortable#options) | object | | 3.51.0 |
 
 > 更多参数参考 [TableProProps](https://github.com/fe6/water-pro/blob/next/components/table-pro/src/types/table.ts#414)
 
