@@ -297,7 +297,7 @@ export interface TableProProps<T = any> {
    * Row's className
    * @type Function
    */
-  rowClassName?: (record: TableCustomRecord<T>, index: number) => string;
+  rowClassName?: (record: TableCustomRecord<T>, index?: number) => string;
 
   /**
    * Row selection config
