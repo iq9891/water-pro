@@ -198,8 +198,9 @@ export default defineComponent({
           // Sort column
           const oldIndexNumber = oldIndex as number;
           const newIndexNumber = newIndex as number;
-          emit('drag-end', oldIndexNumber, newIndexNumber);
+          emit('drag-end', oldIndexNumber, newIndexNumber, evt);
         },
+        ...unref(getProps).dragOtions,
       });
       initSortable();
     };

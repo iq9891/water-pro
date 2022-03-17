@@ -17,7 +17,7 @@
     :showDropdownAdd="false"
     showSearch
     drawerTableDraggable
-    :drawerTableDragApi="dragApi"
+    :drawerTableDragApi="tableApi"
     :drawerWidth="700"
     subClassify
   />
@@ -118,25 +118,30 @@ const columns = [
 const tableApi = ({params, success}) => {
   const arr: any = [];
   arr.push({
-    id: -1,
+    id: '0',
     name: '全部',
     age: '-',
     children: [],
   });
 
-  for (let index = 0; index < 100; index++) {
+  for (let index = 1; index < 5; index++) {
     arr.push({
       id: `${index}`,
-      name: `${Math.floor(Math.random() + index)}-water`,
-      age: `1${index}`,
+      name: `${index}-water`,
+      age: 18,
       show: Math.floor(Math.random()* 10)>5,
-      parentId: 0,
       children: [{
-        parentId: `pid-${index}`,
-        id: `child-${index}`,
+        parentId: `${index}`,
+        id: `child-${index+1}`,
         show: Math.floor(Math.random()* 10)>5,
-        name: `child-${Math.random() + index}-water`,
-        age: `child-age${index}`,
+        name: `child-${index+1}`,
+        age: 98,
+      }, {
+        parentId: `${index}`,
+        id: `child-${index+2}`,
+        show: Math.floor(Math.random()* 10)>5,
+        name: `child-${index+2}`,
+        age: 98,
       }]
     });
   }
@@ -144,11 +149,6 @@ const tableApi = ({params, success}) => {
     success(arr);
   }, 1000);
 }
-const dragApi = ({params, success}) => {
-  setTimeout(() => {
-    success([]);
-  }, 1000);
-};
 
 export default defineComponent({
   setup() {
@@ -205,7 +205,6 @@ export default defineComponent({
       },
       columns,
       tableApi,
-      dragApi,
     }
   },
 });

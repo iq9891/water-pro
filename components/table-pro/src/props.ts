@@ -186,4 +186,8 @@ export const basicProps = {
     default: null,
   },
   prefixCls: PropTypes.string,
+  dragOtions: {
+    type: Object as PropType<{ x: number | true; y: number }>,
+    default: null,
+  },
 };

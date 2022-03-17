@@ -183,6 +183,9 @@ export default defineComponent({
       canResize: true,
       pagination: false,
       dataSource: [],
+      dragOtions: {
+        filter: '.ant-table-row-level-0',
+      },
       columns: [
         ...props.drawerTableColumns,
         {
@@ -199,6 +202,19 @@ export default defineComponent({
 
     const { fetch: drawerDragFecth } = useFetch(props.drawerTableDragApi);
 
+    // 子级拖拽返回的数据
+    const drawerOneDatas = ref<any>([]);
+    const toOneForChildren = () => {
+      tableDatas.value.forEach((theItem: any) => {
+        drawerOneDatas.value.push(theItem);
+        if (theItem.children && theItem.children.length > 0) {
+          theItem.children.forEach((theChild: any) => {
+            drawerOneDatas.value.push(theChild);
+          });
+        }
+      });
+    };
+
     const tableDatas = ref([]);
     const getTableDatas = () => {
       if (!drawerLoading.value) {
@@ -207,6 +223,9 @@ export default defineComponent({
           drawerFecth({
             success: (res: any) => {
               tableDatas.value = res;
+              if (props.subClassify) {
+                toOneForChildren();
+              }
               tableMethods.setTableData(res);
               drawerLoading.value = false;
             },
@@ -221,7 +240,21 @@ export default defineComponent({
       }
     };
 
-    const tableDragDatas = (dragList: any) => {
+    const dragIdsWithPid = (dragIdList: any) => {
+      const idsWithPid = [];
+      dragIdList.forEach((theId: any) => {
+        const theItem = drawerOneDatas.value.find((dItem: any) => dItem.id === theId);
+        if (theItem) {
+          idsWithPid.push({
+            [props.parentIdLabel]: theItem[props.parentIdLabel] || 0,
+            id: theId,
+          });
+        }
+      });
+      return idsWithPid;
+    };
+
+    const tableDragDatas = (dragIdList: any) => {
       if (!drawerLoading.value) {
         drawerLoading.value = true;
         try {
@@ -232,7 +265,11 @@ export default defineComponent({
             error: () => {
               drawerLoading.value = false;
             },
-            params: dragList,
+            params: props.subClassify ? {
+              dragIdList,
+              drawerOneDatas: drawerOneDatas.value,
+              idsWithPid: dragIdsWithPid(dragIdList),
+            } :dragIdList,
           });
         } catch (err) {
           drawerLoading.value = false;
@@ -291,6 +328,7 @@ export default defineComponent({
       tableMethods,
       getOptionDatas,
       classifyLang,
+      drawerOneDatas,
     };
   },
   methods: {
@@ -393,7 +431,7 @@ export default defineComponent({
       }
     },
     tableDragEnd(oldNum: number, newNum: number) {
-      const dragList = this.tableDatas.map((tdItem: any) => tdItem[this.drawerTableDragKey]);
+      const dragList = (this.subClassify ? this.drawerOneDatas : this.tableDatas).map((tdItem: any) => tdItem[this.drawerTableDragKey]);
       if (oldNum > newNum) {
         dragList.splice(newNum, 0, dragList[oldNum]);
         dragList.splice(oldNum + 1, 1);
@@ -609,6 +647,7 @@ export default defineComponent({
           </AButton>
           <Spin spinning={this.drawerLoading}>
             <TablePro
+              class={this.subClassify?'a-table-pro--drag-sub': ''}
               onRegister={this.tableRegister}
               onDragEnd={this.tableDragEnd}
               v-slots={{

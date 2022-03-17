@@ -1,6 +1,7 @@
 /** @format */
 
 import type { VNodeChild } from 'vue';
+import type { Options } from 'sortablejs';
 import type {
   ColumnProps,
   TableRowSelection as ITableRowSelection,
@@ -284,6 +285,7 @@ export interface TableProProps<T = any> {
    */
   indentSize?: number;
 
+  dragOtions?: Options;
   /**
    * i18n text including filter, sort, empty text, etc
    * @default { filterConfirm: 'Ok', filterReset: 'Reset', emptyText: 'No Data' }
@@ -295,7 +297,7 @@ export interface TableProProps<T = any> {
    * Row's className
    * @type Function
    */
-  rowClassName?: (record: TableCustomRecord<T>) => string;
+  rowClassName?: (record: TableCustomRecord<T>, index: number) => string;
 
   /**
    * Row selection config
