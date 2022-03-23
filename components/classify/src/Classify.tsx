@@ -178,14 +178,16 @@ export default defineComponent({
 
     const classifyLang = computed(() => configProvider.locale?.Classify);
 
+    const dragOtions: any = {};
+    if (props.subClassify) {
+      dragOtions.filter = '.ant-table-row-level-0';
+    }
     const [tableRegister, tableMethods] = useTable({
       draggable: props.drawerTableDraggable,
       canResize: true,
       pagination: false,
       dataSource: [],
-      dragOtions: {
-        filter: '.ant-table-row-level-0',
-      },
+      dragOtions,
       columns: [
         ...props.drawerTableColumns,
         {
