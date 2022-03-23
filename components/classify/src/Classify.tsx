@@ -587,15 +587,18 @@ export default defineComponent({
         onClick: () => this.handleEdit(record, false, false),
       };
 
-      if (!this.isAllClassify(params) && this.isOneClassify(params)) {
+      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params)) {
         oneAction.splice(1, 0, addSub);
       }
 
-      return this.isAllClassify(params) ? null : (
+      return this.subClassify ? (this.isAllClassify(params) ? null : (
         <TableAction
           actions={this.isOneClassify(params) ? oneAction : twoAction}
         />
-      );
+      )) : (
+        <TableAction
+          actions={oneAction}
+        /> );
     };
 
     const tableTitleActionNode = () => {
