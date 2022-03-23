@@ -121,6 +121,7 @@ const tableApi = ({params, success}) => {
     id: '0',
     name: '全部',
     age: '-',
+      parentId: 0,
     children: [],
   });
 
@@ -129,6 +130,7 @@ const tableApi = ({params, success}) => {
       id: `${index}`,
       name: `${index}-water`,
       age: 18,
+      parentId: 0,
       show: Math.floor(Math.random()* 10)>5,
       children: [{
         parentId: `${index}`,
