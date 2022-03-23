@@ -12,7 +12,7 @@ import {
 import Omit from 'omit.js';
 import { hasOwn, isUndefined } from '@fe6/shared';
 import { LoadingOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons-vue';
-import { isEmpty, merge } from 'lodash';
+import { isEmpty } from 'lodash';
 
 import ASelect from '../../select';
 import { Option as SelectOption } from '../../vc-select';
@@ -338,7 +338,8 @@ export default defineComponent({
       this.createModalStatus = !this.createModalStatus;
       await nextTick();
       if (this.createModalStatus && (!isEmpty(this.createFormConfig) || !isEmpty(this.createSubFormConfig))) {
-        this.formMethods.setProps(merge(createDefFormConfig, isTheOne?this.createFormConfig: this.createSubFormConfig));
+        // FIX Object.assign 用 merge 一二级编辑切换的时候表单字段不会更新
+        this.formMethods.setProps(Object.assign(createDefFormConfig, isTheOne?this.createFormConfig: this.createSubFormConfig));
       }
     },
     async createOk() {
@@ -583,7 +584,7 @@ export default defineComponent({
           onClick: () => this.handleDelete(record),
         },
       ];
- 
+
       const addSub = {
         label: this.classifyLang?.editSubTitle||'新增二级',
         onClick: () => this.handleEdit(record, false, false),
