@@ -200,6 +200,12 @@ export default defineComponent({
             label: '',
             component: 'Input',
             ifShow: () => false,
+          },
+          {
+            field: 'id',
+            label: '',
+            component: 'Input',
+            ifShow: () => false,
           }
         ],
       },

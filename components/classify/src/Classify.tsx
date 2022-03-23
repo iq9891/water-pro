@@ -561,7 +561,7 @@ export default defineComponent({
       const oneAction = [
         {
           label: this.classifyLang?.editTitle||'编辑',
-          onClick: () => this.handleEdit(record, true),
+          onClick: () => this.handleEdit(record, true, true),
         },
         {
           label: this.classifyLang?.remove||'删除',
