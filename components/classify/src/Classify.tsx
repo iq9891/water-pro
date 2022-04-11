@@ -638,9 +638,9 @@ export default defineComponent({
       // 是一级分类
       // 数据包括全部大于2
       const theAllDatas = this.tableMethods.getDataSource();
-      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params) && theAllDatas.length > 2) {
+      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params)) {
         // 如果是按钮排序，并不是全部
-        if (this.drawerTableDraggableBtn && !this.isAllClassify(params)) {
+        if (this.drawerTableDraggableBtn && !this.isAllClassify(params) && theAllDatas.length > 2) {
           if (!this.showOneFirstSortBtn(params, this.tableMethods)) {
             oneAction.splice(1, 0, downOneSub);
           } else if (!this.showOneLastSortBtn(params, this.tableMethods)) {
