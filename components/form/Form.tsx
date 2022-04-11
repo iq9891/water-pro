@@ -51,6 +51,8 @@ export const formProps = {
   labelAlign: PropTypes.oneOf(tuple('left', 'right')),
   prefixCls: PropTypes.string,
   hideRequiredMark: PropTypes.looseBool,
+  submitOnReset: PropTypes.looseBool,
+  resetOnSubmit: PropTypes.looseBool,
   model: PropTypes.object,
   rules: { type: Object as PropType<{ [k: string]: ValidationRule[] | ValidationRule }> },
   validateMessages: PropTypes.object,

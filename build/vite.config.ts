@@ -46,7 +46,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       ],
     },
     server: {
-      port: 5000,
+      port: 5001,
       // Load proxy configuration from .env
       hmr: {
         overlay: true,

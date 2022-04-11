@@ -19,6 +19,10 @@ export function useTableForm(
       showAdvancedButton: true,
       ...formConfig,
       compact: true,
+      // FIX 表单筛选自动清空
+      submitOnReset: formConfig.submitOnReset !== undefined ? formConfig.submitOnReset : false,
+      // FIX 表单重置自动执行提交
+      resetOnSubmit: formConfig.resetOnSubmit !== undefined ? formConfig.resetOnSubmit : true,
     };
   });
 

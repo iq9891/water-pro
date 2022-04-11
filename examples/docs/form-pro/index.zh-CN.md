@@ -16,6 +16,7 @@
 | baseGutter | 水平内联的间距 | number | 0 |  |
 | autoSetPlaceHolder | 是否自定设置占位文字， RangePicker 无效 | boolean | true |  |
 | submitOnReset | 点击提交是否重置字段及验证 | boolean | - |  |
+| resetOnSubmit | 重置自动执行提交 | boolean | true | 3.52.0 |
 | disabled | 是否禁用表单 | boolean | - |  |
 | showActionButtonGroup | 是否显示操作按钮 | boolean | true |  |
 | showResetButton | 是否显示重置按钮 | boolean | true |  |

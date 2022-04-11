@@ -63,6 +63,7 @@ export interface FormProps {
   resetText?: string;
   // Submit form on reset
   submitOnReset?: boolean;
+  resetOnSubmit?: boolean;
   resetClearValidate?: boolean;
   // Col configuration for the entire form
   labelCol?: Partial<ColEx>;
