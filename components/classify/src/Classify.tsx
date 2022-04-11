@@ -622,14 +622,14 @@ export default defineComponent({
       const upOneSub = {
         label: '上移',
         onClick: () => {
-          this.$emit('up-sort', params);
+          this.$emit('up-sort', params, this.tableMethods);
         },
       };
 
       const downOneSub = {
         label: '下移',
         onClick: () => {
-          this.$emit('down-sort', params);
+          this.$emit('down-sort', params, this.tableMethods);
         },
       };
 
