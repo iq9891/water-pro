@@ -152,7 +152,7 @@ const tableApi = ({params, success}) => {
       age: 18,
       parentId: 0,
       show: Math.floor(Math.random()* 10)>5,
-      children: [{
+      children: index > 3 ? [{
         parentId: `${index}`,
         id: `child-${index+3}`,
         show: Math.floor(Math.random()* 10)>5,
@@ -171,6 +171,13 @@ const tableApi = ({params, success}) => {
         id: `child-${index+2}`,
         show: Math.floor(Math.random()* 10)>5,
         name: `child-${index+2}`,
+        imgUrl: imgs[1],
+        age: 98,
+      }] : [{
+        parentId: `${index}`,
+        id: `child-${index+3}`,
+        show: Math.floor(Math.random()* 10)>5,
+        name: `child-${index+3}`,
         imgUrl: imgs[1],
         age: 98,
       }]

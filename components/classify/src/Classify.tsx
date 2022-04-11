@@ -633,7 +633,12 @@ export default defineComponent({
         },
       };
 
-      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params)) {
+      // 是分组的
+      // 不是全部的一级
+      // 是一级分类
+      // 数据包括全部大于2
+      const theAllDatas = this.tableMethods.getDataSource();
+      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params) && theAllDatas.length > 2) {
         // 如果是按钮排序，并不是全部
         if (this.drawerTableDraggableBtn && !this.isAllClassify(params)) {
           if (!this.showOneFirstSortBtn(params, this.tableMethods)) {
@@ -649,13 +654,16 @@ export default defineComponent({
       }
 
       if (this.subClassify && this.drawerTableDraggableBtn && !this.isOneClassify(params)) {
-        if (!this.showTwoFirstSortBtn(params, this.tableMethods)) {
-          twoAction.splice(1, 0, downOneSub);
-        } else if (!this.showTwoLastSortBtn(params, this.tableMethods)) {
-          twoAction.splice(1, 0, upOneSub);
-        } else {
-          twoAction.splice(1, 0, downOneSub);
-          twoAction.splice(1, 0, upOneSub);
+        const theParent = this.tableMethods.getDataSource().find(({id}: any) => id === params.record.parentId);
+        if (theParent.children.length > 1) {
+          if (!this.showTwoFirstSortBtn(params, this.tableMethods)) {
+            twoAction.splice(1, 0, downOneSub);
+          } else if (!this.showTwoLastSortBtn(params, this.tableMethods)) {
+            twoAction.splice(1, 0, upOneSub);
+          } else {
+            twoAction.splice(1, 0, downOneSub);
+            twoAction.splice(1, 0, upOneSub);
+          }
         }
       }
 
