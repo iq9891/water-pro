@@ -94,6 +94,34 @@ export default defineComponent({
       type: [Array] as PropType<BasicColumn[]>,
       default: () => [],
     },
+    drawerTableActionWidth: {
+      type: Number,
+      default: 200,
+    },
+    drawerTableDraggableBtn: PropTypes.bool.def(false),
+    showOneFirstSortBtn: {
+      type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
+      default: ({index}: any) =>  index > 1,
+    },
+    showOneLastSortBtn: {
+      type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
+      default: ({index}: any, table: any) =>  {
+        return index < table.getDataSource().length - 1;
+      },
+    },
+    showTwoFirstSortBtn: {
+      type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
+      default: ({index}: any) => {
+        return  index > 0;
+      },
+    },
+    showTwoLastSortBtn: {
+      type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
+      default: ({index, record}: any, table: any) =>  {
+        const theParent = table.getDataSource().find(({id}: any) => id === record.parentId);
+        return theParent && index < theParent.children.length - 1;
+      },
+    },
     drawerTableDraggable: PropTypes.bool.def(false),
     drawerTableDragKey: PropTypes.string.def('id'), // 会返回所有排好序的 id 值的数组
     drawerTableDragApi: {
@@ -193,6 +221,7 @@ export default defineComponent({
         {
           dataIndex: 'action',
           key: 'action',
+          width: props.drawerTableActionWidth,
           slots: { customRender: 'action', title: 'actionTitle'  },
         },
       ],
@@ -590,8 +619,44 @@ export default defineComponent({
         onClick: () => this.handleEdit(record, false, false),
       };
 
+      const upOneSub = {
+        label: '上移',
+        onClick: () => {
+          this.$emit('up-sort', params);
+        },
+      };
+
+      const downOneSub = {
+        label: '下移',
+        onClick: () => {
+          this.$emit('down-sort', params);
+        },
+      };
+
       if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params)) {
+        // 如果是按钮排序，并不是全部
+        if (this.drawerTableDraggableBtn && !this.isAllClassify(params)) {
+          if (!this.showOneFirstSortBtn(params, this.tableMethods)) {
+            oneAction.splice(1, 0, downOneSub);
+          } else if (!this.showOneLastSortBtn(params, this.tableMethods)) {
+            oneAction.splice(1, 0, upOneSub);
+          } else {
+            oneAction.splice(1, 0, downOneSub);
+            oneAction.splice(1, 0, upOneSub);
+          }
+        }
         oneAction.splice(1, 0, addSub);
+      }
+
+      if (this.subClassify && this.drawerTableDraggableBtn && !this.isOneClassify(params)) {
+        if (!this.showTwoFirstSortBtn(params, this.tableMethods)) {
+          twoAction.splice(1, 0, downOneSub);
+        } else if (!this.showTwoLastSortBtn(params, this.tableMethods)) {
+          twoAction.splice(1, 0, upOneSub);
+        } else {
+          twoAction.splice(1, 0, downOneSub);
+          twoAction.splice(1, 0, upOneSub);
+        }
       }
 
       return this.subClassify ? (this.isAllClassify(params) ? null : (
@@ -653,12 +718,13 @@ export default defineComponent({
           </AButton>
           <Spin spinning={this.drawerLoading}>
             <TablePro
-              class={this.subClassify?'a-table-pro--drag-sub': ''}
+              class={this.subClassify && this.drawerTableDraggable?'a-table-pro--drag-sub': ''}
               onRegister={this.tableRegister}
               onDragEnd={this.tableDragEnd}
               v-slots={{
                 action: tableActionNode,
                 actionTitle: tableTitleActionNode,
+                ...this.$slots,
               }}
             />
           </Spin>

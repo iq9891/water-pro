@@ -36,10 +36,18 @@
 | subClassify | 是否存在子分类，操作会有点不一样 | boolean | false | 3.50.0 |
 | isAllClassify | 是否是全部分类 | Fucntion | (params: any)=>false | 3.50.0 |
 | isOneClassify | 是否一级分类 | Fucntion | (params: any)=>params.parentId === 0 | 3.50.0 |
+| drawerTableActionWidth | 管理操作的宽度 | Number | 200 | 3.53.0 |
+| drawerTableDraggableBtn | 是否按钮排序 | boolean | - | 3.53.0 |
+| showOneFirstSortBtn | 是否一级第一行 | Fucntion | (arg: any, table: any)=>arg.index > 1 | 3.53.0 |
+| showOneLastSortBtn | 是否一级最后行 | Fucntion | (arg: any, table: any)=>arg.index < table.getDataSource().length - 1 | 3.53.0 |
+| showOneFirstSortBtn | 是否二级第一行 | Fucntion | (arg: any, table: any)=>arg.index > 1 | 3.53.0 |
+| showOneLastSortBtn | 是否二级最后行 | Fucntion | ({index, record}: any, table: any) =>  { const theParent = table.getDataSource().find(({id}: any) => id === record.parentId) return theParent && index < theParent.children.length - 1;} | 3.53.0 |
 
 ### 事件
 
-| 事件名称 | 说明 | 回调参数 |
-| --- | --- | --- |
-| on-edit | 创建编辑的时回调 | function |
-| on-remove | 删除的时回调 | function |
+| 事件名称 | 说明 | 回调参数 | 版本 |
+| --- | --- | --- | --- |
+| on-edit | 创建编辑的时回调 | function | |
+| on-remove | 删除的时回调 | function | |
+| up-sort | 按钮拖拽上移 | function | 3.53.0 |
+| down-sort | 按钮拖拽下移 | function | 3.53.0 |

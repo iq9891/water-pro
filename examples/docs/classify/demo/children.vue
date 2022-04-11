@@ -16,15 +16,26 @@
     drawerCreateButtonText="添加一级分类"
     :showDropdownAdd="false"
     showSearch
-    drawerTableDraggable
+    drawerTableDraggableBtn
     :drawerTableDragApi="tableApi"
-    :drawerWidth="700"
+    :drawerWidth="1000"
     subClassify
-  />
+    @up-sort="upSort"
+    @down-sort="downSort"
+  >
+    <template #name="{ record}">
+      <template v-if="record.parentId === 0">{{record.name}}</template>
+      <template v-else>
+        <a-space>
+          <a-image :src="record.imgUrl" :width="30" :height="30" />{{record.name}}
+        </a-space>
+      </template>
+    </template>
+  </a-classify>
 </template>
 <script lang="ts">
 import { defineComponent, ref, h } from 'vue';
-import { Switch } from '@fe6/water-pro';
+import { Switch, Space, Image } from '@fe6/water-pro';
 
 const getSelectForOptions = ({params, success}) => {
   setTimeout(() => {
@@ -86,17 +97,21 @@ const columns = [
   {
     title: '分类类型',
     dataIndex: 'name',
+    width: 200,
     key: 'name',
+    slots: { customRender: 'name' },
   },
   {
     title: '分类名称',
     dataIndex: 'age',
     key: 'age',
+    width: 80,
   },
   {
     title: '显示',
     dataIndex: 'show',
     key: 'show',
+    width: 60,
     customRender: ({ record }) => {
       return {
         children: h(Switch, {
@@ -115,13 +130,18 @@ const columns = [
   },
 ];
 
+const imgs = [
+  'https://cdn.dev.mosh.cn/image/dc/a4/696b123403f5c16bd1f65be44e36.png',
+  'https://cdn.dev.mosh.cn/image/d8/5a/836b532fb131586b679f2c969900.png'
+];
+
 const tableApi = ({params, success}) => {
   const arr: any = [];
   arr.push({
-    id: '0',
+    id: -1,
     name: '全部',
     age: '-',
-      parentId: 0,
+    parentId: 0,
     children: [],
   });
 
@@ -134,15 +154,24 @@ const tableApi = ({params, success}) => {
       show: Math.floor(Math.random()* 10)>5,
       children: [{
         parentId: `${index}`,
+        id: `child-${index+3}`,
+        show: Math.floor(Math.random()* 10)>5,
+        name: `child-${index+3}`,
+        imgUrl: imgs[1],
+        age: 98,
+      }, {
+        parentId: `${index}`,
         id: `child-${index+1}`,
         show: Math.floor(Math.random()* 10)>5,
         name: `child-${index+1}`,
+        imgUrl: imgs[0],
         age: 98,
       }, {
         parentId: `${index}`,
         id: `child-${index+2}`,
         show: Math.floor(Math.random()* 10)>5,
         name: `child-${index+2}`,
+        imgUrl: imgs[1],
         age: 98,
       }]
     });
@@ -153,6 +182,10 @@ const tableApi = ({params, success}) => {
 }
 
 export default defineComponent({
+  components: {
+    ASpace: Space,
+    AImage: Image,
+  },
   setup() {
     return {
       value3: ref(380),
@@ -213,6 +246,12 @@ export default defineComponent({
       },
       columns,
       tableApi,
+      upSort(params: any) {
+        console.log(params, 'up')
+      },
+      downSort(params: any) {
+        console.log(params, 'up')
+      },
     }
   },
 });
