@@ -101,7 +101,7 @@ export default defineComponent({
     drawerTableDraggableBtn: PropTypes.bool.def(false),
     showOneFirstSortBtn: {
       type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
-      default: ({index}: any) =>  index > 1,
+      default: ({index}: any) =>  index > 0,
     },
     showOneLastSortBtn: {
       type: Function as PropType<(arg: any, table: any) => Promise<any[]>>,
@@ -133,10 +133,6 @@ export default defineComponent({
     subLabelKey: PropTypes.string.def('subLabel'),
     valueKey: PropTypes.string.def('value'),
     subClassify: PropTypes.bool.def(false),
-    isAllClassify: {
-      type: Function as PropType<(arg?: any) => Promise<any[]>>,
-      default: ({record}: any) => record.id === -1,
-    },
     createSubFormConfig: PropTypes.object.def({}),
     parentIdLabel: PropTypes.string.def('parentId'),
     isOneClassify: {
@@ -601,7 +597,7 @@ export default defineComponent({
         },
       ];
 
-      const twoAction = this.isAllClassify(params) ? [] : [
+      const twoAction = [
         {
           label: this.classifyLang?.editTitle||'编辑',
           onClick: () => this.handleEdit(record, false, true),
@@ -638,9 +634,9 @@ export default defineComponent({
       // 是一级分类
       // 数据包括全部大于2
       const theAllDatas = this.tableMethods.getDataSource();
-      if (this.subClassify && !this.isAllClassify(params) && this.isOneClassify(params)) {
+      if (this.subClassify && this.isOneClassify(params)) {
         // 如果是按钮排序，并不是全部
-        if (this.drawerTableDraggableBtn && !this.isAllClassify(params) && theAllDatas.length > 2) {
+        if (this.drawerTableDraggableBtn && theAllDatas.length > 1) {
           if (!this.showOneFirstSortBtn(params, this.tableMethods)) {
             oneAction.splice(1, 0, downOneSub);
           } else if (!this.showOneLastSortBtn(params, this.tableMethods)) {
@@ -667,11 +663,11 @@ export default defineComponent({
         }
       }
 
-      return this.subClassify ? (this.isAllClassify(params) ? null : (
+      return this.subClassify ? (
         <TableAction
           actions={this.isOneClassify(params) ? oneAction : twoAction}
         />
-      )) : (
+      ) : (
         <TableAction
           actions={oneAction}
         /> );

@@ -137,14 +137,6 @@ const imgs = [
 
 const tableApi = ({params, success}) => {
   const arr: any = [];
-  arr.push({
-    id: -1,
-    name: '全部',
-    age: '-',
-    parentId: 0,
-    children: [],
-  });
-
   for (let index = 1; index < 5; index++) {
     arr.push({
       id: `${index}`,
