@@ -17,6 +17,9 @@ import OptionsCodeString from './options.vue?raw';
 import RadioString from './radio.md?raw';
 import Radio from './radio.vue';
 import RadioCodeString from './radio.vue?raw';
+import SlotString from './slot.md?raw';
+import Slot from './slot.vue';
+import SlotCodeString from './slot.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -59,6 +62,9 @@ export default {
           </demo-container>
           <demo-container api={RadioString} code={RadioCodeString}>
             <Radio />
+          </demo-container>
+          <demo-container api={SlotString} code={SlotCodeString}>
+            <Slot />
           </demo-container>
         </demo-sort>
         <api>

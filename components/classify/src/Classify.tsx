@@ -506,6 +506,11 @@ export default defineComponent({
           {createIconNode} {this.classifyLang?.dropdownAdd||'添加'}
         </AButton>;
       }
+
+      const theOptBtnSlot = this.$slots.optionButtonSlot
+        ? this.$slots.optionButtonSlot?.({ loading: this.loading })
+        : null;
+
       return (
         <div>
           <VNodes vnodes={menuNode} />
@@ -515,6 +520,7 @@ export default defineComponent({
             <AButton size="small" type="link" onClick={this.handleDrawerStatus}>
               {drawerIconNode} {this.classifyLang?.dropdownHandle||'管理'}
             </AButton>
+            {theOptBtnSlot}
           </div>
         </div>
       );
