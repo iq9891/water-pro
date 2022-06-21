@@ -18,6 +18,9 @@ const MonthTable = {
     locale: PropTypes.any,
     contentRender: PropTypes.any,
     disabledDate: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
+    // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
+    selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
   },
   data() {
     return {
@@ -33,18 +36,22 @@ const MonthTable = {
   },
   methods: {
     setAndSelectValue(value) {
+      const isMultiple = this.type === 'multiple';
       this.setState({
-        sValue: value,
+        sValue: isMultiple? [value] : value,
       });
       this.__emit('select', value);
     },
     chooseMonth(month) {
-      const next = this.sValue.clone();
+      const isMultiple = this.type === 'multiple';
+      const value = isMultiple ? this.sValue?.[0]:this.sValue;
+      const next = value.clone();
       next.month(month);
       this.setAndSelectValue(next);
     },
     months() {
-      const value = this.sValue;
+      const isMultiple = this.type === 'multiple';
+      const value = isMultiple ? this.sValue?.[0]:this.sValue;
       const current = value.clone();
       const months = [];
       let index = 0;
@@ -67,7 +74,10 @@ const MonthTable = {
 
   render() {
     const props = this.$props;
-    const value = this.sValue;
+    const isMultiple = this.type === 'multiple';
+    // 如果当前是月份选择器
+    const isMonth = this.selectType === 'month';
+    const value = isMultiple ? this.sValue?.[0]:this.sValue;
     const today = getTodayTime(value);
     const months = this.months();
     const currentMonth = value.month();
@@ -80,12 +90,25 @@ const MonthTable = {
           testValue.month(monthData.value);
           disabled = disabledDate(testValue);
         }
+        let isCurrentOn = false;
+        let isSelectOn = false;
+        if (isMonth && isMultiple) {
+          const hasOne = this.value.find((theVal) => {
+            return value.year() === theVal.year() && monthData.value === theVal.month();
+          });
+          if (hasOne) {
+            isCurrentOn = true;
+            isSelectOn = true;
+          }
+        } else {
+          isCurrentOn = today.year() === value.year() && monthData.value === today.month();
+          isSelectOn = monthData.value === currentMonth;
+        }
         const classNameMap = {
           [`${prefixCls}-cell`]: 1,
           [`${prefixCls}-cell-disabled`]: disabled,
-          [`${prefixCls}-selected-cell`]: monthData.value === currentMonth,
-          [`${prefixCls}-current-cell`]:
-            today.year() === value.year() && monthData.value === today.month(),
+          [`${prefixCls}-selected-cell`]: isSelectOn,
+          [`${prefixCls}-current-cell`]: isCurrentOn,
         };
         let cellEl;
         if (cellRender) {

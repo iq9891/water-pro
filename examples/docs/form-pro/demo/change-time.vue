@@ -8,6 +8,37 @@ import { FormSchema, useForm } from '@fe6/water-pro';
 
 const schemas: FormSchema[] =[
   {
+    field: 'mortdate',
+    component: 'DatePicker',
+    componentProps: {
+      type: 'multiple',
+      valueFormat: 'YYYY-MM-DD',
+      format: 'YYYY年MM月DD日',
+      multipleMaxTagTextLength: 15,
+      multipleTagGroupPopoverClass: 'test1'
+    },
+    label: '多选日期',
+  },
+  {
+    field: 'mortmonth',
+    component: 'MonthPicker',
+    componentProps: {
+      type: 'multiple',
+      multipleMaxTagCount: 2,
+      valueFormat: 'YYYY-MM',
+    },
+    label: '多选月份',
+  },
+  {
+    field: 'mortyear',
+    component: 'YearPicker',
+    componentProps: {
+      type: 'multiple',
+      valueFormat: 'YYYY',
+    },
+    label: '多选年份',
+  },
+  {
     field: 'date',
     component: 'DatePicker',
     label: '日期',
@@ -92,3 +123,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="less">
+.test1 {
+  width: 256px;
+}
+</style>

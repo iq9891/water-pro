@@ -4,7 +4,7 @@ export default {
       let { format } = this;
       const { locale, timePicker } = this;
       if (!format) {
-        if (timePicker) {
+        if (timePicker && this.type !== 'multiple') {
           format = locale.dateTimeFormat;
         } else {
           format = locale.dateFormat;

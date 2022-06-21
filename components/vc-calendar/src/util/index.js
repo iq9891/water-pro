@@ -29,7 +29,7 @@ export function getTodayTimeStr(value) {
 
 export function getMonthName(month) {
   const locale = month.locale();
-  const localeData = month.localeData();
+  const localeData = month?.localeData();
   return localeData[locale === 'zh-cn' ? 'months' : 'monthsShort'](month);
 }
 
@@ -113,3 +113,16 @@ export function formatDate(value, format) {
 
   return value.format(format);
 }
+
+export const getMomentObjectIfValid = (date) => {
+  if (Array.isArray(date)) {
+    if (date.length > 0 && date.every((oneDate) => moment.isMoment(oneDate) && oneDate.isValid())) {
+      return date;
+    }
+  } else {
+    if (moment.isMoment(date) && date.isValid()) {
+      return date;
+    }
+  }
+  return false;
+};

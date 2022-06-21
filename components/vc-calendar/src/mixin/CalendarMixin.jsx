@@ -109,11 +109,11 @@ const CalendarMixin = {
           sValue: value,
         });
       }
-      if (
-        (originalValue && value && !originalValue.isSame(value)) ||
-        (!originalValue && value) ||
-        (originalValue && !value)
-      ) {
+      const theOne = this.type !== 'multiple' && ((originalValue && value && !originalValue.isSame(value)) ||
+      (!originalValue && value) ||
+      (originalValue && !value));
+      const theMore = this.type === 'multiple' && originalValue && originalValue.length > 0 && originalValue.every((oneValue)=>!oneValue.isSame(value));
+      if (theMore || theOne) {
         this.__emit('change', value);
       }
     },

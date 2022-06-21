@@ -4,18 +4,21 @@ const ROW = 4;
 const COL = 3;
 function noop() {}
 function goYear(direction) {
-  const value = this.sValue.clone();
+  const isMultiple = this.type === 'multiple';
+  const value = (isMultiple ? this.sValue?.[0]:this.sValue).clone();
   value.add(direction, 'year');
   this.setState({
-    sValue: value,
+    sValue: isMultiple? [value]:value,
   });
 }
 
 function chooseYear(year) {
-  const value = this.sValue.clone();
+  const isMultiple = this.type === 'multiple';
+  const theValue = (isMultiple ? this.sValue?.[0]:this.sValue);
+  const value = theValue.clone();
   value.year(year);
-  value.month(this.sValue.month());
-  this.sValue = value;
+  value.month(theValue.month());
+  this.sValue =isMultiple? [value]: value;
   this.__emit('select', value);
 }
 
@@ -29,6 +32,9 @@ export default {
     defaultValue: PropTypes.object,
     locale: PropTypes.object,
     renderFooter: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
+    // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
+    selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
   },
   data() {
     this.nextDecade = goYear.bind(this, 10);
@@ -44,7 +50,8 @@ export default {
   },
   methods: {
     years() {
-      const value = this.sValue;
+      const isMultiple = this.type === 'multiple';
+      const value = isMultiple ? this.sValue?.[0] : this.sValue;
       const currentYear = value.year();
       const startYear = parseInt(currentYear / 10, 10) * 10;
       const previousYear = startYear - 1;
@@ -68,7 +75,11 @@ export default {
   },
 
   render() {
-    const { sValue: value, locale, renderFooter } = this;
+    const { locale, renderFooter } = this;
+    const isMultiple = this.type === 'multiple';
+    const value = isMultiple ? this.sValue?.[0] : this.sValue;
+    // 如果当前是月份选择器
+    const isYear = this.selectType === 'year';
     const onDecadePanelShow = this.$attrs.onDecadePanelShow || noop;
     const years = this.years();
     const currentYear = value.year();
@@ -78,12 +89,23 @@ export default {
 
     const yeasEls = years.map((row, index) => {
       const tds = row.map((yearData) => {
+        let isSelectOn = false;
+        if (isYear && isMultiple) {
+          const hasOne = this.value.find((theVal) => {
+            return yearData.year === theVal.year();
+          });
+          if (hasOne) {
+            isSelectOn = true;
+          }
+        } else {
+          isSelectOn = yearData.year === currentYear;
+        }
         const classNameMap = {
           [`${prefixCls}-cell`]: 1,
-          [`${prefixCls}-selected-cell`]: yearData.year === currentYear,
+          [`${prefixCls}-selected-cell`]: isSelectOn,
           [`${prefixCls}-last-decade-cell`]: yearData.year < startYear,
           [`${prefixCls}-next-decade-cell`]: yearData.year > endYear,
-        };
+        }; 
         let clickHandler = noop;
         if (yearData.year < startYear) {
           clickHandler = this.previousDecade;

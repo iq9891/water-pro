@@ -15,6 +15,7 @@ import { hasProp, getOptionProps, getComponent, isValidElement } from '../_util/
 import { cloneElement } from '../_util/vnode';
 import { formatDate } from './utils';
 import { getDataAndAriaProps } from '../_util/util';
+import TagGroup from '../tag-group';
 
 export interface PickerProps {
   value?: moment.Moment;
@@ -88,17 +89,19 @@ export default function createPicker<P>(
       clearSelection(e: MouseEvent) {
         e.preventDefault();
         e.stopPropagation();
-        this.handleChange(null);
+        this.handleChange(this.type === 'multiple' ? [] : null);
       },
 
-      handleChange(value: moment.Moment | null) {
+      handleChange(value: moment.Moment | moment.Moment[] | null) {
+        const isMultiple = this.type === 'multiple';
         if (!hasProp(this, 'value')) {
           this.setState({
-            sValue: value,
-            showDate: value,
+            sValue: isMultiple ? [value]:value,
+            showDate: isMultiple ? [value]:value,
           });
         }
-        this.$emit('change', value, formatDate(value, this.format));
+        // 真正 value 更新
+        this.$emit('change', value, isMultiple ? (value as  moment.Moment[]).map((iVal: any) =>formatDate(iVal, this.format)) : formatDate(value as  moment.Moment, this.format));
       },
 
       handleCalendarChange(value: moment.Moment) {
@@ -135,10 +138,50 @@ export default function createPicker<P>(
       onMouseLeave(e: MouseEvent) {
         this.$emit('mouseleave', e);
       },
+      // 多选删除
+      mulitpleTagChange(name: string, eventeType: string, theStr: any, selectedValue: any) {
+        if (eventeType === 'remove') {
+          const theRemoveIdx = theStr.findIndex((item: any) => item === name);
+          if (theRemoveIdx > -1) {
+            theStr.splice(theRemoveIdx, 1);
+            selectedValue.splice(theRemoveIdx, 1);
+            const theRemoveOne = theStr[theRemoveIdx];
+            this.$emit('mulitplteRemove', theRemoveOne, theRemoveIdx);
+          }
+        }
+      },
+      multiplePanelHeaderRender(theStr: any, selectedValue: any) {
+        const theNewTagGroupValue = theStr?.map((oneStr: string, oneIdx: number) => ({
+          id: oneIdx + 1,
+          name: oneStr,
+        }));
+        const theMoreSlot = () => {
+          return `+${theNewTagGroupValue.length - this.multipleMaxTagCount}`;
+        };
+        const props: any = omit({ ...getOptionProps(this), ...this.$attrs }, ['onChange']);
+        const getPrefixCls = this.configProvider.getPrefixCls;
+        const { prefixCls: customizePrefixCls } = props;
+        const prefixCls = getPrefixCls('calendar', customizePrefixCls);
+
+        return <TagGroup
+          class={`${prefixCls}-picker-multiple-taggroup`}
+          value={theNewTagGroupValue}
+          maxTagCount={this.multipleMaxTagCount}
+          maxTagTextLength={this.multipleMaxTagTextLength}
+          color={'#f5f5f5'}
+          closable={this.multipleClosable} 
+          overlayClassName={[`${prefixCls}-picker-multiple-popover`, this.multipleTagGroupPopoverClass]}
+          onChange={(name: string, eventeType: string) => this.mulitpleTagChange(name, eventeType, theStr, selectedValue)}
+          v-slots={{
+            more: theMoreSlot,
+          }}
+        />;
+      },
     },
 
     render() {
       const { $slots } = this;
+      const isMultiple = this.type === 'multiple';
       const { sValue: value, showDate, sOpen: open } = this.$data;
       let suffixIcon = getComponent(this, 'suffixIcon');
       suffixIcon = Array.isArray(suffixIcon) ? suffixIcon[0] : suffixIcon;
@@ -155,22 +198,35 @@ export default function createPicker<P>(
       const placeholder =
         'placeholder' in props ? props.placeholder : locale.lang.otherPlaceholder[name];
 
-      const disabledTime = props.showTime ? props.disabledTime : null;
+      const disabledTime = props.showTime && this.type !== 'multiple' ? props.disabledTime : null;
 
       const calendarClassName = classNames({
-        [`${prefixCls}-time`]: props.showTime,
+        [`${prefixCls}-time`]: props.showTime && this.type !== 'multiple',
         [`${prefixCls}-month`]: (MonthCalendar as any) === TheCalendar,
         [`${prefixCls}-year`]: (YearCalendar as any) === TheCalendar,
       });
 
       if (value && localeCode) {
-        value.locale(localeCode);
+        if (isMultiple) {
+          if (value.length > 0) {
+            value.forEach((oneValue: any) => {
+              if (oneValue.locale) {
+                oneValue.locale(localeCode);
+              }
+            });
+          }
+        } else {
+          value.locale(localeCode);
+        }
+      } else {
+        // form pro 报错
+        this.sValue = this.type === 'multiple' ? [] : undefined;
       }
 
       const pickerProps: any = {};
       const calendarProps: any = {};
       const pickerStyle: CSSProperties = {};
-      if (props.showTime) {
+      if (props.showTime && this.type !== 'multiple') {
         // fix https://github.com/ant-design/ant-design/issues/1902
         calendarProps.onSelect = this.handleChange;
         pickerStyle.minWidth = '195px';
@@ -185,7 +241,7 @@ export default function createPicker<P>(
         disabledDate: props.disabledDate,
         disabledTime,
         locale: locale.lang,
-        timePicker: props.timePicker,
+        timePicker: this.type === 'multiple' ? null : props.timePicker,
         defaultValue: props.defaultPickerValue || interopDefault(moment)(),
         dateInputPlaceholder: placeholder,
         prefixCls,
@@ -200,11 +256,14 @@ export default function createPicker<P>(
         onPanelChange: props.onPanelChange,
         onChange: this.handleCalendarChange,
         class: calendarClassName,
+        type: this.type,
+        multiplePanelHeaderRender: this.multiplePanelHeaderRender,
       };
       const calendar = <TheCalendar {...theCalendarProps} v-slots={$slots} />;
+      const hasValue = isMultiple ? value?.length > 0 : !!value;
 
       const clearIcon =
-        !props.disabled && props.allowClear && value ? (
+        !props.disabled && props.allowClear && hasValue ? (
           <CloseCircleFilled class={`${prefixCls}-picker-clear`} onClick={this.clearSelection} />
         ) : null;
 
@@ -217,24 +276,38 @@ export default function createPicker<P>(
           <span class={`${prefixCls}-picker-icon`}>{suffixIcon}</span>
         ))) || <CalendarOutlined class={`${prefixCls}-picker-icon`} />;
 
-      const input = ({ value: inputValue }) => (
-        <div>
-          <input
-            ref={this.saveInput}
-            disabled={props.disabled}
-            onFocus={props.onFocus}
-            onBlur={props.onBlur}
-            readonly
-            value={formatDate(inputValue, this.format)}
-            placeholder={placeholder}
-            class={props.pickerInputClass}
-            tabindex={props.tabindex}
-            name={this.name}
-          />
+      const multipleTagNode = (inputValue: any) => {
+        const isMultipleEmpty = inputValue?.length < 1;
+        const theValues = inputValue?.map((item: any) => formatDate(item, this.format));
+        return <div class={`${prefixCls}-picker-multiple`}>
+          <div class={[props.pickerInputClass, {
+            [`${prefixCls}-picker-multiple-placeholder`]: isMultipleEmpty,
+          }]}>{isMultipleEmpty ? placeholder : this.multiplePanelHeaderRender(theValues, inputValue)}</div>
           {clearIcon}
           {inputIcon}
-        </div>
-      );
+        </div>;
+      };
+
+      const input = ({ value: inputValue }) => {
+        return isMultiple ? multipleTagNode(inputValue) : (
+          <div>
+            <input
+              ref={this.saveInput}
+              disabled={props.disabled}
+              onFocus={props.onFocus}
+              onBlur={props.onBlur}
+              readonly
+              value={formatDate(inputValue, this.format)}
+              placeholder={placeholder}
+              class={props.pickerInputClass}
+              tabindex={props.tabindex}
+              name={this.name}
+            />
+            {clearIcon}
+            {inputIcon}
+          </div>
+        );
+      };
       const vcDatePickerProps = {
         ...props,
         ...pickerProps,

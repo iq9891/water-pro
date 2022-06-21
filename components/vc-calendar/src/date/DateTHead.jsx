@@ -2,8 +2,8 @@ import DateConstants from './DateConstants';
 import moment from 'moment';
 
 const DateTHead = (_, { attrs }) => {
-  const value = attrs.value;
-  const localeData = value.localeData();
+  const value = attrs.type === 'multiple' ? attrs.value?.[0] : attrs.value;
+  const localeData = value?.localeData();
   const prefixCls = attrs.prefixCls;
   const veryShortWeekdays = [];
   const weekDays = [];

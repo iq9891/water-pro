@@ -4,17 +4,20 @@ const ROW = 4;
 const COL = 3;
 function noop() {}
 function goYear(direction) {
-  const next = this.sValue.clone();
+  const isMultiple = this.type === 'multiple';
+  const next = (isMultiple ? this.sValue?.[0]:this.sValue).clone();
   next.add(direction, 'years');
   this.setState({
-    sValue: next,
+    sValue: isMultiple? [next]:next,
   });
 }
 
 function chooseDecade(year, event) {
-  const next = this.sValue.clone();
+  const isMultiple = this.type === 'multiple';
+  const theValue = (isMultiple ? this.sValue?.[0]:this.sValue);
+  const next = theValue.clone();
   next.year(year);
-  next.month(this.sValue.month());
+  next.month(theValue.month());
   this.__emit('select', next);
   event.preventDefault();
 }
@@ -29,6 +32,7 @@ export default {
     defaultValue: PropTypes.object,
     rootPrefixCls: PropTypes.string,
     renderFooter: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
   },
   data() {
     this.nextCentury = goYear.bind(this, 100);
@@ -43,7 +47,8 @@ export default {
     },
   },
   render() {
-    const value = this.sValue;
+    const isMultiple = this.type === 'multiple';
+    const value = isMultiple ? this.sValue?.[0] : this.sValue;
     const { locale, renderFooter } = this.$props;
     const currentYear = value.year();
     const startYear = parseInt(currentYear / 100, 10) * 100;

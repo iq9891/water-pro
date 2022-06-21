@@ -57,6 +57,7 @@ export default defineComponent({
     createBordered: PropTypes.bool.def(true),
     createIcon: PropTypes.bool.def(true),
     disabled: PropTypes.bool,
+    overlayClassName: PropTypes.any.def(''),
   },
   emits: ['change', 'create-click', 'close-click'],
   setup(props, { emit }) {
@@ -289,7 +290,7 @@ export default defineComponent({
         );
       });
 
-      const popoverInnerNode = <div class={`${this.prefixClsNew}-popover`}>{popoverTagNodes}</div>;
+      const popoverInnerNode = <div class={[`${this.prefixClsNew}-popover`, this.overlayClassName]}>{popoverTagNodes}</div>;
 
       popoverNode = (
         <APopover

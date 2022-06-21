@@ -21,6 +21,11 @@ export interface PickerProps {
   format?: string | string[] | Function;
   disabled?: boolean;
   allowClear?: boolean;
+  type?: string;
+  multipleMaxTagCount?: number;
+  multipleMaxTagTextLength?: number;
+  multipleClosable?: Boolean;
+  multipleTagGroupPopoverClass?: any;
   pickerClass?: string;
   pickerInputClass?: string;
   suffixIcon?: VueNode;

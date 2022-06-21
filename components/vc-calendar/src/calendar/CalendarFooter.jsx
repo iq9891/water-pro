@@ -26,6 +26,7 @@ const CalendarFooter = {
     showTimePicker: PropTypes.looseBool,
     okDisabled: PropTypes.looseBool,
     mode: PropTypes.string,
+    type: { type: String, default: ''}, // 'multiple'
   },
   methods: {
     onSelect(value) {
@@ -47,6 +48,7 @@ const CalendarFooter = {
         ...props,
         ...this.$attrs,
         value,
+        type: this.type,
       };
       let nowEl = null;
       if (showToday) {

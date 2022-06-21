@@ -1,4 +1,5 @@
 import { provide, inject, defineComponent, DefineComponent, nextTick } from 'vue';
+import cloneDeep from 'lodash-es/cloneDeep';
 import TimePickerPanel from '../vc-time-picker/Panel';
 import classNames from '../_util/classNames';
 import LocaleReceiver from '../locale-provider/LocaleReceiver';
@@ -135,10 +136,43 @@ export default function wrapPicker<P>(
       handleMouseLeave(e: MouseEvent) {
         this.$emit('mouseleave', e);
       },
-      handleChange(date: any, dateString: string) {
-        const value = this.valueFormat ? momentToString(date, this.valueFormat) : date;
-        this.$emit('update:value', value);
-        this.$emit('change', value, dateString);
+      handleChange(date: any, dateString: string[]) {
+        let theValue: any = this.type === 'multiple' ? [] : '';
+        if (this.type === 'multiple') {
+          if (date.length > 0) {
+            const theNowVal = this.valueFormat ? momentToString(date?.[0], this.valueFormat) : date?.[0];
+
+            if (Array.isArray(this.value) && this.value.length > 0) {
+              const theOneIdx = this.value.findIndex((vItem: any) => {
+                if (this.valueFormat) {
+                  return vItem === theNowVal;
+                } else {
+                  return vItem.isSame(theNowVal);
+                }
+              });
+              theValue = cloneDeep(this.value);
+              if (theOneIdx > -1) {
+                theValue.splice(theOneIdx, 1);
+              } else {
+                theValue.push(theNowVal);
+              }
+            } else {
+              theValue = [theNowVal];
+            }
+          }
+        } else {
+          theValue = this.valueFormat ? momentToString(date, this.valueFormat) : date;
+        }
+        this.$emit('update:value', theValue);
+        this.$emit('change', theValue, dateString);
+      },
+      handleMulitplteRemove(_: any, dataIdx: number) {
+        if (this.type === 'multiple' && dataIdx > -1) {
+          const oldVal = this.value.slice();
+          this.value.splice(dataIdx, 1);
+          this.$emit('update:value', this.value);
+          this.$emit('change', this.value, oldVal);
+        }
       },
       handleOk(val: any) {
         this.$emit('ok', this.valueFormat ? momentToString(val, this.valueFormat) : val);
@@ -182,7 +216,7 @@ export default function wrapPicker<P>(
           disabled,
           format,
         } = props;
-        const mergedPickerType = showTime ? `${pickerType}Time` : pickerType;
+        const mergedPickerType = showTime && this.type !== 'multiple' ? `${pickerType}Time` : pickerType;
         const mergedFormat =
           format ||
           locale[LOCALE_FORMAT_MAPPING[mergedPickerType]] ||
@@ -235,6 +269,7 @@ export default function wrapPicker<P>(
           onMouseenter: this.handleMouseEnter,
           onMouseleave: this.handleMouseLeave,
           onChange: this.handleChange,
+          onMulitplteRemove: this.handleMulitplteRemove,
           onOk: this.handleOk,
           onCalendarChange: this.handleCalendarChange,
           ref: this.savePicker,

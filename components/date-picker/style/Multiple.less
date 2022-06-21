@@ -1,0 +1,38 @@
+.@{calendar-prefix-cls}-picker-multiple {
+  min-width: 172px;
+
+  &-placeholder {
+    color: @input-placeholder-color;
+  }
+
+  &-taggroup {
+    margin-right: 16px !important;
+
+    & .@{ant-prefix}-tag-group-more {
+      margin-right: 16px;
+    }
+
+    & .ant-tag-has-color,
+    & .ant-tag-has-color a,
+    & .ant-tag-has-color a:hover,
+    & .ant-tag-has-color .anticon,
+    & .ant-tag-has-color .anticon:hover {
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+
+  &-popover {
+    color: #000;
+    & .@{ant-prefix}-tag:nth-of-type(even) {
+      margin-right: 0;
+    }
+
+    & .ant-tag-has-color,
+    & .ant-tag-has-color a,
+    & .ant-tag-has-color a:hover,
+    & .ant-tag-has-color .anticon,
+    & .ant-tag-has-color .anticon:hover {
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+}
