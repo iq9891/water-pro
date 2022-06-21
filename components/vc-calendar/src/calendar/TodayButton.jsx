@@ -1,7 +1,8 @@
 import { getTodayTimeStr, getTodayTime, isAllowedDate } from '../util/';
 function noop() {}
 const TodayButton = (_, { attrs }) => {
-  const { prefixCls, locale, value, timePicker, disabled, disabledDate, onToday, text } = attrs;
+  const { prefixCls, locale, value: theValue, type, timePicker, disabled, disabledDate, onToday, text } = attrs;
+  const value = type === 'multiple' ? theValue?.[0] : theValue;
   const localeNow = (!text && timePicker ? locale.now : text) || locale.today;
   const disabledToday = disabledDate && !isAllowedDate(getTodayTime(value), disabledDate);
   const isDisabled = disabledToday || disabled;

@@ -7,6 +7,7 @@ import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import zhCn from './locale/zh_CN';
+import { getMomentObjectIfValid } from './util';
 import { defineComponent } from 'vue';
 const MonthCalendar = defineComponent({
   name: 'MonthCalendar',
@@ -26,13 +27,16 @@ const MonthCalendar = defineComponent({
     monthCellContentRender: PropTypes.func,
     renderFooter: PropTypes.func.def(() => null),
     renderSidebar: PropTypes.func.def(() => null),
+    type: { type: String, default: ''}, // 'multiple'
   },
 
   data() {
     const props = this.$props;
+    const theNow = moment();
+    const theValue = getMomentObjectIfValid(props.value) || getMomentObjectIfValid(props.defaultValue) || (this.type === 'multiple' ? [theNow]: theNow);
     return {
       mode: 'month',
-      sValue: props.value || props.defaultValue || moment(),
+      sValue: theValue,
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },
@@ -105,6 +109,8 @@ const MonthCalendar = defineComponent({
             mode={mode}
             value={value}
             locale={locale}
+            type={this.type}
+            selectType="month"
             disabledMonth={disabledDate}
             monthCellRender={monthCellRender}
             monthCellContentRender={monthCellContentRender}

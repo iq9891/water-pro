@@ -38,6 +38,7 @@ const DateTBody = {
     value: PropTypes.object,
     hoverValue: PropTypes.any.def([]),
     showWeekNumber: PropTypes.looseBool,
+    type: { type: String, default: ''}, // 'multiple'
   },
 
   render() {
@@ -46,12 +47,14 @@ const DateTBody = {
       contentRender,
       prefixCls,
       selectedValue,
-      value,
+      value: theValue,
       showWeekNumber,
       dateRender,
       disabledDate,
       hoverValue,
+      type,
     } = props;
+    const value = type === 'multiple' ? theValue?.[0] : theValue;
     const { onSelect = noop, onDayHover = noop } = this.$attrs;
     let iIndex;
     let jIndex;
@@ -76,7 +79,7 @@ const DateTBody = {
     const month1 = value.clone();
     month1.date(1);
     const day = month1.day();
-    const lastMonthDiffDay = (day + 7 - value.localeData().firstDayOfWeek()) % 7;
+    const lastMonthDiffDay = (day + 7 - value?.localeData().firstDayOfWeek()) % 7;
     // calculate last month
     const lastMonth1 = month1.clone();
     lastMonth1.add(0 - lastMonthDiffDay, 'days');
@@ -128,8 +131,8 @@ const DateTBody = {
 
         const isBeforeCurrentMonthYear = beforeCurrentMonthYear(current, value);
         const isAfterCurrentMonthYear = afterCurrentMonthYear(current, value);
-
-        if (selectedValue && Array.isArray(selectedValue)) {
+        const isMultiple = this.type === 'multiple';
+        if (!isMultiple && selectedValue && Array.isArray(selectedValue)) {
           const rangeValue = hoverValue.length ? hoverValue : selectedValue;
           if (!isBeforeCurrentMonthYear && !isAfterCurrentMonthYear) {
             const startValue = rangeValue[0];
@@ -160,6 +163,13 @@ const DateTBody = {
                 cls += ` ${inRangeClass}`;
               }
             }
+          }
+        } else if (isMultiple && selectedValue && Array.isArray(selectedValue)) {
+          const isInDay = selectedValue.find((sValue) => isSameDay(current, sValue));
+          if (isInDay) {
+            selected = true;
+            isActiveWeek = true;
+            cls += ` ${selectedEndDateClass}`;
           }
         } else if (isSameDay(current, value)) {
           // keyboard change value, highlight works

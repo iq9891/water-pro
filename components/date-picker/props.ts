@@ -53,7 +53,12 @@ export const PickerProps = {
 };
 
 export const SinglePickerProps = {
-  value: { type: [String, Object] as PropType<PickerValue> },
+  value: { type: [String, Object, Array] as PropType<PickerValue | RangePickerValue> },
+  type: { type: String, default: ''}, // 'multiple'
+  multipleMaxTagCount: {type: Number,default: 1},
+  multipleMaxTagTextLength: {type: Number,default: 11},
+  multipleClosable: {type: Boolean,default: true},
+  multipleTagGroupPopoverClass: {type: [String, Object] as PropType<any>, default: {}},
   defaultValue: { type: [String, Object] as PropType<PickerValue> },
   defaultPickerValue: { type: [String, Object] as PropType<PickerValue> },
   renderExtraFooter: PropTypes.any,

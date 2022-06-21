@@ -6,15 +6,19 @@ import YearPanel from '../year/YearPanel';
 import DecadePanel from '../decade/DecadePanel';
 function noop() {}
 function goMonth(direction) {
-  const next = this.value.clone();
+  const isMultiple = this.type === 'multiple';
+  const theValue = isMultiple ? this.value?.[this.value.length - 1] : this.value;
+  const next = theValue.clone();
   next.add(direction, 'months');
-  this.__emit('valueChange', next);
+  this.__emit('valueChange', isMultiple ? [next] : next);
 }
 
 function goYear(direction) {
-  const next = this.value.clone();
+  const isMultiple = this.type === 'multiple';
+  const theValue = isMultiple ? this.value?.[this.value.length - 1] : this.value;
+  const next = theValue.clone();
   next.add(direction, 'years');
-  this.__emit('valueChange', next);
+  this.__emit('valueChange', isMultiple ? [next] : next);
 }
 
 function showIf(condition, el) {
@@ -39,6 +43,9 @@ const CalendarHeader = {
     monthCellRender: PropTypes.func,
     monthCellContentRender: PropTypes.func,
     renderFooter: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
+    // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
+    selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
   },
   data() {
     this.nextMonth = goMonth.bind(this, 1);
@@ -66,13 +73,14 @@ const CalendarHeader = {
       if (this.$attrs.onYearSelect) {
         this.__emit('yearSelect', value);
       } else {
-        this.__emit('valueChange', value);
+        this.__emit('valueChange', this.type === 'multiple'?[value]:value);
       }
     },
 
     onDecadeSelect(value) {
+      const isMultiple = this.type === 'multiple';
       this.__emit('panelChange', value, 'year');
-      this.__emit('valueChange', value);
+      this.__emit('valueChange', isMultiple?[value]:value);
     },
 
     changeYear(direction) {
@@ -87,8 +95,8 @@ const CalendarHeader = {
       const props = this.$props;
       const prefixCls = props.prefixCls;
       const locale = props.locale;
-      const value = props.value;
-      const localeData = value.localeData();
+      const value = this.type === 'multiple' ? props.value?.[0] : props.value;
+      const localeData = value?.localeData();
       const monthBeforeYear = locale.monthBeforeYear;
       const selectClassName = `${prefixCls}-${monthBeforeYear ? 'my-select' : 'ym-select'}`;
       const timeClassName = showTimePicker ? ` ${prefixCls}-time-status` : '';
@@ -165,6 +173,8 @@ const CalendarHeader = {
           locale={locale}
           value={value}
           rootPrefixCls={prefixCls}
+          type={this.type}
+          selectType={this.selectType}
           onSelect={this.onMonthSelect}
           onYearPanelShow={() => this.showYearPanel('month')}
           disabledDate={disabledMonth}
@@ -180,6 +190,8 @@ const CalendarHeader = {
         <YearPanel
           locale={locale}
           value={value}
+          type={this.type}
+          selectType={this.selectType}
           rootPrefixCls={prefixCls}
           onSelect={this.onYearSelect}
           onDecadePanelShow={this.showDecadePanel}
@@ -195,6 +207,7 @@ const CalendarHeader = {
           rootPrefixCls={prefixCls}
           onSelect={this.onDecadeSelect}
           renderFooter={renderFooter}
+          type={this.type}
         />
       );
     }

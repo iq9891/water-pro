@@ -7,6 +7,7 @@ import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import zhCn from './locale/zh_CN';
+import { getMomentObjectIfValid } from './util';
 import { defineComponent } from 'vue';
 const YearCalendar = defineComponent({
   name: 'YearCalendar',
@@ -26,13 +27,16 @@ const YearCalendar = defineComponent({
     yearCellContentRender: PropTypes.func,
     renderFooter: PropTypes.func.def(() => null),
     renderSidebar: PropTypes.func.def(() => null),
+    type: { type: String, default: ''}, // 'multiple'
   },
 
   data() {
     const props = this.$props;
+    const theNow = moment();
+    const theValue = getMomentObjectIfValid(props.value) || getMomentObjectIfValid(props.defaultValue) || (this.type === 'multiple' ? [theNow]: theNow);
     return {
       mode: 'year',
-      sValue: props.value || props.defaultValue || moment(),
+      sValue: theValue,
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },
@@ -86,7 +90,7 @@ const YearCalendar = defineComponent({
 
     handlePanelChange(_, mode) {
       if (mode !== 'date') {
-        this.setState({ mode });
+        this.setState({ mode: mode || 'year' });
       }
     },
   },
@@ -105,6 +109,8 @@ const YearCalendar = defineComponent({
             mode={mode}
             value={value}
             locale={locale}
+            type={this.type}
+            selectType="year"
             disabledYear={disabledDate}
             yearCellRender={yearCellRender}
             yearCellContentRender={yearCellContentRender}

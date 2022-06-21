@@ -75,11 +75,11 @@ const md = {
       - 偷懒的时候
       - 快速实现数据提交
 
-       ## 代码演示
+      ## 代码演示
         `,
   us: `# Form Pro
         TODO
-       ## Examples
+      ## Examples
         `,
 };
 export default {

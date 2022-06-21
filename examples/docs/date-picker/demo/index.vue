@@ -41,6 +41,9 @@ import TextCodeString from './text.vue?raw';
 import RangeNow from './range-now.vue';
 import RangeNowString from './range-now.md?raw';
 import RangeNowCodeString from './range-now.vue?raw';
+import Multiple from './multiple.vue';
+import MultipleString from './multiple.md?raw';
+import MultipleCodeString from './multiple.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -109,6 +112,9 @@ export default {
           </demo-container>
           <demo-container api={RangeNowString} code={RangeNowCodeString}>
             <RangeNow />
+          </demo-container>
+          <demo-container api={MultipleString} code={MultipleCodeString}>
+            <Multiple />
           </demo-container>
         </demo-sort>
         <api>

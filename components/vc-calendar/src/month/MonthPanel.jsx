@@ -25,6 +25,9 @@ const MonthPanel = {
     // onSelect: PropTypes.func,
     renderFooter: PropTypes.func,
     changeYear: PropTypes.func.def(noop),
+    type: { type: String, default: ''}, // 'multiple'
+    // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
+    selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
   },
 
   data() {
@@ -45,8 +48,9 @@ const MonthPanel = {
   },
   methods: {
     setAndSelectValue(value) {
-      this.setValue(value);
-      this.__emit('select', value);
+      const isMultiple = this.type === 'multiple';
+      this.setValue(isMultiple?[value]:value);
+      this.__emit('select', isMultiple?[value]:value);
     },
 
     setValue(value) {
@@ -68,7 +72,9 @@ const MonthPanel = {
       disabledDate,
       renderFooter,
     } = this;
-    const year = sValue.year();
+    const isMultiple = this.type === 'multiple';
+    const value = isMultiple ? this.sValue?.[0] : this.sValue;
+    const year = value.year();
     const prefixCls = `${rootPrefixCls}-month-panel`;
 
     const footer = renderFooter && renderFooter('month');
@@ -109,6 +115,8 @@ const MonthPanel = {
               cellRender={cellRender}
               contentRender={contentRender}
               prefixCls={prefixCls}
+              type={this.type}
+              selectType={this.selectType}
             />
           </div>
           {footer && <div class={`${prefixCls}-footer`}>{footer}</div>}

@@ -40,6 +40,10 @@
 | inputReadOnly | 设置输入框为只读（避免在移动设备上打开虚拟键盘） | boolean | - | 1.5.4 |
 | align | 该值将合并到 placement 的配置中，设置参考 [dom-align](https://github.com/yiminghe/dom-align) | Object | 无 | 1.5.4 |
 | valueFormat | 可选，绑定值的格式，对 value、defaultValue、defaultPickerValue 起作用。不指定则绑定值为 moment 对象 | string，[具体格式](https://momentjs.com/docs/#/displaying/format/) | - | 1.5.4 |
+| type | 选择类型，可选参数: 'multiple' 。 type="multiple" 是多选不支持 showTime 属性 | string | - | 3.55.0 |
+| multipleMaxTagCount | type="multiple" 时候 最大展示的标签数 | number | 1 | 3.55.0 |
+| multipleMaxTagTextLength | type="multiple" 时候 每个标签最大展示的文字长度 | number | 11 | 3.55.0 |
+| multipleClosable | type="multiple" 时候 标签是否直接删除 | boolean | true | 3.55.0 |
 
 
 ### 共有的事件

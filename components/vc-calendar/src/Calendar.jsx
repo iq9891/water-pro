@@ -10,17 +10,11 @@ import CalendarFooter from './calendar/CalendarFooter';
 import CalendarMixin, { getNowByCurrentStateValue } from './mixin/CalendarMixin';
 import CommonMixin from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
+import DateTag from './date/DateTag';
 import zhCn from './locale/zh_CN';
-import { getTimeConfig, getTodayTime, syncTime } from './util';
+import { getTimeConfig, getTodayTime, syncTime, getMomentObjectIfValid } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import { defineComponent } from 'vue';
-
-const getMomentObjectIfValid = (date) => {
-  if (moment.isMoment(date) && date.isValid()) {
-    return date;
-  }
-  return false;
-};
 
 const Calendar = defineComponent({
   name: 'Calendar',
@@ -65,16 +59,18 @@ const Calendar = defineComponent({
     inputReadOnly: PropTypes.looseBool,
     monthCellRender: PropTypes.func,
     monthCellContentRender: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
+    multiplePanelHeaderRender: PropTypes.func,
   },
 
   data() {
     const props = this.$props;
+    const theValue = getMomentObjectIfValid(props.value) ||
+    getMomentObjectIfValid(props.defaultValue) ||
+    moment();
     return {
       sMode: this.mode || 'date',
-      sValue:
-        getMomentObjectIfValid(props.value) ||
-        getMomentObjectIfValid(props.defaultValue) ||
-        moment(),
+      sValue: this.type === 'multiple' && !Array.isArray(theValue) ? [theValue] : theValue,
       sSelectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   },
@@ -83,12 +79,21 @@ const Calendar = defineComponent({
       this.setState({ sMode: val });
     },
     value(val) {
-      this.setState({
-        sValue:
-          getMomentObjectIfValid(val) ||
-          getMomentObjectIfValid(this.defaultValue) ||
-          getNowByCurrentStateValue(this.sValue),
-      });
+      if (this.type !== 'multiple') {
+        this.setState({
+          sValue:
+            getMomentObjectIfValid(val) ||
+            getMomentObjectIfValid(this.defaultValue) ||
+            getNowByCurrentStateValue(this.sValue),
+        });
+      } else {
+        this.setState({
+          sValue:
+            getMomentObjectIfValid(val) ||
+            getMomentObjectIfValid(this.defaultValue) ||
+            [getNowByCurrentStateValue(this.sValue?.[this.sValue.length -1])],
+        });
+      }
     },
     selectedValue(val) {
       this.setState({
@@ -207,7 +212,7 @@ const Calendar = defineComponent({
     },
     onToday() {
       const { sValue } = this;
-      const now = getTodayTime(sValue);
+      const now = getTodayTime(this.type === 'multiple' ? sValue?.[0] : sValue);
       this.onSelect(now, {
         source: 'todayButton',
       });
@@ -292,25 +297,32 @@ const Calendar = defineComponent({
       timePickerEle = cloneElement(timePicker, timePickerProps);
     }
 
+    const theHeader = this.type === 'multiple' ? <DateTag
+      format={this.getFormat()}
+      selectedValue={sSelectedValue}
+      locale={locale}
+      prefixCls={prefixCls}
+      multiplePanelHeaderRender={this.multiplePanelHeaderRender}
+    /> : <DateInput
+      format={this.getFormat()}
+      key="date-input"
+      value={sValue}
+      locale={locale}
+      placeholder={dateInputPlaceholder}
+      showClear
+      disabledTime={disabledTime}
+      disabledDate={disabledDate}
+      onClear={this.onClear}
+      prefixCls={prefixCls}
+      selectedValue={sSelectedValue}
+      onChange={this.onDateInputChange}
+      clearIcon={clearIcon}
+      onSelect={this.onDateInputSelect}
+      inputMode={inputMode}
+      inputReadOnly={inputReadOnly}
+    />;
     const dateInputElement = showDateInput ? (
-      <DateInput
-        format={this.getFormat()}
-        key="date-input"
-        value={sValue}
-        locale={locale}
-        placeholder={dateInputPlaceholder}
-        showClear
-        disabledTime={disabledTime}
-        disabledDate={disabledDate}
-        onClear={this.onClear}
-        prefixCls={prefixCls}
-        selectedValue={sSelectedValue}
-        onChange={this.onDateInputChange}
-        clearIcon={clearIcon}
-        onSelect={this.onDateInputSelect}
-        inputMode={inputMode}
-        inputReadOnly={inputReadOnly}
-      />
+      theHeader
     ) : null;
     const children = [];
     if (props.renderSidebar) {
@@ -323,6 +335,8 @@ const Calendar = defineComponent({
           <CalendarHeader
             locale={locale}
             mode={sMode}
+            type={this.type}
+            selectType="date"
             value={sValue}
             onValueChange={this.setValue}
             onPanelChange={this.onPanelChange}
@@ -341,6 +355,7 @@ const Calendar = defineComponent({
             <DateTable
               locale={locale}
               value={sValue}
+              type={this.type}
               selectedValue={sSelectedValue}
               prefixCls={prefixCls}
               dateRender={props.dateRender}
@@ -353,6 +368,7 @@ const Calendar = defineComponent({
           <CalendarFooter
             showOk={props.showOk}
             mode={sMode}
+            type={this.type}
             renderFooter={props.renderFooter}
             locale={locale}
             prefixCls={prefixCls}

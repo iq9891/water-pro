@@ -9,6 +9,7 @@ import Trigger from '../../vc-trigger';
 import moment from 'moment';
 import isNil from 'lodash-es/isNil';
 import { defineComponent } from 'vue';
+
 const TimeType = {
   validator(value) {
     if (Array.isArray(value)) {
@@ -48,6 +49,7 @@ const Picker = defineComponent({
     dropdownClassName: PropTypes.string,
     dateRender: PropTypes.func,
     children: PropTypes.func,
+    type: { type: String, default: ''}, // 'multiple'
   },
 
   data() {
@@ -101,12 +103,14 @@ const Picker = defineComponent({
     },
 
     onCalendarSelect(value, cause = {}) {
+      const isMultiple = this.type === 'multiple';
       const props = this.$props;
       if (!hasProp(this, 'value')) {
         this.setState({
           sValue: value,
         });
       }
+      const theMultipleValue = hasProp(this, 'sValue') && Array.isArray(this.sValue) ? this.sValue.slice() : [];
       const calendarProps = getOptionProps(props.calendar);
       if (
         cause.source === 'keyboard' ||
@@ -114,9 +118,11 @@ const Picker = defineComponent({
         (!calendarProps.timePicker && cause.source !== 'dateInput') ||
         cause.source === 'todayButton'
       ) {
-        this.closeCalendar(this.focus);
+        if (!isMultiple) {
+          this.closeCalendar(this.focus);
+        }
       }
-      this.__emit('change', value);
+      this.__emit('change', isMultiple?theMultipleValue.concat(value): value);
     },
 
     onKeyDown(event) {
@@ -152,6 +158,7 @@ const Picker = defineComponent({
         ref: this.saveCalendarRef,
         defaultValue: defaultValue || calendarProps.defaultValue,
         selectedValue: value,
+        type:this.type,
         onKeydown: this.onCalendarKeyDown,
         onOk: createChainedFunction(calendarEvents.onOk, this.onCalendarOk),
         onSelect: createChainedFunction(calendarEvents.onSelect, this.onCalendarSelect),
