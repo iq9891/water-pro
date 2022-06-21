@@ -1,6 +1,7 @@
 <template>
   <a-table-pro
     @register="basicRegister"
+    @fetch-success="successAjax"
   />
 </template>
 <script lang="ts">
@@ -27,7 +28,7 @@ const columns = [
 
 export function demoListApi({params, success}) {
   const arr: any = [];
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < 20; index++) {
     arr.push({
       id: `${index}`,
       name: `${Math.random() + index}-water`,
@@ -36,7 +37,13 @@ export function demoListApi({params, success}) {
     });
   }
   setTimeout(() => {
-    success(arr);
+    success({
+      data: arr,
+      test: 1,
+      pagination: {
+        total:20,
+      }
+    });
   }, 1000);
 }
 
@@ -48,8 +55,12 @@ export default defineComponent({
         api: demoListApi,
         columns,
       });
+      const successAjax = (data: any, res: any) => {
+        console.log(data, res)
+      }
     return {
       basicRegister,
+      successAjax,
     };
   },
 });
