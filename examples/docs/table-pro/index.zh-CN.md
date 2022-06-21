@@ -56,7 +56,7 @@
 | 事件名称 | 说明 | 回调参数 |
 | --- | --- | --- |
 | register | 使用 useTable 的回调 | Function([formActionType](https://github.com/fe6/water-pro/blob/next/components/form-pro/src/types/form.ts#L29)) |  |
-| fetch-success | api 参数请求成功的回调 | Function({ items: 结果数据, total: 总数, params: 参数 }) |  |
+| fetch-success | api 参数请求成功的回调 | Function({ items: 结果数据, total: 总数, params: 参数 }, res: 所有请求的数据) |  |
 | fetch-error | api 参数请求失败的回调 | Function(error: any) |  |
 | fetch-finally | api 参数请求成功失败都会回调 | Function() |  |
 | selection-change | 表格 rowSelection 的 change 回调 | `Function(keys： string[] | number[]，rows: any[])` |  |
