@@ -20,6 +20,8 @@
             allowClear
             mode="multiple"
             :api="getSelectForOptions"
+            :showDropdownManger="false"
+            :showDropdownAdd="false"
             :createFormConfig="createFormConfig"
             :createApi="postCreateApi"
             :editApi="postEditApi"
