@@ -78,6 +78,7 @@ export default defineComponent({
       default: null,
     },
     showDropdownAdd: PropTypes.bool.def(true),
+    showDropdownManger: PropTypes.bool.def(true),
     createApiParams: PropTypes.object.def({}),
     createTitle: PropTypes.string,
     editTitle: PropTypes.string,
@@ -510,6 +511,13 @@ export default defineComponent({
       const theOptBtnSlot = this.$slots.optionButtonSlot
         ? this.$slots.optionButtonSlot?.({ loading: this.loading })
         : null;
+      
+      let mangeNode: any;
+      if (this.showDropdownManger) {
+        mangeNode = <AButton size="small" type="link" onClick={this.handleDrawerStatus}>
+          {drawerIconNode} {this.classifyLang?.dropdownHandle||'管理'}
+        </AButton>;
+      }
 
       return (
         <div>
@@ -517,9 +525,7 @@ export default defineComponent({
           <ADivider style={{ margin: '4px 0' }} />
           <div style="text-align: right;">
             {addNode}
-            <AButton size="small" type="link" onClick={this.handleDrawerStatus}>
-              {drawerIconNode} {this.classifyLang?.dropdownHandle||'管理'}
-            </AButton>
+            {mangeNode}
             {theOptBtnSlot}
           </div>
         </div>
