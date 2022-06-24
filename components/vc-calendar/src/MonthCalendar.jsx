@@ -28,6 +28,7 @@ const MonthCalendar = defineComponent({
     renderFooter: PropTypes.func.def(() => null),
     renderSidebar: PropTypes.func.def(() => null),
     type: { type: String, default: ''}, // 'multiple'
+    disabledSelectYear: { type: Boolean, default: false},
   },
 
   data() {
@@ -110,6 +111,7 @@ const MonthCalendar = defineComponent({
             value={value}
             locale={locale}
             type={this.type}
+            disabledSelectYear={this.disabledSelectYear}
             selectType="month"
             disabledMonth={disabledDate}
             monthCellRender={monthCellRender}

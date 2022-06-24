@@ -28,6 +28,7 @@ const MonthPanel = {
     type: { type: String, default: ''}, // 'multiple'
     // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
     selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
+    disabledSelectYear: { type: Boolean, default: false},
   },
 
   data() {
@@ -78,34 +79,39 @@ const MonthPanel = {
     const prefixCls = `${rootPrefixCls}-month-panel`;
 
     const footer = renderFooter && renderFooter('month');
+
+    let theYear = null;
+    if (!this.disabledSelectYear) {
+      theYear = <div class={`${prefixCls}-header`}>
+        <a
+          class={`${prefixCls}-prev-year-btn`}
+          role="button"
+          onClick={this.previousYear}
+          title={locale.previousYear}
+        />
+
+        <a
+          class={`${prefixCls}-year-select`}
+          role="button"
+          onClick={this.$attrs.onYearPanelShow || noop}
+          title={locale.yearSelect}
+        >
+          <span class={`${prefixCls}-year-select-content`}>{year}</span>
+          <span class={`${prefixCls}-year-select-arrow`}>x</span>
+        </a>
+
+        <a
+          class={`${prefixCls}-next-year-btn`}
+          role="button"
+          onClick={this.nextYear}
+          title={locale.nextYear}
+        />
+      </div>;
+    }
     return (
       <div class={prefixCls}>
         <div>
-          <div class={`${prefixCls}-header`}>
-            <a
-              class={`${prefixCls}-prev-year-btn`}
-              role="button"
-              onClick={this.previousYear}
-              title={locale.previousYear}
-            />
-
-            <a
-              class={`${prefixCls}-year-select`}
-              role="button"
-              onClick={this.$attrs.onYearPanelShow || noop}
-              title={locale.yearSelect}
-            >
-              <span class={`${prefixCls}-year-select-content`}>{year}</span>
-              <span class={`${prefixCls}-year-select-arrow`}>x</span>
-            </a>
-
-            <a
-              class={`${prefixCls}-next-year-btn`}
-              role="button"
-              onClick={this.nextYear}
-              title={locale.nextYear}
-            />
-          </div>
+          {theYear}
           <div class={`${prefixCls}-body`}>
             <MonthTable
               disabledDate={disabledDate}

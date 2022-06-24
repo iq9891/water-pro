@@ -55,6 +55,7 @@ export const PickerProps = {
 export const SinglePickerProps = {
   value: { type: [String, Object, Array] as PropType<PickerValue | RangePickerValue> },
   type: { type: String, default: ''}, // 'multiple'
+  disabledSelectYear: { type: Boolean, default: false},
   multipleMaxTagCount: {type: Number,default: 1},
   multipleMaxTagTextLength: {type: Number,default: 11},
   multipleClosable: {type: Boolean,default: true},

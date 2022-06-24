@@ -44,6 +44,9 @@ import RangeNowCodeString from './range-now.vue?raw';
 import Multiple from './multiple.vue';
 import MultipleString from './multiple.md?raw';
 import MultipleCodeString from './multiple.vue?raw';
+import DisabledHeader from './disabled-header.vue';
+import DisabledHeaderString from './disabled-header.md?raw';
+import DisabledHeaderCodeString from './disabled-header.vue?raw';
 
 import CN from '../index.zh-CN.md';
 
@@ -115,6 +118,9 @@ export default {
           </demo-container>
           <demo-container api={MultipleString} code={MultipleCodeString}>
             <Multiple />
+          </demo-container>
+          <demo-container api={DisabledHeaderString} code={DisabledHeaderCodeString}>
+            <DisabledHeader />
           </demo-container>
         </demo-sort>
         <api>

@@ -44,6 +44,7 @@
 | multipleMaxTagCount | type="multiple" 时候 最大展示的标签数 | number | 1 | 3.55.0 |
 | multipleMaxTagTextLength | type="multiple" 时候 每个标签最大展示的文字长度 | number | 11 | 3.55.0 |
 | multipleClosable | type="multiple" 时候 标签是否直接删除 | boolean | true | 3.55.0 |
+| disabledSelectYear | 禁止头部选择年 | boolean | false | 3.56.0 |
 
 
 ### 共有的事件

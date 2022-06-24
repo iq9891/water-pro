@@ -257,6 +257,7 @@ export default function createPicker<P>(
         onChange: this.handleCalendarChange,
         class: calendarClassName,
         type: this.type,
+        disabledSelectYear: this.disabledSelectYear,
         multiplePanelHeaderRender: this.multiplePanelHeaderRender,
       };
       const calendar = <TheCalendar {...theCalendarProps} v-slots={$slots} />;
