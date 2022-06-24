@@ -46,6 +46,7 @@ const CalendarHeader = {
     type: { type: String, default: ''}, // 'multiple'
     // 用于匹配多选的时候，月和年的时候和日期切换月年的区别
     selectType: { type: String, default: ''}, // 'date' | 'month' | 'year'
+    disabledSelectYear: { type: Boolean, default: false},
   },
   data() {
     this.nextMonth = goMonth.bind(this, 1);
@@ -100,7 +101,7 @@ const CalendarHeader = {
       const monthBeforeYear = locale.monthBeforeYear;
       const selectClassName = `${prefixCls}-${monthBeforeYear ? 'my-select' : 'ym-select'}`;
       const timeClassName = showTimePicker ? ` ${prefixCls}-time-status` : '';
-      const year = (
+      const year = props.disabledSelectYear ? null : (
         <a
           class={`${prefixCls}-year-select${timeClassName}`}
           role="button"
@@ -176,6 +177,7 @@ const CalendarHeader = {
           type={this.type}
           selectType={this.selectType}
           onSelect={this.onMonthSelect}
+          disabledSelectYear={this.disabledSelectYear}
           onYearPanelShow={() => this.showYearPanel('month')}
           disabledDate={disabledMonth}
           cellRender={props.monthCellRender}
@@ -212,45 +214,54 @@ const CalendarHeader = {
       );
     }
 
+    let headerNode = null;
+    if (!this.disabledSelectYear || (this.disabledSelectYear && mode !== 'month')) {
+      headerNode = <div style={{ position: 'relative' }}>
+        {showIf(
+          enablePrev && !showTimePicker && !this.disabledSelectYear,
+          <a
+            class={`${prefixCls}-prev-year-btn`}
+            role="button"
+            onClick={this.previousYear}
+            title={locale.previousYear}
+          />,
+        )}
+        {showIf(
+          enablePrev && !showTimePicker,
+          <a
+            class={[`${prefixCls}-prev-month-btn`, {
+              [`${prefixCls}-prev-month-btn-only`]: this.disabledSelectYear,
+            }]}
+            role="button"
+            onClick={this.previousMonth}
+            title={locale.previousMonth}
+          />,
+        )}
+        {props.mode !== 'time' && this.monthYearElement(showTimePicker)}
+        {showIf(
+          enableNext && !showTimePicker,
+          <a
+            class={[`${prefixCls}-next-month-btn`, {
+              [`${prefixCls}-next-month-btn-only`]: this.disabledSelectYear,
+            }]}
+            onClick={this.nextMonth}
+            title={locale.nextMonth}
+          />,
+        )}
+        {showIf(
+          enableNext && !showTimePicker && !this.disabledSelectYear,
+          <a
+            class={`${prefixCls}-next-year-btn`}
+            onClick={this.nextYear}
+            title={locale.nextYear}
+          />,
+        )}
+      </div>;
+    }
+
     return (
       <div class={`${prefixCls}-header`}>
-        <div style={{ position: 'relative' }}>
-          {showIf(
-            enablePrev && !showTimePicker,
-            <a
-              class={`${prefixCls}-prev-year-btn`}
-              role="button"
-              onClick={this.previousYear}
-              title={locale.previousYear}
-            />,
-          )}
-          {showIf(
-            enablePrev && !showTimePicker,
-            <a
-              class={`${prefixCls}-prev-month-btn`}
-              role="button"
-              onClick={this.previousMonth}
-              title={locale.previousMonth}
-            />,
-          )}
-          {props.mode !== 'time' && this.monthYearElement(showTimePicker)}
-          {showIf(
-            enableNext && !showTimePicker,
-            <a
-              class={`${prefixCls}-next-month-btn`}
-              onClick={this.nextMonth}
-              title={locale.nextMonth}
-            />,
-          )}
-          {showIf(
-            enableNext && !showTimePicker,
-            <a
-              class={`${prefixCls}-next-year-btn`}
-              onClick={this.nextYear}
-              title={locale.nextYear}
-            />,
-          )}
-        </div>
+        {headerNode}
         {panel}
       </div>
     );

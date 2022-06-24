@@ -60,14 +60,22 @@ const Calendar = defineComponent({
     monthCellRender: PropTypes.func,
     monthCellContentRender: PropTypes.func,
     type: { type: String, default: ''}, // 'multiple'
+    disabledSelectYear: { type: Boolean, default: false},
     multiplePanelHeaderRender: PropTypes.func,
   },
 
   data() {
     const props = this.$props;
-    const theValue = getMomentObjectIfValid(props.value) ||
+    let theValue = getMomentObjectIfValid(props.value) ||
     getMomentObjectIfValid(props.defaultValue) ||
     moment();
+
+    if (this.disabledSelectYear) {
+      theValue = theValue.set({
+        'year': 2000,
+      });
+    }
+
     return {
       sMode: this.mode || 'date',
       sValue: this.type === 'multiple' && !Array.isArray(theValue) ? [theValue] : theValue,
@@ -336,6 +344,7 @@ const Calendar = defineComponent({
             locale={locale}
             mode={sMode}
             type={this.type}
+            disabledSelectYear={this.disabledSelectYear}
             selectType="date"
             value={sValue}
             onValueChange={this.setValue}
