@@ -70,12 +70,6 @@ const Calendar = defineComponent({
     getMomentObjectIfValid(props.defaultValue) ||
     moment();
 
-    if (this.disabledSelectYear) {
-      theValue = theValue.set({
-        'year': 2000,
-      });
-    }
-
     return {
       sMode: this.mode || 'date',
       sValue: this.type === 'multiple' && !Array.isArray(theValue) ? [theValue] : theValue,
