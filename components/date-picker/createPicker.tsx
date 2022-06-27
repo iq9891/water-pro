@@ -1,6 +1,8 @@
 import { CSSProperties, DefineComponent, defineComponent, inject, nextTick } from 'vue';
 import moment from 'moment';
 import omit from 'lodash-es/omit';
+import cloneDeep from 'lodash-es/cloneDeep';
+import { isArray } from '@fe6/shared';
 import MonthCalendar from '../vc-calendar/src/MonthCalendar';
 import YearCalendar from '../vc-calendar/src/YearCalendar';
 import VcDatePicker from '../vc-calendar/src/Picker';
@@ -100,8 +102,22 @@ export default function createPicker<P>(
             showDate: isMultiple ? [value]:value,
           });
         }
+        let theValue = cloneDeep(value);
+        if (this.disabledSelectYear) {
+          if (isMultiple && isArray(theValue)) {
+            theValue = (theValue as any).map((oneValue: any) => {
+              return oneValue.set({
+                'year': 2000,
+              });
+            });
+          } else {
+            theValue = (theValue as any).set({
+              'year': 2000,
+            });
+          }
+        }
         // 真正 value 更新
-        this.$emit('change', value, isMultiple ? (value as  moment.Moment[]).map((iVal: any) =>formatDate(iVal, this.format)) : formatDate(value as  moment.Moment, this.format));
+        this.$emit('change', theValue, isMultiple ? (theValue as  moment.Moment[]).map((iVal: any) =>formatDate(iVal, this.format)) : formatDate(theValue as  moment.Moment, this.format));
       },
 
       handleCalendarChange(value: moment.Moment) {
