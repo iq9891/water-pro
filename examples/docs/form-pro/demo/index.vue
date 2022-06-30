@@ -94,6 +94,60 @@ export default {
       <div>
         <Md cn={md.cn} us={md.us} />
         <demo-sort cols={1}>
+          <demo-container api={BasicString} code={BasicCodeString}>
+            <Basic />
+          </demo-container>
+          <demo-container api={LoginString} code={LoginCodeString}>
+            <Login />
+          </demo-container>
+          <demo-container api={UseString} code={UseCodeString}>
+            <Use />
+          </demo-container>
+          <demo-container api={InnerString} code={InnerCodeString}>
+            <Inner />
+          </demo-container>
+          <demo-container api={HorizontalString} code={HorizontalCodeString}>
+            <Horizontal />
+          </demo-container>
+          <demo-container api={FilterString} code={FilterCodeString}>
+            <Filter />
+          </demo-container>
+          <demo-container api={HorizontalInnerString} code={HorizontalInnerCodeString}>
+            <HorizontalInner />
+          </demo-container>
+          <demo-container api={RuleString} code={RuleCodeString}>
+            <Rule />
+          </demo-container>
+          <demo-container api={LabelWidthString} code={LabelWidthCodeString}>
+            <LabelWidth />
+          </demo-container>
+          <demo-container api={LabelString} code={LabelCodeString}>
+            <Label />
+          </demo-container>
+          <demo-container api={DynamicFormString} code={DynamicFormCodeString}>
+            <DynamicForm />
+          </demo-container>
+          <demo-container api={IfShowString} code={IfShowCodeString}>
+            <IfShow />
+          </demo-container>
+          <demo-container api={UpdateSchemaString} code={UpdateSchemaCodeString}>
+            <UpdateSchema />
+          </demo-container>
+          <demo-container api={MsgString} code={MsgCodeString}>
+            <Msg />
+          </demo-container>
+          <demo-container api={SlotString} code={SlotCodeString}>
+            <Slot />
+          </demo-container>
+          <demo-container api={SpecialString} code={SpecialCodeString}>
+            <Special />
+          </demo-container>
+          <demo-container api={ExpendString} code={ExpendCodeString}>
+            <Expend />
+          </demo-container>
+          <demo-container api={ExpendActiveString} code={ExpendActiveCodeString}>
+            <ExpendActive />
+          </demo-container>
           <demo-container api={ChangeTimeString} code={ChangeTimeCodeString}>
             <ChangeTime />
           </demo-container>
