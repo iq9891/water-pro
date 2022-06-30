@@ -14,6 +14,8 @@ import { defineComponent, ref } from 'vue';
 const tagDatas = [
   {
     name: '这是很长的标签',
+    // canRemove 可控制叉子是否能删除
+    canRemove: false,
     id: 190
   },
   {

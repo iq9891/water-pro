@@ -2,7 +2,8 @@
   <a-form-pro @register="fieldMapToTimeForm" @submit="fieldMapToTimeSubmit" />
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted } from 'vue';
+import moment, { Moment } from 'moment';
 
 import { FormSchema, useForm } from '@fe6/water-pro';
 
@@ -15,7 +16,11 @@ const schemas: FormSchema[] =[
       valueFormat: 'YYYY-MM-DD',
       format: 'YYYY年MM月DD日',
       multipleMaxTagTextLength: 15,
-      multipleTagGroupPopoverClass: 'test1'
+      multipleMaxTagCount: 4,
+      multipleTagGroupPopoverClass: 'test1',
+      disabledDate: (current: Moment) => {
+        return current && current < moment().endOf('day');
+      },
     },
     label: '多选日期',
   },
@@ -98,7 +103,7 @@ const schemas: FormSchema[] =[
 
 export default defineComponent({
   setup() {
-    const [fieldMapToTimeForm] = useForm({
+    const [fieldMapToTimeForm, {setFieldsValue}] = useForm({
       schemas,
       labelWidth: 140,
       fieldMapToTime: [
@@ -116,6 +121,14 @@ export default defineComponent({
     const fieldMapToTimeSubmit = async (ressss) => {
       console.log(ressss, 'ctfieldMapToTimeParams');
     };
+
+    onMounted(() => {
+      setFieldsValue({
+        mortdate: [moment().subtract(3, 'd')],
+        mortmonth: [moment().subtract(3, 'd')],
+      })
+    })
+
     return {
       fieldMapToTimeForm,
       fieldMapToTimeSubmit,

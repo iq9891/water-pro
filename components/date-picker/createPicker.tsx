@@ -2,6 +2,7 @@ import { CSSProperties, DefineComponent, defineComponent, inject, nextTick } fro
 import moment from 'moment';
 import omit from 'lodash-es/omit';
 import cloneDeep from 'lodash-es/cloneDeep';
+import isFunction from 'lodash/isFunction';
 import { isArray } from '@fe6/shared';
 import MonthCalendar from '../vc-calendar/src/MonthCalendar';
 import YearCalendar from '../vc-calendar/src/YearCalendar';
@@ -167,12 +168,20 @@ export default function createPicker<P>(
         }
       },
       multiplePanelHeaderRender(theStr: any, selectedValue: any) {
-        const theNewTagGroupValue = theStr?.map((oneStr: string, oneIdx: number) => ({
-          id: oneIdx + 1,
-          name: oneStr,
-        }));
+        const theNewTagGroupValue = theStr?.map((oneStr: string, oneIdx: number) => {
+          let canRemove = false;
+          if (isFunction(this.disabledDate)) {
+            canRemove = !this.disabledDate(selectedValue[oneIdx]);
+          }
+          return {
+            id: oneIdx + 1,
+            canRemove,
+            name: oneStr,
+          };
+        });
+        const maxLen = this.sOpen? 1 : this.multipleMaxTagCount;
         const theMoreSlot = () => {
-          return `+${theNewTagGroupValue.length - this.multipleMaxTagCount}`;
+          return `+${theNewTagGroupValue.length - maxLen}`;
         };
         const props: any = omit({ ...getOptionProps(this), ...this.$attrs }, ['onChange']);
         const getPrefixCls = this.configProvider.getPrefixCls;
@@ -182,7 +191,7 @@ export default function createPicker<P>(
         return <TagGroup
           class={`${prefixCls}-picker-multiple-taggroup`}
           value={theNewTagGroupValue}
-          maxTagCount={this.multipleMaxTagCount}
+          maxTagCount={this.sOpen? 1 : maxLen}
           maxTagTextLength={this.multipleMaxTagTextLength}
           color={'#f5f5f5'}
           closable={this.multipleClosable} 

@@ -54,7 +54,7 @@ const DateTBody = {
       hoverValue,
       type,
     } = props;
-    const value = type === 'multiple' ? theValue?.[0] : theValue;
+    const value = type === 'multiple' ? theValue?.[theValue.length - 1] : theValue;
     const { onSelect = noop, onDayHover = noop } = this.$attrs;
     let iIndex;
     let jIndex;
