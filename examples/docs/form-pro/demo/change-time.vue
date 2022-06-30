@@ -15,7 +15,7 @@ const schemas: FormSchema[] =[
       type: 'multiple',
       valueFormat: 'YYYY-MM-DD',
       format: 'YYYY年MM月DD日',
-      // multipleMaxTagTextLength: 15,
+      multipleMaxTagTextLength: 15,
       multipleMaxTagCount: 4,
       multipleTagGroupPopoverClass: 'test1',
       disabledDate: (current: Moment) => {
