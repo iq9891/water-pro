@@ -12,7 +12,7 @@ import {
   unref,
 } from 'vue';
 import { PlusOutlined, DashOutlined, LoadingOutlined, CloseOutlined } from '@ant-design/icons-vue';
-import { getStrLength } from '@fe6/shared';
+import { getStrLength, hasOwn } from '@fe6/shared';
 
 import ATag from '../../tag';
 import ATooltip from '../../tooltip';
@@ -187,6 +187,7 @@ export default defineComponent({
     };
 
     tagList.forEach((tagItem: any) => {
+      const theClosable = hasOwn(tagItem, 'canRemove') ? tagItem.canRemove : this.closable && tagItem.id !== '0';
       tagNode.push(
         <ATag
           class={[
@@ -195,11 +196,11 @@ export default defineComponent({
               [`${this.prefixClsNew}-inner-small`]:
                 this.maxTagTextLength > 0 &&
                 getStrLength(tagItem[this.nameLabel]) >= this.maxTagTextLength,
-              [`${this.prefixClsNew}-inner-big`]: this.closable && tagItem.id !== '0',
+              [`${this.prefixClsNew}-inner-big`]: theClosable,
               [`${this.prefixClsNew}-inner-disabled`]: this.disabled,
             },
           ]}
-          closable={this.closable && tagItem.id !== '0'}
+          closable={theClosable}
           visible={true}
           color={this.disabled ? '#f0f0f0' : this.color}
           style={this.tagStyle}

@@ -96,7 +96,7 @@ const CalendarHeader = {
       const props = this.$props;
       const prefixCls = props.prefixCls;
       const locale = props.locale;
-      const value = this.type === 'multiple' ? props.value?.[0] : props.value;
+      const value = this.type === 'multiple' ? props.value?.[props.value.length - 1] : props.value;
       const localeData = value?.localeData();
       const monthBeforeYear = locale.monthBeforeYear;
       const selectClassName = `${prefixCls}-${monthBeforeYear ? 'my-select' : 'ym-select'}`;

@@ -1,10 +1,10 @@
 ## API
 
-### Tag
+### TagGroup
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
-| value(v-model) | 标签是否可以关闭 | boolean | false | |
+| value(v-model) | 标签的数据 | {canRemove: 为false就是没有叉子, name: 标签名字, id: 标签的索引} | - | |
 | maxTagTextLength | 文字的长度，中文算2个长度，英文算一个长度 | number | 4 | |
 | maxTagCount | 标签的个数，为 0 的时候显示所有 | number | 4 | |
 | closable | 是否显示关闭按钮 | boolean | false | |
