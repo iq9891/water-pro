@@ -151,6 +151,12 @@ export default {
           <demo-container api={ChangeTimeString} code={ChangeTimeCodeString}>
             <ChangeTime />
           </demo-container>
+          <demo-container api={FullString} code={FullCodeString}>
+            <Full />
+          </demo-container>
+          <demo-container api={ChildrenString} code={ChildrenCodeString}>
+            <Children />
+          </demo-container>
         </demo-sort>
         <api>
           <CN />
