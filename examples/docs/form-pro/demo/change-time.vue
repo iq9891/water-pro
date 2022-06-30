@@ -124,7 +124,7 @@ export default defineComponent({
 
     onMounted(() => {
       setFieldsValue({
-        mortdate: [moment().subtract(3, 'd')],
+        mortdate: [moment().subtract(3, 'd'), moment().add(3, 'd')],
         mortmonth: [moment().subtract(3, 'd')],
       })
     })

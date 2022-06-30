@@ -265,6 +265,7 @@ export default defineComponent({
       const popoverTagNodes = [];
 
       this.stateTruer.forEach((tagItem: any) => {
+        const theClosable = hasOwn(tagItem, 'canRemove') ? tagItem.canRemove : this.closable && tagItem.id !== '0';
         let sPopoverInner = tagItem[this.nameLabel];
         if (this.maxTagTextLength > 0 && tagItem[this.nameLabel].length > this.maxTagTextLength) {
           sPopoverInner = (
@@ -278,11 +279,11 @@ export default defineComponent({
               [`${this.prefixClsNew}-small`]:
                 this.maxTagTextLength > 0 &&
                 tagItem[this.nameLabel].length >= this.maxTagTextLength,
-              [`${this.prefixClsNew}-big`]: this.closable && tagItem.id !== '0',
+              [`${this.prefixClsNew}-big`]:theClosable,
               [`${this.prefixClsNew}-preive`]: true,
               [`${this.prefixClsNew}-disabled`]: this.disabled,
             }}
-            closable={!this.disabled && this.closable && tagItem.id !== '0'}
+            closable={!this.disabled &&theClosable}
             color={this.disabled ? '#f0f0f0' : this.color}
             onClose={() => this.handleClose(tagItem, tagItem.id)}
           >
