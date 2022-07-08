@@ -71,9 +71,9 @@ export const basicProps = {
       if (
         schemaItem &&
         hasOwn(schemaItem, 'componentProps') &&
-        hasOwn(schemaItem.componentProps, 'format')
+        hasOwn(schemaItem.componentProps, 'valueFormat')
       ) {
-        format = (schemaItem.componentProps as any).format;
+        format = (schemaItem.componentProps as any)?.valueFormat;
         if (isArray(format)) {
           format = format[0];
         }
