@@ -45,10 +45,11 @@ export function useFormValues({
       }
       if (
         isArray(value) &&
-        value[0]._isAMomentObject &&
-        value[1]._isAMomentObject
+        value.length > 0
       ) {
-        value = value.map((item: any) => transformDateFunc(item, schemaItem));
+        value = value.map((item: any) => {
+          return item?._isAMomentObject ? transformDateFunc(item, schemaItem) : item;
+        });
       }
       // Remove spaces
       if (isString(value)) {
