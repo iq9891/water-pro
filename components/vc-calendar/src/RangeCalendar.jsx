@@ -211,7 +211,8 @@ const RangeCalendar = defineComponent({
           nextSelectedValue = [startValue, value];
         } else {
           syncTime(prevSelectedValue[0], value);
-          nextSelectedValue = [value];
+          // FIX 编辑的时候，开始时间不能选前面的
+          nextSelectedValue = [value, sSelectedValue?.[1]];
         }
       }
 
