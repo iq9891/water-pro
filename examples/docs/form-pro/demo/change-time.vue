@@ -139,6 +139,6 @@ export default defineComponent({
 
 <style lang="less">
 .test1 {
-  width: 256px;
+  width: 280px;
 }
 </style>

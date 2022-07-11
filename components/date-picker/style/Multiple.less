@@ -19,12 +19,26 @@
     & .ant-tag-has-color .anticon:hover {
       color: rgba(0, 0, 0, 0.85);
     }
+
+    &-disabled {
+      & .ant-tag-group-inner,
+      & .ant-tag-group-more {
+        color: #bfbfbf;
+        border-color: #d9d9d9;
+        cursor: not-allowed;
+      }
+    }
   }
 
   &-popover {
     color: #000;
     & .@{ant-prefix}-tag:nth-of-type(even) {
       margin-right: 0;
+    }
+
+    & .@{ant-prefix}-tag:nth-last-child(1),
+    & .@{ant-prefix}-tag:nth-last-child(2) {
+      margin-bottom: 0;
     }
 
     & .ant-tag-has-color,

@@ -173,6 +173,9 @@ export default function createPicker<P>(
           if (isFunction(this.disabledDate)) {
             canRemove = !this.disabledDate(selectedValue[oneIdx]);
           }
+          if (this.disabled) {
+            canRemove = false;
+          }
           return {
             id: oneIdx + 1,
             canRemove,
@@ -189,7 +192,9 @@ export default function createPicker<P>(
         const prefixCls = getPrefixCls('calendar', customizePrefixCls);
 
         return <TagGroup
-          class={`${prefixCls}-picker-multiple-taggroup`}
+          class={[`${prefixCls}-picker-multiple-taggroup`, {
+            [`${prefixCls}-picker-multiple-taggroup-disabled`]: this.disabled,
+          }]}
           value={theNewTagGroupValue}
           maxTagCount={this.sOpen? 1 : maxLen}
           maxTagTextLength={this.multipleMaxTagTextLength}
