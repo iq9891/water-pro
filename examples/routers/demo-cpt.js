@@ -54,6 +54,12 @@ export default {
     type: 'Data Entry',
     title: 'Checkbox',
   },
+  checkboxCascader: {
+    category: 'Components',
+    subtitle: '多选级联',
+    type: 'Data Entry',
+    title: 'CheckboxCascader',
+  },
   grid: {
     category: 'Components',
     subtitle: '栅格',

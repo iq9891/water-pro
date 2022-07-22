@@ -126,4 +126,5 @@ export type ComponentType =
   | 'MaterialSelect'
   | 'Render'
   | 'ModalUser'
+  | 'CheckboxCascader'
   | 'Slot';

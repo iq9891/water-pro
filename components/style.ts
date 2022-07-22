@@ -82,3 +82,4 @@ import './upload-card/style';
 import './preview-image/style';
 import './classify/style';
 import './modal-user/style';
+import './checkbox-cascader/style';

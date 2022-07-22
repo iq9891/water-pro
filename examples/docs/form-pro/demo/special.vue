@@ -2,9 +2,10 @@
   <a-form-pro @register="specialFormPro" @submit="specialHandleSubmit" />
 </template>
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { defineComponent, onMounted, onBeforeMount, ref, } from 'vue';
 
 import { FormSchema, useForm } from '@fe6/water-pro';
+import isEmpty from 'lodash-es/isEmpty';
 
 const getSelectForOptions = ({params, success}) => {
   setTimeout(() => {
@@ -117,7 +118,31 @@ const getModalUserForOptions = ({params, success}) => {
   }, 100);
 };
 
-const schemas: FormSchema[] = [
+const schemas = (opts): FormSchema[] => ([
+  {
+    field: 'checkboxCascader',
+    component: 'CheckboxCascader',
+    label: 'CheckboxCascader',
+    componentProps: {
+      options: opts,
+      placeholder: '请输入'
+    },
+    dynamicRules: (ruleParams) => {
+      const { values } = ruleParams.value;
+      return [
+        {
+          required: true,
+          validator: () => {
+            const { checkboxCascader } = values;
+            if (!checkboxCascader || isEmpty(checkboxCascader)) {
+              return Promise.reject(new Error('请选择 checkboxCascader'));
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
+  },
   {
     field: 'modalUser',
     component: 'ModalUser',
@@ -280,17 +305,14 @@ const schemas: FormSchema[] = [
       };
     },
   },
-];
+]);
 
 export default defineComponent({
   setup() {
     const [
       specialFormPro,
       specialFormActions
-    ] = useForm({
-      schemas,
-      labelWidth: 200,
-    });
+    ] = useForm();
 
     const specialHandleSubmit = async () => {
       try {
@@ -298,13 +320,34 @@ export default defineComponent({
         console.log(JSON.stringify(updateParams), 'updateParams');
       } catch (err) {}
     };
+    const theOptions = ref([]);
+    const getOpts = (callback = () => {}) => {
+      fetch(`https://api.dev.mosh.cn/public/region/tree`)
+        .then(res => res.json())
+        .then((res) => {
+          if (res.code === 10000) {
+            theOptions.value = res.data;
+            callback();
+          }
+        });
+    }
+
+    onBeforeMount(getOpts);
 
     onMounted(() => {
-      setTimeout(() => {
-        specialFormActions.setFieldsValue({
-          modalUser: ['ShangHaojia'],
-        })
-      }, 90);
+      getOpts(() => {
+        setTimeout(() => { 
+          console.log(theOptions.value, 'theOptions.value');
+          specialFormActions.setProps({
+            schemas: schemas(theOptions.value),
+            labelWidth: 200,
+          });
+          
+          specialFormActions.setFieldsValue({
+            modalUser: ['ShangHaojia'],
+          })
+        }, 90);
+      });
     });
 
     return {

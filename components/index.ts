@@ -162,6 +162,7 @@ import { default as Loading } from './loading';
 import { default as PreviewImage } from './preview-image';
 import { default as Classify } from './classify';
 import { default as ModalUser } from './modal-user';
+import { default as CheckboxCascader } from './checkbox-cascader';
 
 // 工具函数
 import copy from './_util/copy-to-clipboard';
@@ -268,6 +269,7 @@ const components = [
   TablePro,
   Classify,
   ModalUser,
+  CheckboxCascader,
 ];
 
 const install = function (app: App) {
@@ -377,6 +379,7 @@ export {
   TablePro,
   Classify,
   ModalUser,
+  CheckboxCascader,
   PreviewImage,
   utils,
 };

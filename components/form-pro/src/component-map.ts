@@ -23,6 +23,7 @@ import TagGroup from '../../tag-group';
 import TagModalList from '../../tag-modal-list';
 import UploadCard from '../../upload-card';
 import ModalUser from '../../modal-user';
+import CheckboxCascader from '../../checkbox-cascader';
 
 const componentMap = new Map<ComponentType, Component>();
 
@@ -59,6 +60,7 @@ componentMap.set('ColorPicker', ColorPicker);
 componentMap.set('TagGroup', TagGroup);
 componentMap.set('TagModalList', TagModalList);
 componentMap.set('ModalUser', ModalUser);
+componentMap.set('CheckboxCascader', CheckboxCascader);
 
 componentMap.set('UploadName', UploadName);
 componentMap.set('UploadImage', UploadImage);

@@ -42,6 +42,10 @@ export default [
     component: () => import('../docs/checkbox/demo/index.vue'),
   },
   {
+    path: 'checkbox-cascader-cn',
+    component: () => import('../docs/checkbox-cascader/demo/index.vue'),
+  },
+  {
     path: 'grid-cn',
     component: () => import('../docs/grid/demo/index.vue'),
   },
