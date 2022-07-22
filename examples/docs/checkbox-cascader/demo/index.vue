@@ -13,7 +13,7 @@ import CN from '../index.zh-CN.md';
 
 const md = {
   cn: `# CheckboxCascader 多选联级
-           多选联级
+           多选联级 **3.58.0** 新增
          ## 何时使用
          - 联级多选的补充
          ## 代码演示
